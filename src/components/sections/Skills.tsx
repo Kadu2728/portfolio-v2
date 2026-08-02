@@ -29,7 +29,7 @@ const skillGroups: SkillGroup[] = [
   {
     category: 'DevOps & Tools',
     icon: '🛠️',
-    skills: ['Git', 'GitHub', 'Vercel', 'Railway', 'VS Code', 'Android'],
+    skills: ['Git', 'GitHub', 'Vercel', 'Render', 'Railway', 'Neon', 'VS Code'],
   },
   {
     category: 'Inteligência Artificial',
@@ -113,7 +113,7 @@ export function Skills() {
         >
           <h3 className="text-sm font-semibold text-zinc-400 mb-4 tracking-widest uppercase">Soft Skills</h3>
           <div className="flex flex-wrap gap-3">
-            {['Resolução de Problemas', 'Trabalho em Equipe', 'Adaptabilidade', 'Pensamento Crítico', 'Comunicação', 'Aprendizado Contínuo', 'Proatividade', 'Inglês Intermediário'].map((s) => (
+            {['Resolução de Problemas', 'Trabalho em Equipe', 'Adaptabilidade', 'Pensamento Crítico', 'Comunicação', 'Aprendizado Contínuo', 'Proatividade', 'Inglês Fluente'].map((s) => (
               <span
                 key={s}
                 className="px-3 py-1.5 rounded-full text-sm font-medium border border-indigo-500/20 bg-indigo-500/10 text-indigo-300"

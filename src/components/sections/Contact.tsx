@@ -65,7 +65,7 @@ export function Contact() {
             transition={{ ...defaultTransition, delay: 0.2 }}
             className="text-zinc-400 max-w-xl mx-auto leading-relaxed"
           >
-            Estou aberto a oportunidades de estágio, trabalho júnior e projetos freelance. Me manda uma mensagem — responderei o mais rápido possível!
+            Busco minha primeira oportunidade como desenvolvedor — estágio ou júnior — onde eu possa contribuir desde o primeiro dia. Me manda uma mensagem que eu respondo rápido.
           </motion.p>
         </motion.div>
 

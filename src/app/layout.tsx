@@ -5,12 +5,12 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title:       'Carlos Eduardo Diogo | Full-Stack Developer',
-  description: 'Portfólio de Carlos Eduardo Diogo Gavioli — Junior Full-Stack Developer especializado em JavaScript, Python, FastAPI, React, Next.js e IA Generativa. São Paulo, Brasil.',
-  keywords:    ['desenvolvedor', 'full-stack', 'JavaScript', 'Python', 'React', 'Next.js', 'FastAPI', 'São Paulo', 'portfólio'],
+  description: 'Portfólio de Carlos Eduardo Diogo Gavioli — Full-Stack Developer em São Paulo. Seis aplicações full-stack construídas e publicadas de ponta a ponta com Next.js, React, TypeScript, FastAPI e PostgreSQL.',
+  keywords:    ['desenvolvedor', 'full-stack', 'TypeScript', 'React', 'Next.js', 'Python', 'FastAPI', 'PostgreSQL', 'IA Generativa', 'São Paulo', 'portfólio'],
   authors:     [{ name: 'Carlos Eduardo Diogo Gavioli' }],
   openGraph: {
     title:       'Carlos Eduardo Diogo | Full-Stack Developer',
-    description: 'Portfólio de Carlos Eduardo Diogo Gavioli — Junior Full-Stack Developer em São Paulo.',
+    description: 'Seis aplicações full-stack construídas e publicadas de ponta a ponta, sozinho. Next.js, React, TypeScript, FastAPI e PostgreSQL.',
     type:        'website',
   },
 }

@@ -27,10 +27,18 @@ const certificates: Certificate[] = [
   { title: 'Segurança da Informação para Todos',       institution: 'Alura' },
   { title: 'SQL: Consultas e Manipulação de Dados',    institution: 'Alura' },
   { title: 'Iniciando em Dados: Aprendendo Python',    institution: 'Alura' },
+  // AWS
+  { title: 'AWS SimuLearn: Fundamentos da Computação em Nuvem', institution: 'AWS' },
+  // Santander Open Academy
+  { title: 'Publicidade Digital: Dados, IA e Legalidade', institution: 'Santander Open Academy' },
+  { title: 'Storytelling para Marketing Digital',         institution: 'Santander Open Academy' },
 ]
 
 const fiapCerts  = certificates.filter(c => c.institution === 'FIAP')
 const aluraCerts = certificates.filter(c => c.institution === 'Alura')
+const outrosCerts = certificates.filter(
+  c => c.institution !== 'FIAP' && c.institution !== 'Alura'
+)
 
 export function Certificates() {
   return (
@@ -66,7 +74,7 @@ export function Certificates() {
             transition={{ ...defaultTransition, delay: 0.2 }}
             className="text-zinc-400 max-w-xl mx-auto leading-relaxed"
           >
-            {certificates.length} certificados de aprendizado contínuo em FIAP e Alura
+            {certificates.length} certificados de aprendizado contínuo em FIAP, Alura, AWS e Santander
           </motion.p>
         </motion.div>
 
@@ -107,6 +115,7 @@ export function Certificates() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-10"
         >
           <div className="flex items-center gap-3 mb-5">
             <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center">
@@ -131,27 +140,39 @@ export function Certificates() {
           </div>
         </motion.div>
 
-        {/* Banner */}
+        {/* AWS e Santander — instituições com um ou dois certificados cada,
+            agrupadas num bloco só para não criar seções de uma linha. */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-10 p-6 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 flex flex-col sm:flex-row items-center justify-between gap-4"
+          transition={{ duration: 0.5, delay: 0.15 }}
         >
-          <div>
-            <p className="text-white font-bold text-lg">{certificates.length} certificados conquistados</p>
-            <p className="text-zinc-400 text-sm">FIAP e Alura</p>
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+              <span className="text-sm font-black text-amber-400">+</span>
+            </div>
+            <h3 className="text-lg font-bold text-white">AWS & Santander</h3>
+            <span className="ml-auto text-xs text-zinc-500 font-medium">{outrosCerts.length} certificados</span>
           </div>
-          <a
-            href="https://www.linkedin.com/in/carlos-eduardo-diogo-192282358"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 px-5 py-2.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-colors duration-200"
-          >
-            Ver no LinkedIn
-          </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {outrosCerts.map((cert, i) => (
+              <GlowCard key={cert.title} delay={i * 0.05} className="p-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0">
+                    <Award size={16} className="text-amber-400" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-white leading-snug">{cert.title}</p>
+                    <p className="text-xs text-zinc-500 mt-1">{cert.institution}</p>
+                  </div>
+                </div>
+              </GlowCard>
+            ))}
+          </div>
         </motion.div>
+
+        {/* Banner */}
       </div>
     </section>
   )

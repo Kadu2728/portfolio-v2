@@ -54,7 +54,7 @@ export function Hero() {
               transition={{ ...defaultTransition, delay: 0.2 }}
               className="text-lg md:text-xl text-zinc-400 font-medium mb-3"
             >
-              Junior Full-Stack Developer
+              Full-Stack Developer
             </motion.p>
 
             <motion.p
@@ -62,7 +62,7 @@ export function Hero() {
               transition={{ ...defaultTransition, delay: 0.25 }}
               className="text-sm text-zinc-500 mb-6"
             >
-              JavaScript · Python · FastAPI · PostgreSQL · React · Next.js · IA Generativa
+              Next.js · React · TypeScript · FastAPI · Python · PostgreSQL · IA Generativa
             </motion.p>
 
             <motion.p
@@ -70,7 +70,7 @@ export function Hero() {
               transition={{ ...defaultTransition, delay: 0.3 }}
               className="text-zinc-400 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 text-base"
             >
-              Estudante de GTI na <span className="text-white font-medium">FIAP</span>, apaixonado por criar interfaces modernas e back-ends robustos. Combino tecnologia, estratégia de negócio e IA Generativa para construir soluções que geram impacto real.
+              No último ano construí e coloquei no ar <span className="text-white font-medium">seis aplicações full-stack de ponta a ponta, sozinho</span> — uma delas, o CEAP Connect, foi apresentada ao diretor geral do CEAP e avançou para uma segunda rodada de avaliação. Curso GTI na <span className="text-white font-medium">FIAP</span> enquanto construo produtos reais, prontos para produção.
             </motion.p>
 
             {/* CTAs */}
@@ -185,8 +185,8 @@ export function Hero() {
           className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {[
-            { value: 17, suffix: '+', label: 'Certificados' },
-            { value: 6,  suffix: '+', label: 'Projetos' },
+            { value: 21, suffix: '+', label: 'Certificados' },
+            { value: 10, suffix: '+', label: 'Projetos' },
             { value: 5,  suffix: '+', label: 'Tecnologias' },
             { value: 3,  suffix: '+', label: 'Anos de Estudo' },
           ].map((stat) => (

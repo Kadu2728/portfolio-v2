@@ -19,7 +19,7 @@ export type Project = {
 
 export type Certificate = {
   title:       string
-  institution: 'FIAP' | 'Alura'
+  institution: 'FIAP' | 'Alura' | 'AWS' | 'Santander Open Academy'
 }
 
 export type SocialLink = {

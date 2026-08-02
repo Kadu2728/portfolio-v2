@@ -8,22 +8,57 @@ import type { Project } from '@/types'
 
 const projects: Project[] = [
   {
+    title:       'CEAP Connect',
+    description: 'Plataforma que transforma o processo seletivo do CEAP — escola técnica gratuita para jovens em vulnerabilidade social — numa jornada gamificada. O candidato cumpre missões, acumula XP e evolui de Iniciante a Mestre CEAP, desbloqueando recompensas reais: cursos e certificações da AWS, Google, Cisco e Fundação Bradesco. Conta com assistente de IA disponível 24/7, que responde dúvidas sobre a prova e os cursos com respostas em streaming e memória de conversa. O painel administrativo, de acesso restrito a pessoas autorizadas, acompanha XP distribuído, conquistas e ranking de recompensas, além de confirmar a entrega de cada resgate. Apresentado ao diretor geral do CEAP em reunião, o projeto avançou para uma segunda rodada de avaliação — e o retorno sobre a camada de gamificação orientou a reformulação seguinte do produto.',
+    tags:        ['Next.js', 'React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Neon', 'Google Gemini', 'Vercel', 'Render'],
+    link:        'https://ceapconnect.vercel.app',
+    github:      'https://github.com/Kadu2728/ceapconnect',
+    featured:    true,
+  },
+  {
+    title:       'VendIA',
+    description: 'Ferramenta de IA para vendedores de marketplace, com foco em Shopee, criarem e otimizarem anúncios. A geração é multimodal: o vendedor envia a foto do produto e a IA lê a imagem, não apenas o texto, para escrever título e descrição persuasiva. Também sugere faixa de preço competitiva a partir dos concorrentes cadastrados, sempre com justificativa, e responde perguntas de clientes no tom configurado — formal, amigável ou direto. Em produção com front na Vercel, API no Render e banco PostgreSQL na Neon.',
+    tags:        ['Next.js', 'React', 'TypeScript', 'FastAPI', 'SQLAlchemy', 'PostgreSQL', 'Google Gemini', 'IA Multimodal'],
+    link:        'https://vend-ia-weld.vercel.app',
+    github:      'https://github.com/Kadu2728/VendIA',
+    featured:    true,
+  },
+  {
+    title:       'GIRO',
+    description: 'PWA de execução de merchandising. Como nenhuma indústria enxerga o estoque interno do varejista, o único número que existe é o que o promotor conta na gôndola — e o app deriva o giro sozinho a partir dessa contagem, comparando com a visita anterior. O giro nunca é digitado, para não virar dado inventado. A partir daí projeta os dias de estoque restantes e avisa quando o item não chega até a próxima visita. Funciona offline, porque sinal de mercado é ruim: a contagem grava no dispositivo e sincroniza quando a conexão volta. O supervisor acompanha rupturas, cumprimento de rota e histórico por SKU.',
+    tags:        ['Next.js', 'React 19', 'TypeScript', 'Tailwind', 'shadcn/ui', 'Framer Motion', 'PWA', 'Offline-First'],
+    link:        'https://giro-azure.vercel.app',
+    github:      'https://github.com/Kadu2728/GIRO',
+    featured:    true,
+  },
+  {
+    title:       'VESTORA',
+    description: 'Gestor de carteira de investimentos para ações, FIIs e ETFs. Acompanha patrimônio, dividendos e rentabilidade em tempo real, com dashboard interativo que consolida a posição em um só lugar. Tem autenticação JWT e conta demonstrativa, para quem quiser explorar a ferramenta antes de cadastrar a própria carteira. React Query cuida do cache e da sincronização dos dados de mercado no front.',
+    tags:        ['Next.js', 'React', 'TypeScript', 'React Query', 'FastAPI', 'PostgreSQL', 'JWT', 'Vercel'],
+    link:        'https://vestora-roan.vercel.app',
+    github:      'https://github.com/Kadu2728/Vestora',
+    featured:    true,
+  },
+  {
     title:       'FinPilot',
     description: 'Plataforma SaaS de gestão financeira full-stack com autenticação JWT, dashboard interativo e relatórios em tempo real. Backend em FastAPI + PostgreSQL hospedado no Railway, frontend em Vercel.',
     tags:        ['FastAPI', 'PostgreSQL', 'Python', 'JavaScript', 'REST API', 'JWT', 'Railway', 'Vercel'],
     link:        'https://finpilot-omega.vercel.app',
-    featured:    true,
+    github:      'https://github.com/Kadu2728/FinPilot',
   },
   {
     title:       'ControlCash',
     description: 'App de controle de finanças pessoais com gráficos interativos via Chart.js, persistência de dados no LocalStorage e interface responsiva 100% vanilla.',
     tags:        ['JavaScript', 'HTML', 'CSS', 'Chart.js', 'LocalStorage'],
-    featured:    true,
+    link:        'https://controlcash-weld.vercel.app',
+    github:      'https://github.com/Kadu2728/ControlCash',
   },
   {
     title:       'InvestBem',
     description: 'Landing page moderna para fintech brasileira de investimentos. Design premium dark com animações de scroll, seção de planos e CTA otimizado para conversão.',
     tags:        ['HTML', 'CSS', 'JavaScript', 'UX/UI', 'Responsive'],
+    link:        'https://investbem.vercel.app',
+    github:      'https://github.com/Kadu2728/InvestBem',
   },
   {
     title:       'InvestEdu',
@@ -31,29 +66,18 @@ const projects: Project[] = [
     tags:        ['HTML', 'CSS', 'JavaScript', 'UX/UI'],
   },
   {
-    title:       'Valore Capital',
-    description: 'Landing page institucional para gestora de capital com visual sofisticado, tipografia elegante e layout que transmite credibilidade e confiança.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'Design Premium'],
-  },
-  {
-    title:       'Monteiro & Associados',
-    description: 'Site institucional para escritório de advocacia. Layout sóbrio e profissional com paleta dourada, seções de áreas de atuação e formulário de contato.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'UX/UI'],
-  },
-  {
     title:       'Barbearia FINOViSÚ',
     description: 'Site completo para barbearia com agendamento online, galeria de cortes e design urbano premium. Totalmente responsivo para mobile.',
     tags:        ['HTML', 'CSS', 'JavaScript', 'Responsive Design'],
+    link:        'https://barbearia-fino.vercel.app',
+    github:      'https://github.com/Kadu2728/BarbeariaFINO',
   },
   {
     title:       'Dani Brigs Confeitaria',
     description: 'Site de confeitaria artesanal para @danielabrigs em Sapopemba/SP. Cardápio digital, galeria de produtos e integração com WhatsApp.',
     tags:        ['HTML', 'CSS', 'JavaScript', 'Mobile-First'],
-  },
-  {
-    title:       'SatAgro',
-    description: 'Projeto de análise agrícola com dados via Python/openpyxl, gerando relatórios em PDF e apresentações PPTX com insights de campanha de marketing.',
-    tags:        ['Python', 'openpyxl', 'PDF', 'Data Analysis'],
+    link:        'https://danibrigs.vercel.app',
+    github:      'https://github.com/Kadu2728/DoceriaSite',
   },
 ]
 
