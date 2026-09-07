@@ -42,7 +42,7 @@ export function Contact() {
       />
 
       <div className="relative mx-auto max-w-shell px-6 md:px-10">
-        <TechLabel index="05" className="mb-10">
+        <TechLabel index="06" className="mb-10">
           Contato
         </TechLabel>
 

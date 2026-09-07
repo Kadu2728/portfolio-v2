@@ -33,7 +33,7 @@ export function Projects() {
       className="border-t border-line py-section"
     >
       <div className="mx-auto max-w-shell px-6 md:px-10">
-        <TechLabel index="03" className="mb-10">
+        <TechLabel index="04" className="mb-10">
           Projetos
         </TechLabel>
         <MaskText

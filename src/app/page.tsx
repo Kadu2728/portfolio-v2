@@ -3,13 +3,15 @@ import { Footer } from '@/components/layout/Footer'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Stack } from '@/components/sections/Stack'
+import { Services } from '@/components/sections/Services'
 import { Projects } from '@/components/sections/Projects'
 import { Certificates } from '@/components/sections/Certificates'
 import { Contact } from '@/components/sections/Contact'
 
 /**
  * Ritmo da página: impacto (Hero) → respiro (Sobre) → complexidade (Stack)
- * → impacto (Projetos) → densidade (Formação) → conclusão (Contato).
+ * → oferta (Serviços) → impacto (Projetos) → densidade (Formação)
+ * → conclusão (Contato).
  */
 export default function Home() {
   return (
@@ -19,6 +21,7 @@ export default function Home() {
         <Hero />
         <About />
         <Stack />
+        <Services />
         <Projects />
         <Certificates />
         <Contact />
