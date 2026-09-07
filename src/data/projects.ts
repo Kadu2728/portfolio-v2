@@ -383,34 +383,6 @@ export const projects: Project[] = [
     github: 'https://github.com/Kadu2728/InvestBem',
   },
   {
-    slug: 'investedu',
-    title: 'InvestEdu',
-    tagline: 'Educação financeira para quem está começando.',
-    year: '2026',
-    category: 'Experiência',
-    role: 'UX/UI · Front-End',
-    overview:
-      'Plataforma educacional de finanças pessoais com foco em público jovem: trilha de conteúdo, navegação fluida e prova social.',
-    challenge:
-      'Falar de dinheiro para quem nunca investiu sem soar condescendente nem técnico demais. O tom errado espanta o público nas primeiras linhas.',
-    solution:
-      'Trilha de conteúdo em etapas curtas, com linguagem acessível sustentada por tipografia e paleta que transmitem credibilidade — o texto é simples, a apresentação é séria.',
-    experience:
-      'A decisão de tom guiou o design inteiro. Cores sóbrias e tipografia estruturada compensam a linguagem informal, evitando que o conteúdo pareça pouco confiável.',
-    features: [
-      'Trilha de conteúdo em etapas',
-      'Seções de cursos',
-      'Depoimentos e prova social',
-      'Navegação fluida',
-      'Interface limpa e responsiva',
-    ],
-    tech: {
-      frontend: ['JavaScript', 'HTML5', 'CSS3'],
-      backend: [],
-      tools: [],
-    },
-  },
-  {
     slug: 'barbearia-fino',
     title: 'Barbearia FINOViSÚ',
     tagline: 'Agendamento em poucos toques, para quem chega pelo celular.',
