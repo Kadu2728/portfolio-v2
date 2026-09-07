@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { navItems, profile } from '@/data/profile'
 import { useLocale, localeHref } from '@/lib/locale'
@@ -15,6 +16,12 @@ const ids = navItems.map((i) => i.href.slice(1))
 export function Navbar() {
   const { locale, c } = useLocale()
   const other = locale === 'pt' ? 'en' : 'pt'
+  const pathname = usePathname()
+  // Fora da home (nas paginas de case) as seções não existem no documento,
+  // então rolar até elas não faria nada: o item vira link para a âncora na
+  // home. Na home segue rolagem suave, que não recarrega a página.
+  const home = localeHref(locale)
+  const isHome = pathname === home || pathname === `${home}/`
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const active = useActiveSection(ids)
@@ -28,6 +35,13 @@ export function Navbar() {
     setOpen(false)
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
+
+  /**
+   * Na home rola; fora dela navega para a âncora na home.
+   * O prefixo da rota é obrigatório: `#projetos` sozinho apontaria para a
+   * página de case, que não tem essa seção — e o clique morreria ali.
+   */
+  const anchor = (href: string) => `${home}${href}`
 
   // Aberto, o menu é um diálogo modal: trava o scroll, prende o Tab e fecha
   // no Escape. Sem isso o teclado desaparece atrás do overlay.
@@ -93,24 +107,14 @@ export function Navbar() {
               const on = active === id
               return (
                 <li key={item.href}>
-                  <button
-                    onClick={() => goTo(item.href)}
-                    aria-current={on ? 'true' : undefined}
-                    className={cn(
-                      'relative flex items-center gap-2 px-4 py-2 font-tech text-micro uppercase transition-colors duration-200',
-                      on ? 'text-chalk' : 'text-dim hover:text-ash'
-                    )}
-                  >
-                    <span className="tabular-nums opacity-50">{pad(i + 1)}</span>
-                    {c.ui.nav[item.key]}
-                    {on && (
-                      <motion.span
-                        layoutId="nav-dot"
-                        transition={{ duration: 0.4, ease: EASE }}
-                        className="absolute -bottom-0.5 left-4 h-px w-4 bg-accent"
-                      />
-                    )}
-                  </button>
+                  <NavItem
+                    isHome={isHome}
+                    href={anchor(item.href)}
+                    onScroll={() => goTo(item.href)}
+                    active={on}
+                    index={pad(i + 1)}
+                    label={c.ui.nav[item.key]}
+                  />
                 </li>
               )
             })}
@@ -171,21 +175,29 @@ export function Navbar() {
             className="fixed inset-0 z-[105] flex flex-col justify-center bg-void px-6 md:hidden"
           >
             {navItems.map((item, i) => (
-              <motion.button
+              <motion.div
                 key={item.href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.16 + i * 0.06, duration: 0.5, ease: EASE }}
-                onClick={() => goTo(item.href)}
-                className="flex items-baseline gap-5 border-b border-line py-5 text-left"
               >
-                <span className="font-tech text-micro text-accent-text tabular-nums">
-                  {pad(i + 1)}
-                </span>
-                <span className="font-display text-3xl font-semibold text-chalk">
-                  {c.ui.nav[item.key]}
-                </span>
-              </motion.button>
+                {isHome ? (
+                  <button
+                    onClick={() => goTo(item.href)}
+                    className="flex w-full items-baseline gap-5 border-b border-line py-5 text-left"
+                  >
+                    <MobileLabel index={pad(i + 1)} label={c.ui.nav[item.key]} />
+                  </button>
+                ) : (
+                  <Link
+                    href={anchor(item.href)}
+                    onClick={() => setOpen(false)}
+                    className="flex w-full items-baseline gap-5 border-b border-line py-5 text-left"
+                  >
+                    <MobileLabel index={pad(i + 1)} label={c.ui.nav[item.key]} />
+                  </Link>
+                )}
+              </motion.div>
             ))}
             <motion.div
               initial={{ opacity: 0 }}
@@ -209,6 +221,65 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+    </>
+  )
+}
+
+/**
+ * Na home o item rola suavemente; fora dela precisa ser um <a> de verdade —
+ * um botão que só chama scrollIntoView fica morto numa página que não tem
+ * aquelas seções.
+ */
+function NavItem({
+  isHome,
+  href,
+  onScroll,
+  active,
+  index,
+  label,
+}: {
+  isHome: boolean
+  href: string
+  onScroll: () => void
+  active: boolean
+  index: string
+  label: string
+}) {
+  const className = cn(
+    'relative flex items-center gap-2 px-4 py-2 font-tech text-micro uppercase transition-colors duration-200',
+    active ? 'text-chalk' : 'text-dim hover:text-ash'
+  )
+
+  const inner = (
+    <>
+      <span className="tabular-nums opacity-50">{index}</span>
+      {label}
+      {active && (
+        <motion.span
+          layoutId="nav-dot"
+          transition={{ duration: 0.4, ease: EASE }}
+          className="absolute -bottom-0.5 left-4 h-px w-4 bg-accent"
+        />
+      )}
+    </>
+  )
+
+  return isHome ? (
+    <button onClick={onScroll} aria-current={active ? 'true' : undefined} className={className}>
+      {inner}
+    </button>
+  ) : (
+    <Link href={href} className={className}>
+      {inner}
+    </Link>
+  )
+}
+
+function MobileLabel({ index, label }: { index: string; label: string }) {
+  return (
+    <>
+      <span className="font-tech text-micro text-accent-text tabular-nums">{index}</span>
+      <span className="font-display text-3xl font-semibold text-chalk">{label}</span>
     </>
   )
 }
