@@ -13,6 +13,7 @@ export const profile = {
   githubUser: 'Kadu2728',
   linkedin: 'https://www.linkedin.com/in/carlos-eduardo-diogo-192282358',
   available: true,
+  cv: '/cv-carlos-eduardo-diogo.pdf',
 
   /** Headline do hero, quebrada em linhas com comportamento próprio. */
   headline: ['Eu construo', 'experiências', 'digitais.'],

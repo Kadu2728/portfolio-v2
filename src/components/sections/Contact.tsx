@@ -13,6 +13,7 @@ const channels = [
   { label: 'WhatsApp', value: profile.phone, href: profile.whatsapp, ext: true },
   { label: 'GitHub', value: profile.githubUser, href: profile.github, ext: true },
   { label: 'LinkedIn', value: 'Carlos Eduardo Diogo', href: profile.linkedin, ext: true },
+  { label: 'Currículo', value: 'Baixar em PDF', href: profile.cv, ext: false },
 ]
 
 /**

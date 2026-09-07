@@ -11,7 +11,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowDown, Download, Github, Linkedin, Mail } from 'lucide-react'
 import { MaskText } from '@/components/ui/MaskText'
 import { Action } from '@/components/ui/Action'
 import { Marquee } from '@/components/ui/Marquee'
@@ -158,6 +158,15 @@ export function Hero() {
               <Mail size={14} />
               Falar comigo
             </Action>
+
+            <a
+              href={profile.cv}
+              download
+              className="inline-flex items-center gap-2 px-4 py-4 font-tech text-label uppercase tracking-[0.08em] text-ash transition-colors duration-200 hover:text-chalk"
+            >
+              <Download size={14} />
+              Baixar CV
+            </a>
 
             <span className="ml-1 flex items-center gap-1">
               {[
