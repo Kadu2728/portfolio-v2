@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { MaskText } from '@/components/ui/MaskText'
 import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { Action } from '@/components/ui/Action'
+import { ContactForm } from '@/components/ui/ContactForm'
 import { profile } from '@/data/profile'
 
 const channels = [
@@ -70,16 +71,39 @@ export function Contact() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.18}>
-          <div className="mt-12 flex flex-wrap gap-4">
-            <Action href={`mailto:${profile.email}`} arrow>
-              Enviar e-mail
-            </Action>
-            <Action href={profile.whatsapp} target="_blank" rel="noopener noreferrer" variant="outline">
-              WhatsApp
-            </Action>
-          </div>
-        </Reveal>
+        {/* Formulário à esquerda, canais diretos à direita: quem prefere
+            escrever agora resolve ali; quem prefere o próprio cliente de
+            e-mail ou o WhatsApp não precisa passar pelo formulário. */}
+        <div className="mt-14 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+          <Reveal delay={0.16}>
+            <ContactForm />
+          </Reveal>
+
+          <Reveal delay={0.22}>
+            <div className="flex h-full flex-col justify-between gap-8 border border-line bg-carbon p-8">
+              <div>
+                <p className="font-tech text-micro uppercase text-dim">Prefere o caminho direto?</p>
+                <p className="mt-4 text-base leading-relaxed text-ash">
+                  O WhatsApp costuma ser mais rápido. Para proposta com escopo e prazo, o e-mail
+                  funciona melhor — dá para responder com calma.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Action href={`mailto:${profile.email}`} arrow>
+                  E-mail
+                </Action>
+                <Action
+                  href={profile.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                >
+                  WhatsApp
+                </Action>
+              </div>
+            </div>
+          </Reveal>
+        </div>
 
         <ul className="mt-20 border-t border-line">
           {channels.map((c, i) => (
