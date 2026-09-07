@@ -1,39 +1,30 @@
-import { Github, Linkedin, Mail } from 'lucide-react'
+'use client'
+
+import { motion } from 'framer-motion'
+import { profile } from '@/data/profile'
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] py-10 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-zinc-500 text-sm">
-          © {new Date().getFullYear()} <span className="text-white font-medium">Carlos Eduardo Diogo</span> · Feito com Next.js & Framer Motion
-        </p>
-        <div className="flex items-center gap-5">
-          <a
-            href="https://github.com/Kadu2728"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="text-zinc-500 hover:text-white transition-colors"
+    <footer className="border-t border-line px-6 py-12 md:px-10">
+      <div className="mx-auto flex max-w-shell flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="font-display text-xl font-bold text-chalk"
           >
-            <Github size={18} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/carlos-eduardo-diogo-192282358"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-zinc-500 hover:text-white transition-colors"
-          >
-            <Linkedin size={18} />
-          </a>
-          <a
-            href="mailto:kacadu007@gmail.com"
-            aria-label="Email"
-            className="text-zinc-500 hover:text-white transition-colors"
-          >
-            <Mail size={18} />
-          </a>
+            {profile.short}
+            <span className="text-accent">.</span>
+          </motion.p>
+          <p className="mt-1 font-tech text-micro uppercase text-dim">{profile.role}</p>
         </div>
+
+        <p className="max-w-xs font-tech text-micro uppercase leading-relaxed text-dim">
+          Projetado e construído em código.
+          <br />
+          <span className="text-smoke">© {new Date().getFullYear()} · {profile.location}</span>
+        </p>
       </div>
     </footer>
   )

@@ -2,227 +2,254 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react'
-import { fadeUp, staggerContainer, defaultTransition } from '@/lib/animations'
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
+import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
+import { MaskText } from '@/components/ui/MaskText'
+import { Action } from '@/components/ui/Action'
+import { Marquee } from '@/components/ui/Marquee'
+import { EASE } from '@/lib/motion'
+import { profile } from '@/data/profile'
+import { projects } from '@/data/projects'
+import { highlights } from '@/data/certificates'
+import { marquee } from '@/data/stack'
 
+/**
+ * HERO
+ *
+ * Composição assimétrica em duas colunas: o nome domina a esquerda em escala
+ * de cartaz e o retrato ocupa a direita como peça gráfica de verdade — não
+ * como avatar de 48px no rodapé.
+ *
+ * A ordem de leitura é deliberada: quem é → o que faz → a prova (números) →
+ * como falar comigo. Um recrutador precisa dos quatro em cinco segundos.
+ */
 export function Hero() {
+  const ref = useRef<HTMLElement>(null)
+  const prefersReduced = useReducedMotion()
+  const [ready, setReady] = useState(false)
+  const [photoFailed, setPhotoFailed] = useState(false)
+
+  // Halo preso ao ponteiro, guardado em motion values para não re-renderizar
+  // o React a cada movimento do mouse.
+  const mx = useMotionValue(50)
+  const my = useMotionValue(20)
+  const sx = useSpring(mx, { stiffness: 55, damping: 20 })
+  const sy = useSpring(my, { stiffness: 55, damping: 20 })
+  const halo = useMotionTemplate`radial-gradient(560px circle at ${sx}% ${sy}%, rgba(224,74,63,0.16), transparent 62%)`
+
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const lift = useTransform(scrollYProgress, [0, 1], ['0%', '14%'])
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const photoLift = useTransform(scrollYProgress, [0, 1], ['0%', '-10%'])
+
+  useEffect(() => {
+    setReady(true)
+    const move = (e: MouseEvent) => {
+      mx.set((e.clientX / window.innerWidth) * 100)
+      my.set((e.clientY / window.innerHeight) * 100)
+    }
+    window.addEventListener('mousemove', move, { passive: true })
+    return () => window.removeEventListener('mousemove', move)
+  }, [mx, my])
+
+  const seq = (d: number) => ({
+    initial: { opacity: 0, y: prefersReduced ? 0 : 16 },
+    animate: ready ? { opacity: 1, y: 0 } : {},
+    transition: { duration: 0.75, ease: EASE, delay: prefersReduced ? 0 : d },
+  })
+
+  const stats = [
+    { v: String(projects.length), l: 'projetos entregues' },
+    { v: '6', l: 'em produção' },
+    { v: highlights.total, l: 'certificados' },
+  ]
+
   return (
     <section
-      id="sobre"
-      className="relative min-h-screen flex items-center pt-16 px-6 md:px-10 overflow-hidden"
+      ref={ref}
+      id="inicio"
+      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pt-24 md:pt-28"
     >
-      {/* Background gradient blur */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-indigo-600/10 blur-[120px]" />
-        <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] rounded-full bg-purple-600/10 blur-[100px]" />
+      {/* Três camadas de luz. Fundo quase preto e liso lê como luto; a luz
+          quente atrás do retrato e o degradê de base dão volume e calor. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, ease: EASE }}
+          className="absolute inset-0"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(58%_46%_at_72%_28%,rgba(224,74,63,0.22),transparent_68%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(46%_38%_at_18%_12%,rgba(243,240,232,0.055),transparent_70%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-carbon to-transparent" />
+        </motion.div>
+        <motion.div style={{ background: halo }} className="absolute inset-0" />
       </div>
 
-      <div className="max-w-6xl mx-auto w-full">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16"
-        >
-          {/* Texto */}
-          <div className="flex-1 text-center lg:text-left">
-            <motion.div
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-medium mb-6"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-              Disponível para oportunidades
-            </motion.div>
-
-            <motion.h1
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black tracking-tight leading-[1.05] text-white mb-4"
-            >
-              Carlos Eduardo
-              <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Diogo Gavioli
-              </span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0.2 }}
-              className="text-lg md:text-xl text-zinc-400 font-medium mb-3"
-            >
-              Full-Stack Developer
-            </motion.p>
-
-            <motion.p
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0.25 }}
-              className="text-sm text-zinc-500 mb-6"
-            >
-              Next.js · React · TypeScript · FastAPI · Python · PostgreSQL · IA Generativa
-            </motion.p>
-
-            <motion.p
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0.3 }}
-              className="text-zinc-400 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 text-base"
-            >
-              No último ano construí e coloquei no ar <span className="text-white font-medium">seis aplicações full-stack de ponta a ponta, sozinho</span> — uma delas, o CEAP Connect, foi apresentada ao diretor geral do CEAP e avançou para uma segunda rodada de avaliação. Curso GTI na <span className="text-white font-medium">FIAP</span> enquanto construo produtos reais, prontos para produção.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0.38 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8"
-            >
-              <motion.a
-                href="#projetos"
-                onClick={e => { e.preventDefault(); document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' }) }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-colors duration-200 shadow-lg shadow-indigo-600/25"
-              >
-                Ver Projetos
-                <ArrowDown size={15} />
-              </motion.a>
-
-              <motion.a
-                href="mailto:kacadu007@gmail.com"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/[0.12] hover:border-white/30 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-semibold transition-all duration-200"
-              >
-                <Mail size={15} />
-                Contato
-              </motion.a>
-            </motion.div>
-
-            {/* Socials */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: 0.44 }}
-              className="flex items-center justify-center lg:justify-start gap-4"
-            >
-              <a
-                href="https://github.com/Kadu2728"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub de Carlos Eduardo"
-                className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors duration-200 text-sm"
-              >
-                <Github size={18} />
-                <span className="hidden sm:inline">Kadu2728</span>
-              </a>
-              <span className="text-zinc-700">·</span>
-              <a
-                href="https://www.linkedin.com/in/carlos-eduardo-diogo-192282358"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn de Carlos Eduardo"
-                className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors duration-200 text-sm"
-              >
-                <Linkedin size={18} />
-                <span className="hidden sm:inline">LinkedIn</span>
-              </a>
-              <span className="text-zinc-700">·</span>
-              <a
-                href="mailto:kacadu007@gmail.com"
-                aria-label="Email de Carlos Eduardo"
-                className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors duration-200 text-sm"
-              >
-                <Mail size={18} />
-                <span className="hidden sm:inline">kacadu007@gmail.com</span>
-              </a>
-            </motion.div>
-          </div>
-
-          {/* Foto */}
+      <motion.div
+        style={prefersReduced ? undefined : { y: lift, opacity: fade }}
+        className="relative mx-auto grid w-full max-w-shell flex-1 grid-cols-1 items-center gap-12 px-6 py-10 md:px-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
+      >
+        {/* ---------- Coluna de identidade ----------
+            Vem primeiro no mobile: com a foto acima, o nome caía abaixo da
+            dobra e a primeira coisa lida deixava de ser quem a pessoa é. */}
+        <div className="order-1">
           <motion.div
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.15 }}
-            className="flex-shrink-0"
+            {...seq(0.15)}
+            className="mb-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-tech text-micro uppercase text-smoke"
           >
-            <div className="relative">
-              {/* Anel de glow */}
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 blur-md opacity-60" />
-              <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-2 border-white/10">
-                {/* Placeholder iniciais — fica atrás da foto */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-900 text-white text-5xl font-black select-none z-0">
-                  KD
-                </div>
-                {/* Sua foto — coloque profile.jpg dentro de /public */}
+            <span className="flex items-center gap-2 text-chalk">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              Disponível para oportunidades
+            </span>
+            <span className="hidden h-3 w-px bg-line-strong sm:block" />
+            <span>{profile.location}</span>
+          </motion.div>
+
+          {/* O nome em escala de cartaz — é a primeira coisa que se lê */}
+          <MaskText
+            as="h1"
+            animate={ready}
+            delay={0.3}
+            stagger={0.09}
+            lines={['Carlos', 'Eduardo']}
+            className="font-display text-6xl font-bold uppercase text-chalk"
+            highlightLast="text-accent"
+          />
+
+          <motion.div {...seq(0.95)} className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="h-px w-10 bg-accent" aria-hidden="true" />
+            <p className="font-display text-xl font-semibold text-chalk md:text-2xl">
+              {profile.role}
+            </p>
+            <span className="rounded-xs border border-line px-2.5 py-1 font-tech text-micro uppercase text-smoke">
+              UX/UI · IA
+            </span>
+          </motion.div>
+
+          <motion.p {...seq(1.08)} className="mt-7 max-w-text text-lg text-ash">
+            Construo experiências digitais de ponta a ponta — do modelo de dados à interface.
+            No último ano publiquei seis aplicações full-stack sozinho.
+          </motion.p>
+
+          <motion.div {...seq(1.22)} className="mt-9 flex flex-wrap items-center gap-3">
+            <Action
+              href="#projetos"
+              onClick={(e) => {
+                e.preventDefault()
+                document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Ver projetos
+              <ArrowDown size={14} />
+            </Action>
+            <Action href={`mailto:${profile.email}`} variant="outline">
+              <Mail size={14} />
+              Falar comigo
+            </Action>
+
+            <span className="ml-1 flex items-center gap-1">
+              {[
+                { href: profile.github, Icon: Github, label: 'GitHub' },
+                { href: profile.linkedin, Icon: Linkedin, label: 'LinkedIn' },
+              ].map(({ href, Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="p-2.5 text-smoke transition-colors duration-200 hover:text-chalk"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </span>
+          </motion.div>
+        </div>
+
+        {/* ---------- Retrato ---------- */}
+        <motion.div
+          style={prefersReduced ? undefined : { y: photoLift }}
+          className="order-2 justify-self-center lg:justify-self-end"
+        >
+          <motion.div
+            initial={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
+            animate={ready ? { clipPath: 'inset(0% 0 0 0)', opacity: 1 } : {}}
+            transition={{ duration: 1.1, ease: EASE, delay: prefersReduced ? 0 : 0.5 }}
+            className="group relative"
+          >
+            {/* Moldura deslocada: profundidade sem sombra e sem glass */}
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-3 -right-3 h-full w-full border border-accent-line transition-all duration-700 ease-expo group-hover:-bottom-1.5 group-hover:-right-1.5"
+            />
+
+            <div className="relative aspect-[4/5] w-[13rem] overflow-hidden bg-graphite sm:w-[17rem] lg:w-[22rem]">
+              {/* Iniciais na camada de baixo — fallback natural se a foto falhar */}
+              <span className="absolute inset-0 flex select-none items-center justify-center font-display text-6xl font-bold text-line-strong">
+                {profile.initials}
+              </span>
+
+              {!photoFailed && (
                 <Image
                   src="/profile.jpg"
-                  alt="Foto de Carlos Eduardo Diogo Gavioli"
+                  alt={`Retrato de ${profile.name}`}
                   fill
                   priority
-                  className="object-cover relative z-10"
+                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 304px, 352px"
+                  onError={() => setPhotoFailed(true)}
+                  // Foto colorida. Em preto e branco sobre fundo quase preto
+                  // a composição inteira lê como luto — é a peça que traz
+                  // pele, calor e presença humana para a dobra.
+                  className="relative object-cover brightness-[1.06] saturate-[1.08] transition-transform duration-700 ease-expo group-hover:scale-[1.04]"
                 />
-              </div>
+              )}
 
-              {/* Badge FIAP */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7, type: 'spring', stiffness: 260, damping: 20 }}
-                className="absolute -bottom-2 -right-2 bg-[#18181b] border border-white/10 rounded-full px-3 py-1.5 text-xs font-semibold text-indigo-400 shadow-xl"
-              >
-                FIAP · GTI
-              </motion.div>
+              {/* Véu inferior: garante contraste da legenda sobre qualquer foto */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-void/85 to-transparent"
+              />
+
+              <span className="absolute bottom-4 left-4 font-tech text-micro uppercase text-chalk">
+                {profile.education.org} · GTI
+              </span>
             </div>
           </motion.div>
         </motion.div>
+      </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4"
-        >
-          {[
-            { value: 21, suffix: '+', label: 'Certificados' },
-            { value: 10, suffix: '+', label: 'Projetos' },
-            { value: 5,  suffix: '+', label: 'Tecnologias' },
-            { value: 3,  suffix: '+', label: 'Anos de Estudo' },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="flex flex-col items-center justify-center p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]"
-            >
-              <span className="text-3xl md:text-4xl font-black text-white">
-                <AnimatedCounterInline target={stat.value} suffix={stat.suffix} />
-              </span>
-              <span className="text-xs text-zinc-500 mt-1 font-medium">{stat.label}</span>
-            </div>
-          ))}
-        </motion.div>
-      </div>
+      {/* ---------- Barra de prova + fita de stack ---------- */}
+      <motion.div {...seq(1.45)} className="relative border-t border-line">
+        <div className="mx-auto max-w-shell px-6 md:px-10">
+          <dl className="grid grid-cols-3 divide-x divide-line">
+            {stats.map((s, i) => (
+              <div key={s.l} className={i === 0 ? 'py-6 pr-5' : 'py-6 pl-5 md:pl-8'}>
+                <dd className="font-display text-2xl font-bold tabular-nums text-chalk md:text-3xl">
+                  {s.v}
+                </dd>
+                <dt className="mt-0.5 font-tech text-micro uppercase text-smoke">{s.l}</dt>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="border-t border-line py-3.5">
+          <Marquee items={marquee} speed={52} className="opacity-60" />
+        </div>
+      </motion.div>
     </section>
   )
-}
-
-function AnimatedCounterInline({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const [count, setCount] = useState(0)
-  const ref               = useRef<HTMLSpanElement>(null)
-  const isInView          = useInView(ref, { once: true })
-
-  useEffect(() => {
-    if (!isInView) return
-    const start = performance.now()
-    const animate = (time: number) => {
-      const elapsed  = time - start
-      const progress = Math.min(elapsed / 1500, 1)
-      const eased    = 1 - Math.pow(2, -10 * progress)
-      setCount(Math.floor(eased * target))
-      if (progress < 1) requestAnimationFrame(animate)
-    }
-    requestAnimationFrame(animate)
-  }, [isInView, target])
-
-  return <span ref={ref}>{count}{suffix}</span>
 }

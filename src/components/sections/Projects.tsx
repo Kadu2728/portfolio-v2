@@ -1,216 +1,252 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { ExternalLink, Github, Star } from 'lucide-react'
-import { GlowCard } from '@/components/ui/GlowCard'
-import { fadeUp, staggerContainer, defaultTransition } from '@/lib/animations'
+import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
+import { ArrowUpRight, Github, Star } from 'lucide-react'
+import { MaskText } from '@/components/ui/MaskText'
+import { TechLabel, Reveal } from '@/components/ui/Reveal'
+import { EASE, inView } from '@/lib/motion'
+import { pad } from '@/lib/utils'
+import { ProjectPlate } from '@/components/ui/ProjectPlate'
+import { getProject, projects } from '@/data/projects'
 import type { Project } from '@/types'
 
-const projects: Project[] = [
-  {
-    title:       'CEAP Connect',
-    description: 'Plataforma que transforma o processo seletivo do CEAP — escola técnica gratuita para jovens em vulnerabilidade social — numa jornada gamificada. O candidato cumpre missões, acumula XP e evolui de Iniciante a Mestre CEAP, desbloqueando recompensas reais: cursos e certificações da AWS, Google, Cisco e Fundação Bradesco. Conta com assistente de IA disponível 24/7, que responde dúvidas sobre a prova e os cursos com respostas em streaming e memória de conversa. O painel administrativo, de acesso restrito a pessoas autorizadas, acompanha XP distribuído, conquistas e ranking de recompensas, além de confirmar a entrega de cada resgate. Apresentado ao diretor geral do CEAP em reunião, o projeto avançou para uma segunda rodada de avaliação — e o retorno sobre a camada de gamificação orientou a reformulação seguinte do produto.',
-    tags:        ['Next.js', 'React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Neon', 'Google Gemini', 'Vercel', 'Render'],
-    link:        'https://ceapconnect.vercel.app',
-    github:      'https://github.com/Kadu2728/ceapconnect',
-    featured:    true,
-  },
-  {
-    title:       'VendIA',
-    description: 'Ferramenta de IA para vendedores de marketplace, com foco em Shopee, criarem e otimizarem anúncios. A geração é multimodal: o vendedor envia a foto do produto e a IA lê a imagem, não apenas o texto, para escrever título e descrição persuasiva. Também sugere faixa de preço competitiva a partir dos concorrentes cadastrados, sempre com justificativa, e responde perguntas de clientes no tom configurado — formal, amigável ou direto. Em produção com front na Vercel, API no Render e banco PostgreSQL na Neon.',
-    tags:        ['Next.js', 'React', 'TypeScript', 'FastAPI', 'SQLAlchemy', 'PostgreSQL', 'Google Gemini', 'IA Multimodal'],
-    link:        'https://vend-ia-weld.vercel.app',
-    github:      'https://github.com/Kadu2728/VendIA',
-    featured:    true,
-  },
-  {
-    title:       'GIRO',
-    description: 'PWA de execução de merchandising. Como nenhuma indústria enxerga o estoque interno do varejista, o único número que existe é o que o promotor conta na gôndola — e o app deriva o giro sozinho a partir dessa contagem, comparando com a visita anterior. O giro nunca é digitado, para não virar dado inventado. A partir daí projeta os dias de estoque restantes e avisa quando o item não chega até a próxima visita. Funciona offline, porque sinal de mercado é ruim: a contagem grava no dispositivo e sincroniza quando a conexão volta. O supervisor acompanha rupturas, cumprimento de rota e histórico por SKU.',
-    tags:        ['Next.js', 'React 19', 'TypeScript', 'Tailwind', 'shadcn/ui', 'Framer Motion', 'PWA', 'Offline-First'],
-    link:        'https://giro-azure.vercel.app',
-    github:      'https://github.com/Kadu2728/GIRO',
-    featured:    true,
-  },
-  {
-    title:       'VESTORA',
-    description: 'Gestor de carteira de investimentos para ações, FIIs e ETFs. Acompanha patrimônio, dividendos e rentabilidade em tempo real, com dashboard interativo que consolida a posição em um só lugar. Tem autenticação JWT e conta demonstrativa, para quem quiser explorar a ferramenta antes de cadastrar a própria carteira. React Query cuida do cache e da sincronização dos dados de mercado no front.',
-    tags:        ['Next.js', 'React', 'TypeScript', 'React Query', 'FastAPI', 'PostgreSQL', 'JWT', 'Vercel'],
-    link:        'https://vestora-roan.vercel.app',
-    github:      'https://github.com/Kadu2728/Vestora',
-    featured:    true,
-  },
-  {
-    title:       'FinPilot',
-    description: 'Plataforma SaaS de gestão financeira full-stack com autenticação JWT, dashboard interativo e relatórios em tempo real. Backend em FastAPI + PostgreSQL hospedado no Railway, frontend em Vercel.',
-    tags:        ['FastAPI', 'PostgreSQL', 'Python', 'JavaScript', 'REST API', 'JWT', 'Railway', 'Vercel'],
-    link:        'https://finpilot-omega.vercel.app',
-    github:      'https://github.com/Kadu2728/FinPilot',
-  },
-  {
-    title:       'ControlCash',
-    description: 'App de controle de finanças pessoais com gráficos interativos via Chart.js, persistência de dados no LocalStorage e interface responsiva 100% vanilla.',
-    tags:        ['JavaScript', 'HTML', 'CSS', 'Chart.js', 'LocalStorage'],
-    link:        'https://controlcash-weld.vercel.app',
-    github:      'https://github.com/Kadu2728/ControlCash',
-  },
-  {
-    title:       'InvestBem',
-    description: 'Landing page moderna para fintech brasileira de investimentos. Design premium dark com animações de scroll, seção de planos e CTA otimizado para conversão.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'UX/UI', 'Responsive'],
-    link:        'https://investbem.vercel.app',
-    github:      'https://github.com/Kadu2728/InvestBem',
-  },
-  {
-    title:       'InvestEdu',
-    description: 'Plataforma educacional de finanças pessoais com foco em jovens. Interface limpa com navegação fluida e seções de cursos e depoimentos.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'UX/UI'],
-  },
-  {
-    title:       'Barbearia FINOViSÚ',
-    description: 'Site completo para barbearia com agendamento online, galeria de cortes e design urbano premium. Totalmente responsivo para mobile.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'Responsive Design'],
-    link:        'https://barbearia-fino.vercel.app',
-    github:      'https://github.com/Kadu2728/BarbeariaFINO',
-  },
-  {
-    title:       'Dani Brigs Confeitaria',
-    description: 'Site de confeitaria artesanal para @danielabrigs em Sapopemba/SP. Cardápio digital, galeria de produtos e integração com WhatsApp.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'Mobile-First'],
-    link:        'https://danibrigs.vercel.app',
-    github:      'https://github.com/Kadu2728/DoceriaSite',
-  },
-]
+/**
+ * PROJETOS
+ *
+ * Dois pesos: o CEAP Connect ocupa um bloco inteiro, com métricas e
+ * funcionalidades à vista; os demais entram numa grade regular com resumo.
+ *
+ * A galeria horizontal saiu: escondia projeto atrás de scroll lateral, e o
+ * objetivo aqui é que todos sejam lidos sem esforço.
+ */
+const HERO_SLUG = 'ceap-connect'
 
 export function Projects() {
-  const featured = projects.filter(p => p.featured)
-  const rest     = projects.filter(p => !p.featured)
+  const hero = getProject(HERO_SLUG)
+  const rest = projects.filter((p) => p.slug !== HERO_SLUG)
 
   return (
-    <section id="projetos" className="py-24 md:py-32 px-6 md:px-10 bg-white/[0.01]">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="text-center mb-16"
-        >
-          <motion.p
-            variants={fadeUp}
-            transition={defaultTransition}
-            className="text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-3"
-          >
-            Portfólio
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.1 }}
-            className="text-3xl md:text-5xl font-black tracking-tight text-white mb-4"
-          >
-            Projetos{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              em Destaque
+    <section
+      id="projetos"
+      aria-labelledby="projetos-titulo"
+      className="border-t border-line py-section"
+    >
+      <div className="mx-auto max-w-shell px-6 md:px-10">
+        <TechLabel index="03" className="mb-10">
+          Projetos
+        </TechLabel>
+        <MaskText
+          as="h2"
+          lines={['Produtos reais,', 'no ar e em uso.']}
+          className="font-display text-4xl font-bold text-chalk"
+        />
+        <p id="projetos-titulo" className="sr-only">
+          Projetos
+        </p>
+
+        <Reveal delay={0.1}>
+          <p className="mt-8 max-w-text text-lg text-ash">
+            {projects.length} projetos construídos sozinho — do modelo de dados à interface,
+            incluindo colocar em produção. Cada um resolve um problema que existe fora da tela.
+          </p>
+        </Reveal>
+
+        {hero && <Featured project={hero} />}
+
+        <div className="mt-24">
+          <div className="mb-10 flex items-end justify-between gap-6 border-b border-line pb-5">
+            <h3 className="font-display text-2xl font-semibold text-chalk">Outros projetos</h3>
+            <span className="font-tech text-micro uppercase text-dim tabular-nums">
+              {rest.length} projetos
             </span>
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.2 }}
-            className="text-zinc-400 max-w-xl mx-auto leading-relaxed"
-          >
-            Do SaaS full-stack a landing pages premium — cada projeto construído com foco em performance, design e experiência do usuário.
-          </motion.p>
-        </motion.div>
+          </div>
 
-        {/* Featured projects */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {featured.map((project, i) => (
-            <GlowCard key={project.title} delay={i * 0.1} className="p-7 flex flex-col justify-between min-h-[240px]">
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2">
-                    <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                    <span className="text-xs text-yellow-400 font-semibold tracking-wide uppercase">Destaque</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="Ver no GitHub" className="text-zinc-500 hover:text-white transition-colors">
-                        <Github size={16} />
-                      </a>
-                    )}
-                    {project.link && (
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label="Visitar projeto" className="text-zinc-500 hover:text-white transition-colors">
-                        <ExternalLink size={16} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed mb-5">{project.description}</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map(tag => (
-                  <span key={tag} className="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </GlowCard>
-          ))}
+          <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {rest.map((p, i) => (
+              <Card key={p.slug} project={p} index={i + 2} />
+            ))}
+          </ul>
         </div>
-
-        {/* Other projects grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {rest.map((project, i) => (
-            <GlowCard key={project.title} delay={i * 0.07} className="p-6 flex flex-col justify-between">
-              <div>
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-base font-bold text-white">{project.title}</h3>
-                  <div className="flex items-center gap-2 ml-2 shrink-0">
-                    {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-zinc-600 hover:text-white transition-colors">
-                        <Github size={14} />
-                      </a>
-                    )}
-                    {project.link && (
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label="Link" className="text-zinc-600 hover:text-white transition-colors">
-                        <ExternalLink size={14} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-4">{project.description}</p>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {project.tags.map(tag => (
-                  <span key={tag} className="px-2 py-0.5 rounded-full text-xs font-medium bg-white/[0.04] border border-white/[0.08] text-zinc-400">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </GlowCard>
-          ))}
-        </div>
-
-        {/* GitHub CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-12 text-center"
-        >
-          <a
-            href="https://github.com/Kadu2728"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/[0.12] hover:border-white/25 bg-white/[0.03] hover:bg-white/[0.07] text-zinc-300 hover:text-white text-sm font-medium transition-all duration-200"
-          >
-            <Github size={16} />
-            Ver todos os repositórios no GitHub
-          </a>
-        </motion.div>
       </div>
     </section>
+  )
+}
+
+/** Bloco de destaque: o projeto que melhor representa o trabalho. */
+function Featured({ project }: { project: Project }) {
+  const prefersReduced = useReducedMotion()
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: prefersReduced ? 0 : 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={inView}
+      transition={{ duration: 0.8, ease: EASE }}
+      className="group relative mt-16 overflow-hidden rounded-lg border border-line bg-carbon transition-colors duration-500 hover:border-accent-line"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(224,74,63,0.10),transparent_70%)]"
+      />
+
+      <div className="relative grid gap-10 p-8 md:p-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:p-16">
+        <div>
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-sm border border-accent-line bg-accent-soft px-3 py-1.5 font-tech text-micro uppercase text-accent-text">
+              <Star size={11} className="fill-current" />
+              Projeto em destaque
+            </span>
+            <span className="font-tech text-micro uppercase text-dim">
+              {project.category} · {project.year}
+            </span>
+          </div>
+
+          <h3 className="font-display text-4xl font-bold tracking-tight text-chalk">
+            {project.title}
+          </h3>
+          <p className="mt-4 max-w-xl font-display text-xl font-medium text-accent-text">
+            {project.tagline}
+          </p>
+
+          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ash">{project.overview}</p>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-smoke">{project.challenge}</p>
+
+          {project.results && (
+            <ul className="mt-8 space-y-2.5">
+              {project.results.map((r) => (
+                <li key={r} className="flex gap-3.5 text-base text-ash">
+                  <span aria-hidden="true" className="mt-2.5 h-px w-5 shrink-0 bg-accent" />
+                  {r}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Link
+              href={`/projects/${project.slug}`}
+              className="inline-flex items-center gap-2 rounded-sm bg-accent px-6 py-3.5 font-tech text-label uppercase text-white transition-colors duration-200 hover:bg-accent-bright"
+            >
+              Ver o case completo
+              <ArrowUpRight size={15} />
+            </Link>
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-sm border border-line-strong px-6 py-3.5 font-tech text-label uppercase text-chalk transition-colors duration-200 hover:border-accent hover:text-accent-text"
+              >
+                Abrir ao vivo
+                <ArrowUpRight size={15} />
+              </a>
+            )}
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Código de ${project.title} no GitHub`}
+                className="rounded-sm border border-line p-3.5 text-smoke transition-colors duration-200 hover:border-line-strong hover:text-chalk"
+              >
+                <Github size={17} />
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* Coluna de apoio: números e o que o produto entrega */}
+        <div className="lg:border-l lg:border-line lg:pl-12">
+          {project.metrics && (
+            <dl className="mb-10 grid grid-cols-3 gap-4">
+              {project.metrics.map((m) => (
+                <div key={m.label}>
+                  <dd className="font-display text-2xl font-bold text-chalk">{m.value}</dd>
+                  <dt className="mt-1 font-tech text-micro uppercase leading-tight text-dim">
+                    {m.label}
+                  </dt>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          <p className="mb-4 font-tech text-micro uppercase text-dim">O que ele faz</p>
+          <ul className="mb-10 space-y-2.5">
+            {project.features.slice(0, 6).map((f) => (
+              <li key={f} className="flex gap-3 text-base text-ash">
+                <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mb-3 font-tech text-micro uppercase text-dim">Stack</p>
+          <ul className="flex flex-wrap gap-2">
+            {[...project.tech.frontend, ...project.tech.backend, ...project.tech.tools]
+              .slice(0, 10)
+              .map((t) => (
+                <li
+                  key={t}
+                  className="rounded-xs border border-line px-2.5 py-1 font-tech text-micro text-smoke"
+                >
+                  {t}
+                </li>
+              ))}
+          </ul>
+        </div>
+      </div>
+    </motion.article>
+  )
+}
+
+/** Card de projeto: título, resumo e stack. Sem imagem — o texto é o argumento. */
+function Card({ project, index }: { project: Project; index: number }) {
+  const prefersReduced = useReducedMotion()
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: prefersReduced ? 0 : 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={inView}
+      transition={{ duration: 0.55, ease: EASE, delay: (index % 3) * 0.07 }}
+    >
+      <div className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-line bg-carbon transition-colors duration-500 hover:border-accent-line hover:bg-steel">
+        <Link
+          href={`/projects/${project.slug}`}
+          className="absolute inset-0 z-10"
+          aria-label={`Ver o case de ${project.title}`}
+        />
+
+        <ProjectPlate project={project} index={index} />
+
+        <div className="relative flex flex-1 flex-col p-6">
+          <h4 className="font-display text-2xl font-semibold text-chalk">{project.title}</h4>
+          <p className="mt-2 text-base font-medium text-accent-text">{project.tagline}</p>
+          <p className="mt-4 flex-1 text-base leading-relaxed text-ash">{project.overview}</p>
+
+          <div className="mt-6 flex items-center justify-between border-t border-line pt-5">
+            <span className="font-tech text-micro uppercase text-dim">{project.role}</span>
+            <span className="relative z-20 flex items-center gap-3">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Código de ${project.title}`}
+                  className="text-dim transition-colors hover:text-chalk"
+                >
+                  <Github size={15} />
+                </a>
+              )}
+              <ArrowUpRight
+                size={17}
+                className="text-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+    </motion.li>
   )
 }

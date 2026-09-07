@@ -1,140 +1,112 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Mail, Github, Linkedin, Send } from 'lucide-react'
-import { fadeUp, staggerContainer, defaultTransition } from '@/lib/animations'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
+import { MaskText } from '@/components/ui/MaskText'
+import { TechLabel, Reveal } from '@/components/ui/Reveal'
+import { Action } from '@/components/ui/Action'
+import { profile } from '@/data/profile'
 
-const contactLinks = [
-  {
-    icon:  Mail,
-    label: 'E-mail',
-    value: 'kacadu007@gmail.com',
-    href:  'mailto:kacadu007@gmail.com',
-    color: 'text-indigo-400',
-    bg:    'bg-indigo-500/10 border-indigo-500/20',
-  },
-  {
-    icon:  Github,
-    label: 'GitHub',
-    value: 'github.com/Kadu2728',
-    href:  'https://github.com/Kadu2728',
-    color: 'text-zinc-300',
-    bg:    'bg-white/[0.06] border-white/[0.10]',
-  },
-  {
-    icon:  Linkedin,
-    label: 'LinkedIn',
-    value: 'Carlos Eduardo Diogo',
-    href:  'https://www.linkedin.com/in/carlos-eduardo-diogo-192282358',
-    color: 'text-blue-400',
-    bg:    'bg-blue-500/10 border-blue-500/20',
-  },
+const channels = [
+  { label: 'E-mail', value: profile.email, href: `mailto:${profile.email}`, ext: false },
+  { label: 'WhatsApp', value: profile.phone, href: profile.whatsapp, ext: true },
+  { label: 'GitHub', value: profile.githubUser, href: profile.github, ext: true },
+  { label: 'LinkedIn', value: 'Carlos Eduardo Diogo', href: profile.linkedin, ext: true },
 ]
 
+/**
+ * CONTATO — clímax.
+ *
+ * A headline cresce enquanto a seção entra: o texto escala com o scroll, o
+ * que faz a página terminar em crescendo em vez de simplesmente acabar.
+ */
 export function Contact() {
+  const ref = useRef<HTMLElement>(null)
+  const prefersReduced = useReducedMotion()
+
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] })
+  const scale = useTransform(scrollYProgress, [0, 1], [0.86, 1])
+  const opacity = useTransform(scrollYProgress, [0, 0.55], [0.25, 1])
+
   return (
-    <section id="contato" className="py-24 md:py-32 px-6 md:px-10">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
+    <section
+      ref={ref}
+      id="contato"
+      aria-labelledby="contato-titulo"
+      className="relative overflow-hidden border-t border-line py-section"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[60vh] bg-[radial-gradient(ellipse_60%_100%_at_50%_100%,rgba(224,74,63,0.11),transparent_70%)]"
+      />
+
+      <div className="relative mx-auto max-w-shell px-6 md:px-10">
+        <TechLabel index="05" className="mb-10">
+          Contato
+        </TechLabel>
+
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="text-center mb-16"
+          style={prefersReduced ? undefined : { scale, opacity }}
+          className="origin-left"
         >
-          <motion.p
-            variants={fadeUp}
-            transition={defaultTransition}
-            className="text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-3"
-          >
-            Contato
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.1 }}
-            className="text-3xl md:text-5xl font-black tracking-tight text-white mb-4"
-          >
-            Vamos{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              Trabalhar Juntos?
-            </span>
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.2 }}
-            className="text-zinc-400 max-w-xl mx-auto leading-relaxed"
-          >
-            Busco minha primeira oportunidade como desenvolvedor — estágio ou júnior — onde eu possa contribuir desde o primeiro dia. Me manda uma mensagem que eu respondo rápido.
-          </motion.p>
+          <MaskText
+            as="h2"
+            lines={['Vamos construir', 'algo que', 'valha a pena.']}
+            className="font-display text-5xl font-bold leading-[0.92] text-chalk"
+            highlightLast="text-accent"
+          />
         </motion.div>
+        <p id="contato-titulo" className="sr-only">
+          Contato
+        </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-          {/* Cards de contato */}
-          <div className="flex flex-col gap-4">
-            {contactLinks.map((link, i) => {
-              const Icon = link.icon
-              return (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                  rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  whileHover={{ x: 6, borderColor: 'rgba(99,102,241,0.4)' }}
-                  className="flex items-center gap-4 p-5 rounded-2xl border border-white/[0.08] bg-[#18181b] transition-colors duration-200 group"
-                >
-                  <div className={`w-11 h-11 rounded-xl border flex items-center justify-center shrink-0 ${link.bg}`}>
-                    <Icon size={18} className={link.color} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs text-zinc-500 font-medium uppercase tracking-wide mb-0.5">{link.label}</p>
-                    <p className="text-white font-semibold text-sm truncate group-hover:text-indigo-300 transition-colors">{link.value}</p>
-                  </div>
-                </motion.a>
-              )
-            })}
+        <Reveal delay={0.1}>
+          <p className="mt-10 max-w-text text-lg text-ash">
+            Busco minha primeira oportunidade como desenvolvedor — estágio ou júnior — onde eu
+            possa contribuir desde o primeiro dia. Me conta o contexto e o prazo; se não for algo
+            que eu entregue bem, eu digo na primeira resposta.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.18}>
+          <div className="mt-12 flex flex-wrap gap-4">
+            <Action href={`mailto:${profile.email}`} arrow>
+              Enviar e-mail
+            </Action>
+            <Action href={profile.whatsapp} target="_blank" rel="noopener noreferrer" variant="outline">
+              WhatsApp
+            </Action>
           </div>
+        </Reveal>
 
-          {/* CTA card */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="p-8 rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/5 text-center flex flex-col items-center gap-6"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
-              <Send size={24} className="text-indigo-400" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white mb-2">Pronto para colaborar</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed max-w-xs mx-auto">
-                Seja para um projeto full-stack, uma landing page premium ou uma integração com IA — estou disponível e animado para entregar resultado.
-              </p>
-            </div>
-            <motion.a
-              href="mailto:kacadu007@gmail.com"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors duration-200 shadow-lg shadow-indigo-600/25"
-            >
-              <Mail size={16} />
-              Enviar E-mail
-            </motion.a>
-            <a
-              href="https://www.linkedin.com/in/carlos-eduardo-diogo-192282358"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-zinc-500 hover:text-indigo-400 transition-colors duration-200 underline underline-offset-4"
-            >
-              Ou conecte-se no LinkedIn
-            </a>
-          </motion.div>
-        </div>
+        <ul className="mt-20 border-t border-line">
+          {channels.map((c, i) => (
+            <li key={c.label}>
+              <motion.a
+                href={c.href}
+                target={c.ext ? '_blank' : undefined}
+                rel={c.ext ? 'noopener noreferrer' : undefined}
+                initial={{ opacity: 0, y: prefersReduced ? 0 : 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ delay: i * 0.06, duration: 0.5 }}
+                className="group flex items-center gap-6 border-b border-line py-7"
+              >
+                <span className="w-24 shrink-0 font-tech text-micro uppercase text-dim">
+                  {c.label}
+                </span>
+                <span className="flex-1 truncate font-display text-xl font-medium text-ash transition-colors duration-300 group-hover:text-chalk md:text-2xl">
+                  {c.value}
+                </span>
+                <ArrowUpRight
+                  size={18}
+                  className="shrink-0 text-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                />
+              </motion.a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

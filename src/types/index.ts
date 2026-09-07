@@ -1,29 +1,56 @@
-export type NavItem = {
-  label: string
-  href:  string
-}
+export type NavItem = { label: string; href: string }
 
-export type Skill = {
-  name:     string
-  category: 'frontend' | 'backend' | 'database' | 'tools' | 'ai' | 'other'
-}
+export type Institution =
+  | 'FIAP'
+  | 'Alura'
+  | 'AWS'
+  | 'Santander Open Academy'
+  | 'Anthropic'
+
+export type Certificate = { title: string; institution: Institution }
+
+export type ProjectCategory = 'Produto' | 'Plataforma' | 'Aplicação' | 'Experiência'
+
+/** Bloco de métrica exibido no case: valor grande + rótulo pequeno. */
+export type Metric = { value: string; label: string }
 
 export type Project = {
-  title:       string
-  description: string
-  tags:        string[]
-  link?:       string
-  github?:     string
-  featured?:   boolean
+  slug: string
+  title: string
+  /** Uma linha. É o que o usuário lê enquanto o card passa na horizontal. */
+  tagline: string
+  year: string
+  category: ProjectCategory
+  role: string
+  /** Featured = entra no scroll horizontal principal. */
+  featured?: boolean
+
+  overview: string
+  challenge: string
+  solution: string
+  /** O ângulo de UX/produto — o que diferencia de "fiz um CRUD". */
+  experience: string
+
+  features: string[]
+  tech: { frontend: string[]; backend: string[]; tools: string[] }
+  metrics?: Metric[]
+  results?: string[]
+
+  link?: string
+  github?: string
 }
 
-export type Certificate = {
-  title:       string
-  institution: 'FIAP' | 'Alura' | 'AWS' | 'Santander Open Academy'
-}
-
-export type SocialLink = {
+export type StackGroup = {
+  id: string
   label: string
-  href:  string
-  icon:  'github' | 'linkedin' | 'mail'
+  caption: string
+  items: string[]
+}
+
+export type Chapter = {
+  id: string
+  index: string
+  word: string
+  title: string
+  body: string
 }

@@ -1,178 +1,99 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Award } from 'lucide-react'
-import { GlowCard } from '@/components/ui/GlowCard'
-import { fadeUp, staggerContainer, defaultTransition } from '@/lib/animations'
-import type { Certificate } from '@/types'
+import { motion, useReducedMotion } from 'framer-motion'
+import { MaskText } from '@/components/ui/MaskText'
+import { TechLabel, Reveal } from '@/components/ui/Reveal'
+import { EASE, inView } from '@/lib/motion'
+import { certificates, highlights, institutionOrder } from '@/data/certificates'
 
-const certificates: Certificate[] = [
-  // FIAP
-  { title: 'Front End',                                institution: 'FIAP'  },
-  { title: 'Android',                                  institution: 'FIAP'  },
-  { title: 'IA Responsável',                           institution: 'FIAP'  },
-  { title: 'Formação Social e Sustentabilidade',       institution: 'FIAP'  },
-  { title: 'Algoritmos: Aprenda a Programar',          institution: 'FIAP'  },
-  { title: 'Big Data & Analytics',                     institution: 'FIAP'  },
-  { title: 'Big Data',                                 institution: 'FIAP'  },
-  { title: 'Banco de Dados Oracle',                    institution: 'FIAP'  },
-  { title: 'Marketing em Plataformas de Social Media', institution: 'FIAP'  },
-  { title: 'Agentes Autônomos (Agentic AI)',           institution: 'FIAP'  },
-  { title: 'IA Generativa',                            institution: 'FIAP'  },
-  { title: 'Segurança da Informação',                  institution: 'FIAP'  },
-  // Alura
-  { title: 'AI-Native Software Engineering (Trilha)',  institution: 'Alura' },
-  { title: 'IA: Explorando IA Generativa',             institution: 'Alura' },
-  { title: 'Engenharia de Software na Era da IA',      institution: 'Alura' },
-  { title: 'Segurança da Informação para Todos',       institution: 'Alura' },
-  { title: 'SQL: Consultas e Manipulação de Dados',    institution: 'Alura' },
-  { title: 'Iniciando em Dados: Aprendendo Python',    institution: 'Alura' },
-  // AWS
-  { title: 'AWS SimuLearn: Fundamentos da Computação em Nuvem', institution: 'AWS' },
-  // Santander Open Academy
-  { title: 'Publicidade Digital: Dados, IA e Legalidade', institution: 'Santander Open Academy' },
-  { title: 'Storytelling para Marketing Digital',         institution: 'Santander Open Academy' },
-]
-
-const fiapCerts  = certificates.filter(c => c.institution === 'FIAP')
-const aluraCerts = certificates.filter(c => c.institution === 'Alura')
-const outrosCerts = certificates.filter(
-  c => c.institution !== 'FIAP' && c.institution !== 'Alura'
-)
-
+/**
+ * FORMAÇÃO — densa de propósito.
+ *
+ * Certificado é volume, não narrativa: o valor está na quantidade e na
+ * procedência. Por isso vira uma tabela técnica compacta em vez de cards
+ * grandes, que roubariam peso dos projetos logo acima.
+ */
 export function Certificates() {
+  const prefersReduced = useReducedMotion()
+
   return (
-    <section id="certificados" className="py-24 md:py-32 px-6 md:px-10">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="text-center mb-16"
-        >
-          <motion.p
-            variants={fadeUp}
-            transition={defaultTransition}
-            className="text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-3"
-          >
-            Formação
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.1 }}
-            className="text-3xl md:text-5xl font-black tracking-tight text-white mb-4"
-          >
-            Certificados &{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              Cursos
-            </span>
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ ...defaultTransition, delay: 0.2 }}
-            className="text-zinc-400 max-w-xl mx-auto leading-relaxed"
-          >
-            {certificates.length} certificados de aprendizado contínuo em FIAP, Alura, AWS e Santander
-          </motion.p>
-        </motion.div>
+    <section
+      id="formacao"
+      aria-labelledby="formacao-titulo"
+      className="border-t border-line bg-carbon py-section"
+    >
+      <div className="mx-auto max-w-shell px-6 md:px-10">
+        <TechLabel index="04" className="mb-10">
+          Formação contínua
+        </TechLabel>
+        <MaskText
+          as="h2"
+          lines={['Aprender é parte', 'do trabalho.']}
+          className="font-display text-3xl font-bold text-chalk"
+        />
+        <p id="formacao-titulo" className="sr-only">
+          Certificados
+        </p>
 
-        {/* FIAP */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-10"
-        >
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-8 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center">
-              <span className="text-sm font-black text-pink-400">F</span>
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-text text-lg text-ash">
+            {highlights.total} certificados — incluindo mais de {highlights.anthropic.replace('+', '')} da
+            Anthropic e Claude, em {highlights.anthropicFocus}.
+          </p>
+        </Reveal>
+
+        {/* Destaque de especialização: o diferencial real da lista */}
+        <Reveal delay={0.16}>
+          <div className="mt-12 flex flex-col justify-between gap-6 border border-accent-line bg-accent-soft p-8 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-display text-2xl font-bold text-chalk">
+                {highlights.anthropic} certificados Anthropic &amp; Claude
+              </p>
+              <p className="mt-2 font-tech text-micro uppercase text-accent-text">
+                {highlights.anthropicFocus}
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-white">FIAP — Nano Courses</h3>
-            <span className="ml-auto text-xs text-zinc-500 font-medium">{fiapCerts.length} certificados</span>
+            <p className="max-w-xs text-sm leading-relaxed text-ash">
+              Especialização em IA aplicada a software — o que sustenta o assistente do CEAP
+              Connect e a geração multimodal do VendIA.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {fiapCerts.map((cert, i) => (
-              <GlowCard key={cert.title} delay={i * 0.05} className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 shrink-0">
-                    <Award size={16} className="text-pink-400" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white leading-snug">{cert.title}</p>
-                  </div>
-                </div>
-              </GlowCard>
-            ))}
-          </div>
-        </motion.div>
+        </Reveal>
 
-        {/* Alura */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-10"
-        >
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center">
-              <span className="text-sm font-black text-blue-400">A</span>
-            </div>
-            <h3 className="text-lg font-bold text-white">Alura</h3>
-            <span className="ml-auto text-xs text-zinc-500 font-medium">{aluraCerts.length} certificados</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {aluraCerts.map((cert, i) => (
-              <GlowCard key={cert.title} delay={i * 0.05} className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 shrink-0">
-                    <Award size={16} className="text-blue-400" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white leading-snug">{cert.title}</p>
-                  </div>
+        {/* Tabela por instituição */}
+        <div className="mt-14 border-t border-line">
+          {institutionOrder.map((inst) => {
+            const list = certificates.filter((c) => c.institution === inst)
+            if (!list.length) return null
+            return (
+              <motion.div
+                key={inst}
+                initial={{ opacity: 0, y: prefersReduced ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={inView}
+                transition={{ duration: 0.55, ease: EASE }}
+                className="grid gap-4 border-b border-line py-8 md:grid-cols-[200px_1fr] md:gap-10"
+              >
+                <div className="flex items-baseline justify-between gap-3 md:block">
+                  <p className="font-display text-lg font-semibold text-chalk">{inst}</p>
+                  <p className="font-tech text-micro uppercase text-dim tabular-nums">
+                    {inst === 'Anthropic' ? highlights.anthropic : list.length} certificados
+                  </p>
                 </div>
-              </GlowCard>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* AWS e Santander — instituições com um ou dois certificados cada,
-            agrupadas num bloco só para não criar seções de uma linha. */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-        >
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
-              <span className="text-sm font-black text-amber-400">+</span>
-            </div>
-            <h3 className="text-lg font-bold text-white">AWS & Santander</h3>
-            <span className="ml-auto text-xs text-zinc-500 font-medium">{outrosCerts.length} certificados</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {outrosCerts.map((cert, i) => (
-              <GlowCard key={cert.title} delay={i * 0.05} className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 shrink-0">
-                    <Award size={16} className="text-amber-400" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white leading-snug">{cert.title}</p>
-                    <p className="text-xs text-zinc-500 mt-1">{cert.institution}</p>
-                  </div>
-                </div>
-              </GlowCard>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Banner */}
+                <ul className="flex flex-wrap gap-x-2 gap-y-2">
+                  {list.map((c) => (
+                    <li
+                      key={c.title}
+                      className="border border-line px-3 py-1.5 font-tech text-micro text-ash transition-colors duration-200 hover:border-line-strong hover:text-chalk"
+                    >
+                      {c.title}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
