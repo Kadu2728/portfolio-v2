@@ -17,9 +17,9 @@ import { Action } from '@/components/ui/Action'
 import { Marquee } from '@/components/ui/Marquee'
 import { EASE } from '@/lib/motion'
 import { profile } from '@/data/profile'
-import { projects } from '@/data/projects'
 import { highlights } from '@/data/certificates'
 import { marquee } from '@/data/stack'
+import { useLocale } from '@/lib/locale'
 
 /**
  * HERO
@@ -32,6 +32,8 @@ import { marquee } from '@/data/stack'
  * como falar comigo. Um recrutador precisa dos quatro em cinco segundos.
  */
 export function Hero() {
+  const { c } = useLocale()
+  const t = c.ui.hero
   const ref = useRef<HTMLElement>(null)
   const prefersReduced = useReducedMotion()
   const [ready, setReady] = useState(false)
@@ -67,9 +69,9 @@ export function Hero() {
   })
 
   const stats = [
-    { v: String(projects.length), l: 'projetos entregues' },
-    { v: '6', l: 'em produção' },
-    { v: highlights.total, l: 'certificados' },
+    { v: String(c.projects.length), l: t.statsProjects },
+    { v: '6', l: t.statsLive },
+    { v: highlights.total, l: t.statsCerts },
   ]
 
   return (
@@ -111,10 +113,10 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
               </span>
-              Disponível para oportunidades
+              {t.available}
             </span>
             <span className="hidden h-3 w-px bg-line-strong sm:block" />
-            <span>{profile.location}</span>
+            <span>{c.location}</span>
           </motion.div>
 
           {/* O nome em escala de cartaz — é a primeira coisa que se lê */}
@@ -131,7 +133,7 @@ export function Hero() {
           <motion.div {...seq(0.95)} className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="h-px w-10 bg-accent" aria-hidden="true" />
             <p className="font-display text-xl font-semibold text-chalk md:text-2xl">
-              {profile.role}
+              {c.role}
             </p>
             <span className="rounded-xs border border-line px-2.5 py-1 font-tech text-micro uppercase text-smoke">
               UX/UI · IA
@@ -139,8 +141,7 @@ export function Hero() {
           </motion.div>
 
           <motion.p {...seq(1.08)} className="mt-7 max-w-text text-lg text-ash">
-            Construo experiências digitais de ponta a ponta — do modelo de dados à interface.
-            No último ano publiquei seis aplicações full-stack sozinho.
+            {t.tagline}
           </motion.p>
 
           <motion.div {...seq(1.22)} className="mt-9 flex flex-wrap items-center gap-3">
@@ -151,12 +152,12 @@ export function Hero() {
                 document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' })
               }}
             >
-              Ver projetos
+              {t.viewProjects}
               <ArrowDown size={14} />
             </Action>
             <Action href={`mailto:${profile.email}`} variant="outline">
               <Mail size={14} />
-              Falar comigo
+              {c.ui.nav.talk}
             </Action>
 
             <a
@@ -165,7 +166,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-4 py-4 font-tech text-label uppercase tracking-[0.08em] text-ash transition-colors duration-200 hover:text-chalk"
             >
               <Download size={14} />
-              Baixar CV
+              {t.downloadCv}
             </a>
 
             <span className="ml-1 flex items-center gap-1">

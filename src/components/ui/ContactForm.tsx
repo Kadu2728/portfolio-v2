@@ -6,6 +6,7 @@ import { Check, Loader2, Send } from 'lucide-react'
 import { EASE } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
+import { useLocale } from '@/lib/locale'
 
 type Field = 'name' | 'email' | 'message'
 type Status = 'idle' | 'sending' | 'sent' | 'error'
@@ -21,6 +22,8 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
  * topo obriga a pessoa a caçar qual campo falhou.
  */
 export function ContactForm() {
+  const { c } = useLocale()
+  const t = c.ui.contact.form
   const uid = useId()
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
@@ -65,7 +68,7 @@ export function ContactForm() {
       setFailure(json.error ?? 'Não consegui enviar agora.')
       setStatus('error')
     } catch {
-      setFailure('Sem conexão com o servidor. Tente pelo e-mail ou WhatsApp.')
+      setFailure(t.offline)
       setStatus('error')
     }
   }
@@ -82,16 +85,16 @@ export function ContactForm() {
         <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-full border border-accent-line text-accent-text">
           <Check size={20} />
         </span>
-        <p className="font-display text-2xl font-bold text-chalk">Mensagem enviada.</p>
+        <p className="font-display text-2xl font-bold text-chalk">{t.sentTitle}</p>
         <p className="mt-3 max-w-sm text-base text-ash">
-          Respondo em até 24 horas. Se for urgente, o WhatsApp é mais rápido.
+          {t.sentBody}
         </p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
           className="mt-7 font-tech text-micro uppercase text-dim underline-offset-4 transition-colors hover:text-chalk hover:underline"
         >
-          Enviar outra mensagem
+          {t.again}
         </button>
       </motion.div>
     )
@@ -109,14 +112,14 @@ export function ContactForm() {
       {/* Isca anti-spam: fora da tela e fora da ordem de tabulação, nunca
           escondida com display:none — leitor de tela ignora, robô preenche. */}
       <div className="absolute h-px w-px overflow-hidden opacity-0" aria-hidden="true">
-        <label htmlFor={`${uid}-company`}>Empresa</label>
+        <label htmlFor={`${uid}-company`}>{t.honeypot}</label>
         <input id={`${uid}-company`} name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <Field
         id={fieldId('name')}
         name="name"
-        label="Nome"
+        label={t.name}
         autoComplete="name"
         error={errors.name}
         errorId={errorId('name')}
@@ -126,7 +129,7 @@ export function ContactForm() {
         id={fieldId('email')}
         name="email"
         type="email"
-        label="E-mail"
+        label={t.email}
         autoComplete="email"
         error={errors.email}
         errorId={errorId('email')}
@@ -135,9 +138,9 @@ export function ContactForm() {
       <Field
         id={fieldId('message')}
         name="message"
-        label="Mensagem"
+        label={t.message}
         as="textarea"
-        hint="Conte o contexto do projeto e o prazo."
+        hint={t.hint}
         error={errors.message}
         errorId={errorId('message')}
         disabled={busy}
@@ -155,14 +158,14 @@ export function ContactForm() {
           )}
         >
           {busy ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} />}
-          {busy ? 'Enviando' : 'Enviar mensagem'}
+          {busy ? t.sending : t.send}
         </button>
 
         <a
           href={`mailto:${profile.email}`}
           className="font-tech text-micro uppercase text-dim underline-offset-4 transition-colors hover:text-chalk hover:underline"
         >
-          ou escrever direto
+          {t.or}
         </a>
       </div>
 

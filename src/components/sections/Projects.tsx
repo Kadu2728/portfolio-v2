@@ -8,7 +8,7 @@ import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { EASE, inView } from '@/lib/motion'
 import { pad } from '@/lib/utils'
 import { ProjectPlate } from '@/components/ui/ProjectPlate'
-import { getProject, projects } from '@/data/projects'
+import { useLocale, localeHref } from '@/lib/locale'
 import type { Project } from '@/types'
 
 /**
@@ -23,7 +23,10 @@ import type { Project } from '@/types'
 const HERO_SLUG = 'ceap-connect'
 
 export function Projects() {
-  const hero = getProject(HERO_SLUG)
+  const { c, locale } = useLocale()
+  const projects = c.projects
+  const t = c.ui.projects
+  const hero = projects.find((p) => p.slug === HERO_SLUG)
   const rest = projects.filter((p) => p.slug !== HERO_SLUG)
 
   return (
@@ -34,21 +37,20 @@ export function Projects() {
     >
       <div className="mx-auto max-w-shell px-6 md:px-10">
         <TechLabel index="04" className="mb-10">
-          Projetos
+          {c.ui.sections.projects}
         </TechLabel>
         <MaskText
           as="h2"
-          lines={['Produtos reais,', 'no ar e em uso.']}
+          lines={t.title}
           className="font-display text-4xl font-bold text-chalk"
         />
         <p id="projetos-titulo" className="sr-only">
-          Projetos
+          {c.ui.sections.projects}
         </p>
 
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-text text-lg text-ash">
-            {projects.length} projetos construídos sozinho — do modelo de dados à interface,
-            incluindo colocar em produção. Cada um resolve um problema que existe fora da tela.
+            {projects.length} {t.intro}
           </p>
         </Reveal>
 
@@ -56,9 +58,9 @@ export function Projects() {
 
         <div className="mt-24">
           <div className="mb-10 flex items-end justify-between gap-6 border-b border-line pb-5">
-            <h3 className="font-display text-2xl font-semibold text-chalk">Outros projetos</h3>
+            <h3 className="font-display text-2xl font-semibold text-chalk">{t.others}</h3>
             <span className="font-tech text-micro uppercase text-dim tabular-nums">
-              {rest.length} projetos
+              {rest.length} {t.count}
             </span>
           </div>
 
@@ -75,6 +77,8 @@ export function Projects() {
 
 /** Bloco de destaque: o projeto que melhor representa o trabalho. */
 function Featured({ project }: { project: Project }) {
+  const { locale, c } = useLocale()
+  const t = c.ui.projects
   const prefersReduced = useReducedMotion()
 
   return (
@@ -95,7 +99,7 @@ function Featured({ project }: { project: Project }) {
           <div className="mb-6 flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 rounded-sm border border-accent-line bg-accent-soft px-3 py-1.5 font-tech text-micro uppercase text-accent-text">
               <Star size={11} className="fill-current" />
-              Projeto em destaque
+              {t.featured}
             </span>
             <span className="font-tech text-micro uppercase text-dim">
               {project.category} · {project.year}
@@ -125,10 +129,10 @@ function Featured({ project }: { project: Project }) {
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
-              href={`/projects/${project.slug}`}
+              href={localeHref(locale, `/projects/${project.slug}`)}
               className="inline-flex items-center gap-2 rounded-sm bg-accent px-6 py-3.5 font-tech text-label uppercase text-white transition-colors duration-200 hover:bg-accent-bright"
             >
-              Ver o case completo
+              {t.viewCase}
               <ArrowUpRight size={15} />
             </Link>
             {project.link && (
@@ -138,7 +142,7 @@ function Featured({ project }: { project: Project }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-sm border border-line-strong px-6 py-3.5 font-tech text-label uppercase text-chalk transition-colors duration-200 hover:border-accent hover:text-accent-text"
               >
-                Abrir ao vivo
+                {t.openLive}
                 <ArrowUpRight size={15} />
               </a>
             )}
@@ -171,7 +175,7 @@ function Featured({ project }: { project: Project }) {
             </dl>
           )}
 
-          <p className="mb-4 font-tech text-micro uppercase text-dim">O que ele faz</p>
+          <p className="mb-4 font-tech text-micro uppercase text-dim">{t.whatItDoes}</p>
           <ul className="mb-10 space-y-2.5">
             {project.features.slice(0, 6).map((f) => (
               <li key={f} className="flex gap-3 text-base text-ash">
@@ -181,7 +185,7 @@ function Featured({ project }: { project: Project }) {
             ))}
           </ul>
 
-          <p className="mb-3 font-tech text-micro uppercase text-dim">Stack</p>
+          <p className="mb-3 font-tech text-micro uppercase text-dim">{t.stack}</p>
           <ul className="flex flex-wrap gap-2">
             {[...project.tech.frontend, ...project.tech.backend, ...project.tech.tools]
               .slice(0, 10)
@@ -202,6 +206,7 @@ function Featured({ project }: { project: Project }) {
 
 /** Card de projeto: título, resumo e stack. Sem imagem — o texto é o argumento. */
 function Card({ project, index }: { project: Project; index: number }) {
+  const { locale } = useLocale()
   const prefersReduced = useReducedMotion()
 
   return (
@@ -213,7 +218,7 @@ function Card({ project, index }: { project: Project; index: number }) {
     >
       <div className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-line bg-carbon transition-colors duration-500 hover:border-accent-line hover:bg-steel">
         <Link
-          href={`/projects/${project.slug}`}
+          href={localeHref(locale, `/projects/${project.slug}`)}
           className="absolute inset-0 z-10"
           aria-label={`Ver o case de ${project.title}`}
         />

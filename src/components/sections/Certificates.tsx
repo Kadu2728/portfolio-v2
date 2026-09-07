@@ -5,6 +5,7 @@ import { MaskText } from '@/components/ui/MaskText'
 import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { EASE, inView } from '@/lib/motion'
 import { certificates, highlights, institutionOrder } from '@/data/certificates'
+import { useLocale } from '@/lib/locale'
 
 /**
  * FORMAÇÃO — densa de propósito.
@@ -14,6 +15,7 @@ import { certificates, highlights, institutionOrder } from '@/data/certificates'
  * grandes, que roubariam peso dos projetos logo acima.
  */
 export function Certificates() {
+  const { c } = useLocale()
   const prefersReduced = useReducedMotion()
 
   return (
@@ -24,11 +26,11 @@ export function Certificates() {
     >
       <div className="mx-auto max-w-shell px-6 md:px-10">
         <TechLabel index="05" className="mb-10">
-          Formação contínua
+          {c.ui.sections.education}
         </TechLabel>
         <MaskText
           as="h2"
-          lines={['Aprender é parte', 'do trabalho.']}
+          lines={c.ui.certificates.title}
           className="font-display text-3xl font-bold text-chalk"
         />
         <p id="formacao-titulo" className="sr-only">
@@ -37,8 +39,7 @@ export function Certificates() {
 
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-text text-lg text-ash">
-            {highlights.total} certificados entre FIAP, Alura, Anthropic, AWS e Santander Open
-            Academy — com especialização em {highlights.anthropicFocus}.
+            {highlights.total} {c.ui.certificates.intro} {highlights.anthropicFocus}.
           </p>
         </Reveal>
 
@@ -47,15 +48,14 @@ export function Certificates() {
           <div className="mt-12 flex flex-col justify-between gap-6 border border-accent-line bg-accent-soft p-8 sm:flex-row sm:items-center">
             <div>
               <p className="font-display text-2xl font-bold text-chalk">
-                Especialização Anthropic &amp; Claude
+                {c.ui.certificates.specialization}
               </p>
               <p className="mt-2 font-tech text-micro uppercase text-accent-text">
                 {highlights.anthropicFocus}
               </p>
             </div>
             <p className="max-w-xs text-sm leading-relaxed text-ash">
-              Especialização em IA aplicada a software — o que sustenta o assistente do CEAP
-              Connect e a geração multimodal do VendIA.
+              {c.ui.certificates.specializationBody}
             </p>
           </div>
         </Reveal>

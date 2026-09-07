@@ -17,7 +17,8 @@ import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { Action } from '@/components/ui/Action'
 import { EASE, inView } from '@/lib/motion'
 import { pad } from '@/lib/utils'
-import { services, servicesIntro, type Service } from '@/data/services'
+import { type Service } from '@/data/services'
+import { useLocale, localeHref } from '@/lib/locale'
 import { profile } from '@/data/profile'
 
 /**
@@ -39,6 +40,8 @@ const ICONS: Record<Service['icon'], LucideIcon> = {
 }
 
 export function Services() {
+  const { c } = useLocale()
+  const { services, servicesIntro, ui } = { services: c.services, servicesIntro: c.servicesIntro, ui: c.ui }
   return (
     <section
       id="servicos"
@@ -47,15 +50,15 @@ export function Services() {
     >
       <div className="mx-auto max-w-shell px-6 md:px-10">
         <TechLabel index="03" className="mb-10">
-          Serviços
+          {c.ui.sections.services}
         </TechLabel>
         <MaskText
           as="h2"
-          lines={['Como eu', 'te ajudo.']}
+          lines={ui.services.title}
           className="font-display text-4xl font-bold text-chalk"
         />
         <p id="servicos-titulo" className="sr-only">
-          Serviços
+          {ui.sections.services}
         </p>
 
         <Reveal delay={0.1}>
@@ -72,17 +75,16 @@ export function Services() {
           <div className="mt-14 flex flex-col items-start justify-between gap-6 border border-accent-line bg-accent-soft p-8 sm:flex-row sm:items-center">
             <div>
               <p className="font-display text-2xl font-bold text-chalk">
-                Tem um projeto em mente?
+                {ui.services.ctaTitle}
               </p>
               <p className="mt-2 max-w-lg text-base text-ash">
-                Me conta o contexto e o prazo. Se não for algo que eu entregue bem, eu digo na
-                primeira resposta.
+                {ui.services.ctaBody}
               </p>
             </div>
             <div className="flex shrink-0 flex-wrap gap-3">
-              <Action href={`mailto:${profile.email}`}>Falar comigo</Action>
+              <Action href={`mailto:${profile.email}`}>{ui.services.email}</Action>
               <Action href={profile.whatsapp} target="_blank" rel="noopener noreferrer" variant="outline">
-                WhatsApp
+                {ui.services.whatsapp}
               </Action>
             </div>
           </div>
@@ -97,6 +99,7 @@ export function Services() {
  * vira a própria divisória. Menos borda desenhada, mais estrutura.
  */
 function Card({ service, index }: { service: Service; index: number }) {
+  const { locale, c } = useLocale()
   const Icon = ICONS[service.icon]
   const prefersReduced = useReducedMotion()
 
@@ -129,10 +132,10 @@ function Card({ service, index }: { service: Service; index: number }) {
 
       {/* A prova: o serviço aponta para código no ar, não para um adjetivo. */}
       <Link
-        href={`/projects/${service.proof.slug}`}
+        href={localeHref(locale, `/projects/${service.proof.slug}`)}
         className="mt-7 inline-flex items-center gap-2 border-t border-line pt-5 font-tech text-micro uppercase text-dim transition-colors duration-300 hover:text-chalk"
       >
-        Feito em
+        {c.ui.services.provenIn}
         <span className="text-accent-text">{service.proof.label}</span>
         <ArrowUpRight
           size={13}

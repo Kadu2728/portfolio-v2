@@ -12,7 +12,8 @@ import {
 import { TechLabel } from '@/components/ui/Reveal'
 import { MaskText } from '@/components/ui/MaskText'
 import { EASE, inView } from '@/lib/motion'
-import { chapters, profile } from '@/data/profile'
+import { profile } from '@/data/profile'
+import { useLocale } from '@/lib/locale'
 
 /**
  * SOBRE — narrativa em scroll.
@@ -22,6 +23,8 @@ import { chapters, profile } from '@/data/profile'
  * ela que dá a sensação de progressão de Curiosidade a Full-Stack.
  */
 export function About() {
+  const { c } = useLocale()
+  const chapters = c.chapters
   const ref = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
   const prefersReduced = useReducedMotion()
@@ -47,15 +50,15 @@ export function About() {
     >
       <div className="mx-auto max-w-shell px-6 pt-section md:px-10">
         <TechLabel index="01" className="mb-10">
-          Sobre
+          {c.ui.sections.about}
         </TechLabel>
         <MaskText
           as="h2"
-          lines={['Do primeiro "como isso funciona?"', 'até o produto em produção.']}
+          lines={c.ui.about.title}
           className="max-w-4xl font-display text-3xl font-bold text-chalk"
         />
         <p id="sobre-titulo" className="sr-only">
-          Sobre Carlos Eduardo
+          {c.ui.sections.about}
         </p>
       </div>
 
@@ -131,25 +134,25 @@ export function About() {
         <div className="rule mb-14" />
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <TechLabel className="mb-5">Formação</TechLabel>
+            <TechLabel className="mb-5">{c.ui.about.education}</TechLabel>
             <p className="font-display text-lg font-semibold text-chalk">
-              {profile.education.org}
+              {c.education.org}
             </p>
-            <p className="mt-1 text-base text-ash">{profile.education.course}</p>
+            <p className="mt-1 text-base text-ash">{c.education.course}</p>
             <p className="mt-2 font-tech text-micro uppercase text-dim">
-              {profile.education.period}
+              {c.education.period}
             </p>
           </div>
 
           <div className="md:col-span-2">
-            <TechLabel className="mb-5">Experiência</TechLabel>
+            <TechLabel className="mb-5">{c.ui.about.experience}</TechLabel>
             <div className="grid gap-8 sm:grid-cols-2">
-              {profile.experience.map((e) => (
+              {c.experience.map((e) => (
                 <div key={e.org}>
                   <div className="flex items-center gap-3">
                     <p className="font-display text-lg font-semibold text-chalk">{e.org}</p>
                     {e.current && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-label="Atual" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-label={c.ui.about.current} />
                     )}
                   </div>
                   <p className="mt-1 text-base text-ash">{e.role}</p>
@@ -164,7 +167,7 @@ export function About() {
         </div>
 
         <div className="mt-14 flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-line pt-8">
-          {profile.languages.map((l) => (
+          {c.languages.map((l) => (
             <span key={l.code} className="font-tech text-micro uppercase text-dim">
               <span className="text-accent-text">{l.code}</span> · {l.name} — {l.level}
             </span>

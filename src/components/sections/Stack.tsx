@@ -7,7 +7,8 @@ import { MaskText } from '@/components/ui/MaskText'
 import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { EASE } from '@/lib/motion'
 import { cn, pad } from '@/lib/utils'
-import { marquee, stackGroups } from '@/data/stack'
+import { marquee } from '@/data/stack'
+import { useLocale } from '@/lib/locale'
 
 /**
  * STACK — lista tipográfica expansível.
@@ -20,6 +21,8 @@ import { marquee, stackGroups } from '@/data/stack'
  * mesmo estado, então teclado e leitor de tela funcionam igual.
  */
 export function Stack() {
+  const { c } = useLocale()
+  const stackGroups = c.stack
   const [open, setOpen] = useState<string | null>(stackGroups[0].id)
   const prefersReduced = useReducedMotion()
 
@@ -31,11 +34,11 @@ export function Stack() {
     >
       <div className="mx-auto max-w-shell px-6 md:px-10">
         <TechLabel index="02" className="mb-10">
-          Stack
+          {c.ui.sections.stack}
         </TechLabel>
         <MaskText
           as="h2"
-          lines={['As ferramentas que', 'eu realmente uso.']}
+          lines={c.ui.stack.title}
           className="font-display text-3xl font-bold text-chalk"
         />
         <p id="stack-titulo" className="sr-only">

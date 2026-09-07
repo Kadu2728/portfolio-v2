@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { navItems, profile } from '@/data/profile'
+import { useLocale, localeHref } from '@/lib/locale'
+import { Languages } from 'lucide-react'
 import { useActiveSection } from '@/hooks/use-active-section'
 import { EASE } from '@/lib/motion'
 import { cn, pad } from '@/lib/utils'
@@ -11,6 +13,8 @@ import { cn, pad } from '@/lib/utils'
 const ids = navItems.map((i) => i.href.slice(1))
 
 export function Navbar() {
+  const { locale, c } = useLocale()
+  const other = locale === 'pt' ? 'en' : 'pt'
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const active = useActiveSection(ids)
@@ -73,11 +77,11 @@ export function Navbar() {
         )}
       >
         <nav
-          aria-label="Navegação principal"
+          aria-label={c.ui.nav.ariaMain}
           className="mx-auto flex h-full max-w-shell items-center justify-between px-6 md:px-10"
         >
           <Link
-            href="/"
+            href={localeHref(locale)}
             className="font-display text-lg font-bold tracking-tight text-chalk"
           >
             CE<span className="text-accent">.</span>
@@ -98,7 +102,7 @@ export function Navbar() {
                     )}
                   >
                     <span className="tabular-nums opacity-50">{pad(i + 1)}</span>
-                    {item.label}
+                    {c.ui.nav[item.key]}
                     {on && (
                       <motion.span
                         layoutId="nav-dot"
@@ -112,12 +116,31 @@ export function Navbar() {
             })}
           </ul>
 
+          <div className="flex items-center gap-2">
+            {/* Trocar de idioma é uma mudança de rota, não estado de cliente:
+                o link permite abrir em nova aba e é indexável pelo buscador. */}
+            <Link
+              href={localeHref(other)}
+              hrefLang={other === 'en' ? 'en' : 'pt-BR'}
+              className="hidden items-center gap-2 rounded-sm border border-line px-3 py-2 font-tech text-micro uppercase text-smoke transition-colors duration-200 hover:border-line-strong hover:text-chalk sm:inline-flex"
+            >
+              <Languages size={13} />
+              {other.toUpperCase()}
+            </Link>
+
+            <a
+              href={`mailto:${profile.email}`}
+              className="hidden rounded-sm border border-line-strong px-4 py-2 font-tech text-micro uppercase text-chalk transition-colors duration-200 hover:border-accent hover:text-accent-text md:inline-flex"
+            >
+              {c.ui.nav.talk}
+            </a>
+
           <button
             ref={triggerRef}
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="menu-mobile"
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={open ? c.ui.nav.menuClose : c.ui.nav.menuOpen}
             className="flex flex-col items-end gap-1.5 p-2 md:hidden"
           >
             <motion.span
@@ -129,6 +152,7 @@ export function Navbar() {
               className="block h-px bg-chalk"
             />
           </button>
+          </div>
         </nav>
       </header>
 
@@ -139,7 +163,7 @@ export function Navbar() {
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Menu"
+            aria-label={c.ui.nav.ariaMain}
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
             animate={{ clipPath: 'inset(0 0 0% 0)' }}
             exit={{ clipPath: 'inset(0 0 100% 0)' }}
@@ -159,19 +183,29 @@ export function Navbar() {
                   {pad(i + 1)}
                 </span>
                 <span className="font-display text-3xl font-semibold text-chalk">
-                  {item.label}
+                  {c.ui.nav[item.key]}
                 </span>
               </motion.button>
             ))}
-            <motion.a
-              href={`mailto:${profile.email}`}
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="mt-10 font-tech text-micro uppercase text-smoke"
+              className="mt-10 flex flex-col gap-5"
             >
-              {profile.email}
-            </motion.a>
+              <a href={`mailto:${profile.email}`} className="font-tech text-micro uppercase text-smoke">
+                {profile.email}
+              </a>
+              <Link
+                href={localeHref(other)}
+                hrefLang={other === 'en' ? 'en' : 'pt-BR'}
+                onClick={() => setOpen(false)}
+                className="inline-flex w-fit items-center gap-2 border border-line px-4 py-2.5 font-tech text-micro uppercase text-chalk"
+              >
+                <Languages size={13} />
+                {c.ui.nav.switchTo}
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

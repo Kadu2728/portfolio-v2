@@ -49,7 +49,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: profile.name, url: siteUrl }],
   creator: profile.name,
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    languages: { 'pt-BR': siteUrl, en: `${siteUrl}/en` },
+  },
   openGraph: {
     type: 'website',
     locale: 'pt_BR',

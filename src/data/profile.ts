@@ -53,14 +53,15 @@ export const profile = {
   ],
 } as const
 
-export const navItems: NavItem[] = [
-  { label: 'Início', href: '#inicio' },
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Serviços', href: '#servicos' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Contato', href: '#contato' },
-]
+/** `key` casa com os rótulos em ui.nav; o href é igual nos dois idiomas. */
+export const navItems = [
+  { key: 'home', href: '#inicio' },
+  { key: 'about', href: '#sobre' },
+  { key: 'stack', href: '#stack' },
+  { key: 'services', href: '#servicos' },
+  { key: 'projects', href: '#projetos' },
+  { key: 'contact', href: '#contato' },
+] as const satisfies readonly { key: string; href: string }[]
 
 /**
  * A narrativa do About. Cada capítulo tem uma palavra-chave que domina a tela

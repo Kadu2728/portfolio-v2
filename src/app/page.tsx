@@ -1,12 +1,4 @@
-import { Navbar } from '@/components/layout/Navbar'
-import { Footer } from '@/components/layout/Footer'
-import { Hero } from '@/components/sections/Hero'
-import { About } from '@/components/sections/About'
-import { Stack } from '@/components/sections/Stack'
-import { Services } from '@/components/sections/Services'
-import { Projects } from '@/components/sections/Projects'
-import { Certificates } from '@/components/sections/Certificates'
-import { Contact } from '@/components/sections/Contact'
+import { Shell } from '@/components/Shell'
 
 /**
  * Ritmo da página: impacto (Hero) → respiro (Sobre) → complexidade (Stack)
@@ -14,19 +6,5 @@ import { Contact } from '@/components/sections/Contact'
  * → conclusão (Contato).
  */
 export default function Home() {
-  return (
-    <>
-      <Navbar />
-      <main id="conteudo">
-        <Hero />
-        <About />
-        <Stack />
-        <Services />
-        <Projects />
-        <Certificates />
-        <Contact />
-      </main>
-      <Footer />
-    </>
-  )
+  return <Shell locale="pt" />
 }

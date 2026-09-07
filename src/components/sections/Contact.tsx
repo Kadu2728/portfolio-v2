@@ -8,13 +8,14 @@ import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { Action } from '@/components/ui/Action'
 import { ContactForm } from '@/components/ui/ContactForm'
 import { profile } from '@/data/profile'
+import { useLocale } from '@/lib/locale'
 
-const channels = [
-  { label: 'E-mail', value: profile.email, href: `mailto:${profile.email}`, ext: false },
-  { label: 'WhatsApp', value: profile.phone, href: profile.whatsapp, ext: true },
+const buildChannels = (c: ReturnType<typeof useLocale>['c']) => [
+  { label: c.ui.contact.email, value: profile.email, href: `mailto:${profile.email}`, ext: false },
+  { label: c.ui.contact.whatsapp, value: profile.phone, href: profile.whatsapp, ext: true },
   { label: 'GitHub', value: profile.githubUser, href: profile.github, ext: true },
   { label: 'LinkedIn', value: 'Carlos Eduardo Diogo', href: profile.linkedin, ext: true },
-  { label: 'Currículo', value: 'Baixar em PDF', href: profile.cv, ext: false },
+  { label: c.ui.contact.cvLabel, value: c.ui.contact.cvValue, href: profile.cv, ext: false },
 ]
 
 /**
@@ -24,6 +25,8 @@ const channels = [
  * que faz a página terminar em crescendo em vez de simplesmente acabar.
  */
 export function Contact() {
+  const { c } = useLocale()
+  const channels = buildChannels(c)
   const ref = useRef<HTMLElement>(null)
   const prefersReduced = useReducedMotion()
 
@@ -45,7 +48,7 @@ export function Contact() {
 
       <div className="relative mx-auto max-w-shell px-6 md:px-10">
         <TechLabel index="06" className="mb-10">
-          Contato
+          {c.ui.sections.contact}
         </TechLabel>
 
         <motion.div
@@ -54,20 +57,18 @@ export function Contact() {
         >
           <MaskText
             as="h2"
-            lines={['Vamos construir', 'algo que', 'valha a pena.']}
+            lines={c.ui.contact.title}
             className="font-display text-5xl font-bold leading-[0.92] text-chalk"
             highlightLast="text-accent"
           />
         </motion.div>
         <p id="contato-titulo" className="sr-only">
-          Contato
+          {c.ui.sections.contact}
         </p>
 
         <Reveal delay={0.1}>
           <p className="mt-10 max-w-text text-lg text-ash">
-            Busco minha primeira oportunidade como desenvolvedor — estágio ou júnior — onde eu
-            possa contribuir desde o primeiro dia. Me conta o contexto e o prazo; se não for algo
-            que eu entregue bem, eu digo na primeira resposta.
+            {c.ui.contact.intro}
           </p>
         </Reveal>
 
@@ -82,15 +83,14 @@ export function Contact() {
           <Reveal delay={0.22}>
             <div className="flex h-full flex-col justify-between gap-8 border border-line bg-carbon p-8">
               <div>
-                <p className="font-tech text-micro uppercase text-dim">Prefere o caminho direto?</p>
+                <p className="font-tech text-micro uppercase text-dim">{c.ui.contact.directTitle}</p>
                 <p className="mt-4 text-base leading-relaxed text-ash">
-                  O WhatsApp costuma ser mais rápido. Para proposta com escopo e prazo, o e-mail
-                  funciona melhor — dá para responder com calma.
+                  {c.ui.contact.directBody}
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <Action href={`mailto:${profile.email}`} arrow>
-                  E-mail
+                  {c.ui.contact.email}
                 </Action>
                 <Action
                   href={profile.whatsapp}
@@ -98,7 +98,7 @@ export function Contact() {
                   rel="noopener noreferrer"
                   variant="outline"
                 >
-                  WhatsApp
+                  {c.ui.contact.whatsapp}
                 </Action>
               </div>
             </div>
