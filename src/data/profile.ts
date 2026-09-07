@@ -49,7 +49,7 @@ export const profile = {
 
   languages: [
     { code: 'PT', name: 'Português', level: 'Nativo' },
-    { code: 'EN', name: 'Inglês', level: 'Fluente' },
+    { code: 'EN', name: 'Inglês', level: 'Intermediário' },
   ],
 } as const
 

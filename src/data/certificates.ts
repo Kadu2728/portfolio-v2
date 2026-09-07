@@ -22,6 +22,8 @@ export const certificates: Certificate[] = [
   { title: 'IA: Explorando IA Generativa', institution: 'Alura' },
 
   { title: 'AI Fluency: Framework & Foundations', institution: 'Anthropic' },
+  { title: 'Building with the Claude API', institution: 'Anthropic' },
+  { title: 'Model Context Protocol (MCP)', institution: 'Anthropic' },
 
   { title: 'AWS SimuLearn: Fundamentos da Computação em Nuvem', institution: 'AWS' },
   { title: 'Publicidade Digital: Dados, IA e Legalidade', institution: 'Santander Open Academy' },

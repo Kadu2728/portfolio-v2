@@ -40,12 +40,12 @@ export const projects: Project[] = [
     },
     metrics: [
       { value: '24/7', label: 'assistente de IA' },
-      { value: '2ª', label: 'rodada de avaliação' },
+      { value: 'Aprovado', label: 'para a etapa seguinte' },
       { value: '100%', label: 'em produção' },
     ],
     results: [
       'Apresentado em formato de pitch ao diretor geral do CEAP.',
-      'Avançou para uma segunda rodada de avaliação.',
+      'A proposta foi aprovada para avançar à etapa seguinte, com a Coordenação de TI.',
       'O retorno sobre a camada de gamificação orientou a reformulação seguinte do produto.',
     ],
     link: 'https://ceapconnect.vercel.app',
