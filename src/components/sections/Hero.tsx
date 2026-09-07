@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   motion,
   useMotionTemplate,
@@ -11,46 +12,51 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ArrowDown, Download, Github, Linkedin, Mail } from 'lucide-react'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  MessageCircle,
+} from 'lucide-react'
 import { MaskText } from '@/components/ui/MaskText'
-import { Action } from '@/components/ui/Action'
-import { Marquee } from '@/components/ui/Marquee'
 import { EASE } from '@/lib/motion'
+import { cn } from '@/lib/utils'
+import { useLocale, localeHref } from '@/lib/locale'
 import { profile } from '@/data/profile'
 import { highlights } from '@/data/certificates'
-import { marquee } from '@/data/stack'
-import { useLocale } from '@/lib/locale'
 
 /**
  * HERO
  *
- * Composição assimétrica em duas colunas: o nome domina a esquerda em escala
- * de cartaz e o retrato ocupa a direita como peça gráfica de verdade — não
- * como avatar de 48px no rodapé.
+ * Composição em camadas: o retrato ocupa a direita e sangra no fundo, a
+ * headline domina a esquerda e o case em destaque flutua ao lado.
  *
- * A ordem de leitura é deliberada: quem é → o que faz → a prova (números) →
- * como falar comigo. Um recrutador precisa dos quatro em cinco segundos.
+ * O retrato não é um card recortado — recebe máscara nas bordas para se
+ * dissolver no fundo. É o que separa composição de "foto colada na página".
  */
 export function Hero() {
-  const { c } = useLocale()
+  const { locale, c } = useLocale()
   const t = c.ui.hero
   const ref = useRef<HTMLElement>(null)
   const prefersReduced = useReducedMotion()
   const [ready, setReady] = useState(false)
   const [photoFailed, setPhotoFailed] = useState(false)
 
-  // Halo preso ao ponteiro, guardado em motion values para não re-renderizar
-  // o React a cada movimento do mouse.
-  const mx = useMotionValue(50)
-  const my = useMotionValue(20)
-  const sx = useSpring(mx, { stiffness: 55, damping: 20 })
-  const sy = useSpring(my, { stiffness: 55, damping: 20 })
-  const halo = useMotionTemplate`radial-gradient(560px circle at ${sx}% ${sy}%, rgba(224,74,63,0.16), transparent 62%)`
+  const featured = c.projects.find((p) => p.slug === 'ceap-connect')
+
+  const mx = useMotionValue(60)
+  const my = useMotionValue(25)
+  const sx = useSpring(mx, { stiffness: 50, damping: 20 })
+  const sy = useSpring(my, { stiffness: 50, damping: 20 })
+  const halo = useMotionTemplate`radial-gradient(620px circle at ${sx}% ${sy}%, rgba(224,74,63,0.16), transparent 60%)`
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const lift = useTransform(scrollYProgress, [0, 1], ['0%', '14%'])
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const photoLift = useTransform(scrollYProgress, [0, 1], ['0%', '-10%'])
+  const lift = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
+  const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0])
+  const photoShift = useTransform(scrollYProgress, [0, 1], ['0%', '-8%'])
 
   useEffect(() => {
     setReady(true)
@@ -65,200 +71,189 @@ export function Hero() {
   const seq = (d: number) => ({
     initial: { opacity: 0, y: prefersReduced ? 0 : 16 },
     animate: ready ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 0.75, ease: EASE, delay: prefersReduced ? 0 : d },
+    transition: { duration: 0.8, ease: EASE, delay: prefersReduced ? 0 : d },
   })
 
-  const stats = [
-    { v: String(c.projects.length), l: t.statsProjects },
-    { v: '6', l: t.statsLive },
-    { v: highlights.total, l: t.statsCerts },
+  const contacts = [
+    { Icon: Mail, label: profile.email, href: `mailto:${profile.email}` },
+    { Icon: MessageCircle, label: profile.phone, href: profile.whatsapp, ext: true },
+    { Icon: Github, label: profile.githubUser, href: profile.github, ext: true },
+    { Icon: Linkedin, label: 'LinkedIn', href: profile.linkedin, ext: true },
+    { Icon: Download, label: t.downloadCv, href: profile.cv, download: true },
   ]
+
+  // Dissolve as bordas do retrato no fundo em vez de recortar num retângulo.
+  const mask =
+    'radial-gradient(76% 70% at 62% 44%, black 40%, transparent 78%), linear-gradient(to right, transparent, black 26%)'
 
   return (
     <section
       ref={ref}
       id="inicio"
-      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pt-24 md:pt-28"
+      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pb-14 pt-28 md:pt-32"
     >
-      {/* Três camadas de luz. Fundo quase preto e liso lê como luto; a luz
-          quente atrás do retrato e o degradê de base dão volume e calor. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, ease: EASE }}
-          className="absolute inset-0"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(58%_46%_at_72%_28%,rgba(224,74,63,0.22),transparent_68%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(46%_38%_at_18%_12%,rgba(243,240,232,0.055),transparent_70%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-carbon to-transparent" />
-        </motion.div>
-        <motion.div style={{ background: halo }} className="absolute inset-0" />
-      </div>
-
+      {/* ---------- Retrato: camada de fundo, sangrando pela direita ---------- */}
       <motion.div
-        style={prefersReduced ? undefined : { y: lift, opacity: fade }}
-        className="relative mx-auto grid w-full max-w-shell flex-1 grid-cols-1 items-center gap-12 px-6 py-10 md:px-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
+        style={prefersReduced ? undefined : { y: photoShift }}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={ready ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1.7, ease: EASE, delay: 0.15 }}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 w-full lg:w-[64%]"
       >
-        {/* ---------- Coluna de identidade ----------
-            Vem primeiro no mobile: com a foto acima, o nome caía abaixo da
-            dobra e a primeira coisa lida deixava de ser quem a pessoa é. */}
-        <div className="order-1">
-          <motion.div
-            {...seq(0.15)}
-            className="mb-7 flex flex-wrap items-center gap-x-5 gap-y-2 font-tech text-micro uppercase text-smoke"
+        {/* Luz de recorte atrás da silhueta */}
+        <div className="absolute inset-0 bg-[radial-gradient(46%_56%_at_58%_42%,rgba(224,74,63,0.28),transparent_70%)]" />
+
+        {!photoFailed && (
+          <div
+            className="absolute inset-0"
+            style={{
+              maskImage: mask,
+              WebkitMaskImage: mask,
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in',
+            }}
           >
-            <span className="flex items-center gap-2 text-chalk">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-              </span>
-              {t.available}
-            </span>
-            <span className="hidden h-3 w-px bg-line-strong sm:block" />
-            <span>{c.location}</span>
-          </motion.div>
-
-          {/* O nome em escala de cartaz — é a primeira coisa que se lê */}
-          <MaskText
-            as="h1"
-            animate={ready}
-            delay={0.3}
-            stagger={0.09}
-            lines={['Carlos', 'Eduardo']}
-            className="font-display text-6xl font-bold uppercase text-chalk"
-            highlightLast="text-accent"
-          />
-
-          <motion.div {...seq(0.95)} className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="h-px w-10 bg-accent" aria-hidden="true" />
-            <p className="font-display text-xl font-semibold text-chalk md:text-2xl">
-              {c.role}
-            </p>
-            <span className="rounded-xs border border-line px-2.5 py-1 font-tech text-micro uppercase text-smoke">
-              UX/UI · IA
-            </span>
-          </motion.div>
-
-          <motion.p {...seq(1.08)} className="mt-7 max-w-text text-lg text-ash">
-            {t.tagline}
-          </motion.p>
-
-          <motion.div {...seq(1.22)} className="mt-9 flex flex-wrap items-center gap-3">
-            <Action
-              href="#projetos"
-              onClick={(e) => {
-                e.preventDefault()
-                document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            >
-              {t.viewProjects}
-              <ArrowDown size={14} />
-            </Action>
-            <Action href={`mailto:${profile.email}`} variant="outline">
-              <Mail size={14} />
-              {c.ui.nav.talk}
-            </Action>
-
-            <a
-              href={profile.cv}
-              download
-              className="inline-flex items-center gap-2 px-4 py-4 font-tech text-label uppercase tracking-[0.08em] text-ash transition-colors duration-200 hover:text-chalk"
-            >
-              <Download size={14} />
-              {t.downloadCv}
-            </a>
-
-            <span className="ml-1 flex items-center gap-1">
-              {[
-                { href: profile.github, Icon: Github, label: 'GitHub' },
-                { href: profile.linkedin, Icon: Linkedin, label: 'LinkedIn' },
-              ].map(({ href, Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="p-2.5 text-smoke transition-colors duration-200 hover:text-chalk"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
-            </span>
-          </motion.div>
-        </div>
-
-        {/* ---------- Retrato ---------- */}
-        <motion.div
-          style={prefersReduced ? undefined : { y: photoLift }}
-          className="order-2 justify-self-center lg:justify-self-end"
-        >
-          <motion.div
-            initial={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
-            animate={ready ? { clipPath: 'inset(0% 0 0 0)', opacity: 1 } : {}}
-            transition={{ duration: 1.1, ease: EASE, delay: prefersReduced ? 0 : 0.5 }}
-            className="group relative"
-          >
-            {/* Moldura deslocada: profundidade sem sombra e sem glass */}
-            <span
-              aria-hidden="true"
-              className="absolute -bottom-3 -right-3 h-full w-full border border-accent-line transition-all duration-700 ease-expo group-hover:-bottom-1.5 group-hover:-right-1.5"
+            <Image
+              src="/profile.jpg"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 64vw"
+              onError={() => setPhotoFailed(true)}
+              className="object-cover object-[58%_30%] opacity-40 contrast-[1.12] saturate-[0.85] lg:opacity-75"
             />
+          </div>
+        )}
 
-            <div className="relative aspect-[4/5] w-[13rem] overflow-hidden bg-graphite sm:w-[17rem] lg:w-[22rem]">
-              {/* Iniciais na camada de baixo — fallback natural se a foto falhar */}
-              <span className="absolute inset-0 flex select-none items-center justify-center font-display text-6xl font-bold text-line-strong">
-                {profile.initials}
-              </span>
-
-              {!photoFailed && (
-                <Image
-                  src="/profile.jpg"
-                  alt={`Retrato de ${profile.name}`}
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 304px, 352px"
-                  onError={() => setPhotoFailed(true)}
-                  // Foto colorida. Em preto e branco sobre fundo quase preto
-                  // a composição inteira lê como luto — é a peça que traz
-                  // pele, calor e presença humana para a dobra.
-                  className="relative object-cover brightness-[1.06] saturate-[1.08] transition-transform duration-700 ease-expo group-hover:scale-[1.04]"
-                />
-              )}
-
-              {/* Véu inferior: garante contraste da legenda sobre qualquer foto */}
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-void/85 to-transparent"
-              />
-
-              <span className="absolute bottom-4 left-4 font-tech text-micro uppercase text-chalk">
-                {profile.education.org} · GTI
-              </span>
-            </div>
-          </motion.div>
-        </motion.div>
+        {/* Véu à esquerda: garante contraste do texto sobre a foto */}
+        <div className="absolute inset-0 bg-gradient-to-r from-void via-void/85 to-transparent lg:via-void/40" />
+        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-void to-transparent" />
       </motion.div>
 
-      {/* ---------- Barra de prova + fita de stack ---------- */}
-      <motion.div {...seq(1.45)} className="relative border-t border-line">
-        <div className="mx-auto max-w-shell px-6 md:px-10">
-          <dl className="grid grid-cols-3 divide-x divide-line">
-            {stats.map((s, i) => (
-              <div key={s.l} className={i === 0 ? 'py-6 pr-5' : 'py-6 pl-5 md:pl-8'}>
-                <dd className="font-display text-2xl font-bold tabular-nums text-chalk md:text-3xl">
-                  {s.v}
-                </dd>
-                <dt className="mt-0.5 font-tech text-micro uppercase text-smoke">{s.l}</dt>
-              </div>
-            ))}
-          </dl>
-        </div>
+      <motion.div style={{ background: halo }} aria-hidden="true" className="absolute inset-0" />
 
-        <div className="border-t border-line py-3.5">
-          <Marquee items={marquee} speed={52} className="opacity-60" />
-        </div>
+      {/* ---------- Conteúdo ---------- */}
+      <motion.div
+        style={prefersReduced ? undefined : { y: lift, opacity: fade }}
+        className="relative mx-auto w-full max-w-shell px-6 md:px-10"
+      >
+        <motion.div {...seq(0.2)} className="mb-8 flex items-center gap-4">
+          <span className="font-tech text-micro text-accent tabular-nums">01</span>
+          <span aria-hidden="true" className="h-px w-10 bg-line-strong" />
+          <span className="font-tech text-micro uppercase text-smoke">{t.eyebrow}</span>
+        </motion.div>
+
+        <MaskText
+          as="h1"
+          animate={ready}
+          delay={0.32}
+          stagger={0.085}
+          lines={t.headline}
+          className="font-display text-5xl font-bold uppercase leading-[0.92] text-chalk"
+          accentIndex={t.headlineAccent}
+        />
+
+        <motion.p {...seq(1.05)} className="mt-7 max-w-md text-base leading-relaxed text-ash">
+          {t.intro}
+        </motion.p>
+
+        <motion.div {...seq(1.2)} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <Link
+            href="#projetos"
+            onClick={(e) => {
+              e.preventDefault()
+              document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="group inline-flex items-center gap-4"
+          >
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white transition-all duration-300 ease-expo group-hover:scale-110 group-hover:bg-accent-bright">
+              <ArrowRight size={18} />
+            </span>
+            <span className="font-tech text-label uppercase tracking-[0.10em] text-chalk">
+              {t.viewProjects}
+            </span>
+          </Link>
+
+          <span className="flex items-center gap-2 font-tech text-micro uppercase text-smoke">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+            </span>
+            {t.available}
+          </span>
+        </motion.div>
+
+        {/* ---------- Contatos: todos na primeira dobra ---------- */}
+        <motion.ul
+          {...seq(1.35)}
+          aria-label={t.contactsLabel}
+          className="mt-8 flex flex-wrap items-center gap-2"
+        >
+          {contacts.map(({ Icon, label, href, ext, download }) => (
+            <li key={label}>
+              <a
+                href={href}
+                target={ext ? '_blank' : undefined}
+                rel={ext ? 'noopener noreferrer' : undefined}
+                download={download}
+                className={cn(
+                  'inline-flex items-center gap-2 rounded-sm border border-line bg-carbon/70 px-3.5 py-2.5',
+                  'font-tech text-micro text-ash backdrop-blur-sm transition-colors duration-200',
+                  'hover:border-accent-line hover:text-chalk'
+                )}
+              >
+                <Icon size={13} className="shrink-0 text-smoke" />
+                {label}
+              </a>
+            </li>
+          ))}
+        </motion.ul>
+      </motion.div>
+
+      {/* ---------- Case em destaque ---------- */}
+      {featured && (
+        <motion.div
+          {...seq(1.5)}
+          className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10 lg:-mt-4 lg:flex lg:justify-end"
+        >
+          <Link
+            href={localeHref(locale, `/projects/${featured.slug}`)}
+            className="group block w-full rounded-sm border border-line bg-carbon/80 p-6 backdrop-blur-md transition-colors duration-500 hover:border-accent-line lg:max-w-sm"
+          >
+            <span className="flex items-center gap-2 font-tech text-micro uppercase text-accent-text">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              {t.featured}
+            </span>
+            <p className="mt-4 font-display text-2xl font-bold uppercase text-chalk">
+              {featured.title}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-ash">{featured.tagline}</p>
+            <span className="mt-5 inline-flex items-center gap-2 font-tech text-micro uppercase text-chalk">
+              {t.viewCase}
+              <ArrowUpRight
+                size={13}
+                className="text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </span>
+          </Link>
+        </motion.div>
+      )}
+
+      {/* ---------- Números ---------- */}
+      <motion.div {...seq(1.65)} className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10">
+        <dl className="flex flex-wrap items-end gap-x-10 gap-y-4 border-t border-line pt-6">
+          {[
+            { v: String(c.projects.length), l: t.statsProjects },
+            { v: '6', l: t.statsLive },
+            { v: highlights.total, l: t.statsCerts },
+          ].map((s) => (
+            <div key={s.l} className="flex items-baseline gap-2.5">
+              <dd className="font-display text-xl font-bold tabular-nums text-chalk">{s.v}</dd>
+              <dt className="font-tech text-micro uppercase text-dim">{s.l}</dt>
+            </div>
+          ))}
+        </dl>
       </motion.div>
     </section>
   )

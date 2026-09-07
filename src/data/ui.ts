@@ -20,9 +20,18 @@ export const ptUI = {
     switchTo: 'View in English',
   },
   hero: {
+    eyebrow: 'Creative Developer',
+    headline: ['Ideias', 'ganham', 'forma', 'com código.'],
+    /** Índice da linha que recebe o accent. */
+    headlineAccent: 2,
+    intro:
+      'Eu sou Carlos, desenvolvedor full-stack com foco em UX/UI e produto. Transformo ideias em aplicações que unem design, tecnologia e experiência.',
     available: 'Disponível para oportunidades',
     viewProjects: 'Ver projetos',
     downloadCv: 'Baixar CV',
+    featured: 'Projeto em destaque',
+    viewCase: 'Ver case',
+    contactsLabel: 'Contato',
     statsProjects: 'projetos entregues',
     statsLive: 'em produção',
     statsCerts: 'certificados',
@@ -146,9 +155,17 @@ export const enUI: UIStrings = {
     switchTo: 'Ver em português',
   },
   hero: {
+    eyebrow: 'Creative Developer',
+    headline: ['Ideas', 'take', 'shape', 'in code.'],
+    headlineAccent: 2,
+    intro:
+      'I am Carlos, a full-stack developer focused on UX/UI and product. I turn ideas into applications that bring design, technology and experience together.',
     available: 'Open to opportunities',
     viewProjects: 'View work',
     downloadCv: 'Download CV',
+    featured: 'Featured project',
+    viewCase: 'View case',
+    contactsLabel: 'Contact',
     statsProjects: 'projects shipped',
     statsLive: 'in production',
     statsCerts: 'certificates',

@@ -17,6 +17,7 @@ export function MaskText({
   className,
   lineClassName,
   highlightLast,
+  accentIndex,
   delay = 0,
   stagger = 0.09,
   animate = false,
@@ -30,6 +31,8 @@ export function MaskText({
    * dentro da própria máscara, então um seletor :last-child pegaria todas.
    */
   highlightLast?: string
+  /** Índice da linha que recebe o accent, quando não for a última. */
+  accentIndex?: number
   delay?: number
   stagger?: number
   /** true = anima na montagem (hero); false = anima ao entrar em tela. */
@@ -57,7 +60,8 @@ export function MaskText({
               className={cn(
                 'block',
                 lineClassName,
-                i === lines.length - 1 && highlightLast
+                i === lines.length - 1 && highlightLast,
+                accentIndex === i && 'text-accent'
               )}
               variants={{
                 hidden: prefersReduced ? { opacity: 0 } : { y: '112%' },
