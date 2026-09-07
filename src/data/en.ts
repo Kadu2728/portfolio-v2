@@ -324,7 +324,7 @@ export const enProjects: Project[] = [
   },
   {
     slug: 'giro',
-    title: 'GIRO',
+    title: 'GIRO — App',
     tagline: 'Offline-first merchandising that computes stock turnover on its own.',
     year: '2026',
     category: 'Aplicação',
@@ -361,7 +361,38 @@ export const enProjects: Project[] = [
       'The front end was built against that contract, so the interface will not change when the back end lands.',
       'Portfolio project, running on fictional data.',
     ],
+    link: 'https://giro-azure.vercel.app/login',
     github: 'https://github.com/Kadu2728/GIRO',
+  },
+  {
+    slug: 'giro-varejo',
+    title: 'GIRO — Landing',
+    tagline: 'The page that pitches GIRO to whoever signs off on it.',
+    year: '2026',
+    category: 'Experiência',
+    role: 'UX/UI · Front-End',
+    overview:
+      'GIRO landing page: it presents the merchandising execution tool to the consumer goods company — the buyer, not the daily user.',
+    challenge:
+      'The person using GIRO is the field rep, but the person signing off is the company — and they do not ask the same question. The rep wants to know whether it is quick to fill in; the company wants to know what information comes back.',
+    solution:
+      'The page speaks to the decision maker: it explains what the shelf count becomes once processed — turnover, stockout projection, route compliance — before mentioning a screen or a technology.',
+    experience:
+      'I split the landing page from the application into two projects because they are two audiences with two goals. Merging them into one interface would force one audience to wade through content written for the other.',
+    features: [
+      'Product pitch for the consumer goods company',
+      'Explanation of the count, turnover and stockout cycle',
+      'Responsive layout',
+      'Scroll animations',
+      'Call to action to explore the app',
+    ],
+    tech: {
+      frontend: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+      backend: [],
+      tools: ['Vercel'],
+    },
+    results: ['In production on Vercel.'],
+    link: 'https://giro-varejo.vercel.app',
   },
   {
     slug: 'vitrine',

@@ -140,7 +140,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'giro',
-    title: 'GIRO',
+    title: 'GIRO — App',
     tagline: 'Merchandising offline que calcula o giro sozinho.',
     year: '2026',
     category: 'Aplicação',
@@ -177,7 +177,38 @@ export const projects: Project[] = [
       'O front foi construído contra esse contrato, então a interface não muda quando o back entrar.',
       'Projeto de portfólio, com dados fictícios.',
     ],
+    link: 'https://giro-azure.vercel.app/login',
     github: 'https://github.com/Kadu2728/GIRO',
+  },
+  {
+    slug: 'giro-varejo',
+    title: 'GIRO — Landing',
+    tagline: 'A página que apresenta o GIRO a quem decide a compra.',
+    year: '2026',
+    category: 'Experiência',
+    role: 'UX/UI · Front-End',
+    overview:
+      'Landing page do GIRO: apresenta a ferramenta de execução de merchandising para a indústria, que é quem contrata, não quem usa no dia a dia.',
+    challenge:
+      'Quem usa o GIRO é o promotor, mas quem decide a compra é a indústria — e os dois não têm a mesma pergunta. O promotor quer saber se é rápido de preencher; a indústria quer saber que informação vai receber de volta.',
+    solution:
+      'A página fala com quem decide: explica o que a contagem em gôndola vira depois de processada — giro, projeção de ruptura, cumprimento de rota — antes de falar de tela ou de tecnologia.',
+    experience:
+      'Separei a landing do aplicativo em dois projetos porque são dois públicos e dois objetivos. Misturar os dois na mesma interface obrigaria uma das audiências a atravessar conteúdo que não é para ela.',
+    features: [
+      'Apresentação do produto para a indústria',
+      'Explicação do ciclo: contagem, giro e ruptura',
+      'Layout responsivo',
+      'Animações de scroll',
+      'Chamada para conhecer o aplicativo',
+    ],
+    tech: {
+      frontend: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+      backend: [],
+      tools: ['Vercel'],
+    },
+    results: ['Em produção na Vercel.'],
+    link: 'https://giro-varejo.vercel.app',
   },
   {
     slug: 'vitrine',
