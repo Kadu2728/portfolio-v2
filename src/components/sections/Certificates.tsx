@@ -37,8 +37,8 @@ export function Certificates() {
 
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-text text-lg text-ash">
-            {highlights.total} certificados — incluindo mais de {highlights.anthropic.replace('+', '')} da
-            Anthropic e Claude, em {highlights.anthropicFocus}.
+            {highlights.total} certificados entre FIAP, Alura, Anthropic, AWS e Santander Open
+            Academy — com especialização em {highlights.anthropicFocus}.
           </p>
         </Reveal>
 
@@ -47,7 +47,7 @@ export function Certificates() {
           <div className="mt-12 flex flex-col justify-between gap-6 border border-accent-line bg-accent-soft p-8 sm:flex-row sm:items-center">
             <div>
               <p className="font-display text-2xl font-bold text-chalk">
-                {highlights.anthropic} certificados Anthropic &amp; Claude
+                Especialização Anthropic &amp; Claude
               </p>
               <p className="mt-2 font-tech text-micro uppercase text-accent-text">
                 {highlights.anthropicFocus}
@@ -74,11 +74,10 @@ export function Certificates() {
                 transition={{ duration: 0.55, ease: EASE }}
                 className="grid gap-4 border-b border-line py-8 md:grid-cols-[200px_1fr] md:gap-10"
               >
-                <div className="flex items-baseline justify-between gap-3 md:block">
+                {/* Só o nome da instituição. A contagem por grupo expunha
+                    números pequenos ("AWS 1") que enfraquecem o total. */}
+                <div>
                   <p className="font-display text-lg font-semibold text-chalk">{inst}</p>
-                  <p className="font-tech text-micro uppercase text-dim tabular-nums">
-                    {inst === 'Anthropic' ? highlights.anthropic : list.length} certificados
-                  </p>
                 </div>
                 <ul className="flex flex-wrap gap-x-2 gap-y-2">
                   {list.map((c) => (

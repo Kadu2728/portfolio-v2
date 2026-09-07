@@ -180,6 +180,112 @@ export const projects: Project[] = [
     github: 'https://github.com/Kadu2728/GIRO',
   },
   {
+    slug: 'vitrine',
+    title: 'Vitrine',
+    tagline: 'Auditoria de gôndola por visão computacional.',
+    year: '2026',
+    category: 'Aplicação',
+    role: 'Produto · Visão Computacional · Python',
+    overview:
+      'Biblioteca e CLI que analisam a foto de uma gôndola e devolvem número: quantos produtos estão expostos, como o espaço está dividido entre regiões e onde há buraco na prateleira.',
+    challenge:
+      'A indústria paga — em dinheiro, bonificação e acordo comercial — para que seus produtos ocupem um espaço determinado de prateleira, e não tem como verificar se aquele espaço está sendo ocupado. A informação existe: está na foto que o promotor tira. Só que ela morre ali como imagem, e o número que sobra é o que alguém digitou na prancheta — que ninguém consegue auditar depois.',
+    solution:
+      'A foto entra, o número sai. O pipeline corrige orientação EXIF e perspectiva, detecta produtos por trás de um protocolo com três implementações trocáveis, remove duplicatas, agrupa em prateleiras e calcula share por contagem, share por área linear e ocupação lado a lado. A saída é a imagem anotada mais um JSON com schema versionado.',
+    experience:
+      'Não tem front-end, e isso é decisão de arquitetura, não limitação. A imagem anotada é a interface e o `--json` é a API. Uma camada web adicionaria superfície de manutenção sem adicionar capacidade — e o efeito colateral é o ponto: sem tela bonita não há onde esconder problema. A página de demonstração em Gradio existe, mas mora fora do produto e consome a biblioteca como qualquer outro cliente.',
+    features: [
+      'Correção de orientação EXIF e de perspectiva',
+      'Detecção por protocolo, com implementações trocáveis',
+      'Remoção de detecções duplicadas antes da contagem',
+      'Agrupamento em prateleiras com limiar relativo',
+      'Share por contagem, por área linear e ocupação',
+      'Detecção de espaço vazio na prateleira',
+      'Imagem anotada e JSON com schema versionado',
+      'Medição de precisão, recall e AP@50 sobre dataset anotado',
+      'Lote paralelo, resumível após interrupção',
+      'Histórico por ponto de venda em SQLite',
+    ],
+    tech: {
+      frontend: ['CLI (Typer)', 'Rich', 'Gradio (demo)'],
+      backend: ['Python', 'OpenCV', 'NumPy', 'Pydantic', 'Pillow', 'SQLite'],
+      tools: ['YOLO / Ultralytics', 'GitHub Actions'],
+    },
+    results: [
+      'Funciona de ponta a ponta em foto avulsa e em lote: analyze, batch, history e benchmark.',
+      'Fase 3 de 4: o detector real ainda não tem peso treinado em gôndola, e as métricas de detecção seguem não medidas — declarado no próprio README.',
+      'Não identifica SKU nem marca: produto é classe única, e o share é entre regiões da gôndola.',
+    ],
+    github: 'https://github.com/Kadu2728/vitrine',
+  },
+  {
+    slug: 'vertice',
+    title: 'Vértice',
+    tagline: 'Marcação a mercado de títulos públicos, explicada em linguagem natural.',
+    year: '2026',
+    category: 'Plataforma',
+    role: 'Arquitetura · Back-End · IA aplicada',
+    overview:
+      'Simulador que calcula a marcação a mercado de títulos do Tesouro e explica o resultado em texto, sem exigir que o investidor entenda a matemática por trás.',
+    challenge:
+      'Milhões de investidores têm títulos públicos e não entendem por que o valor de mercado muda todo dia. Quando a taxa de juros se move, prefixados e indexados ao IPCA sofrem marcação a mercado — o preço sobe ou desce sem nada "errado" ter acontecido.',
+    solution:
+      'O sistema é dividido em dois mundos que nunca se misturam. O motor determinístico calcula todo preço, taxa, imposto e valor exibido em Python puro, sem depender de framework, banco ou IA. A camada de IA só explica em texto o que o motor já calculou.',
+    experience:
+      'A fronteira entre os dois é a razão de existir do projeto. Um validador extrai todo valor monetário do texto gerado e descarta a resposta se algo não bater com o payload original, caindo num template estático determinístico. Se um número aparece na tela, ele veio do motor — a IA nunca inventa, estima ou corrige valor financeiro.',
+    features: [
+      'Motor de precificação determinístico e isolado',
+      'Explicação em linguagem natural gerada por IA',
+      'Validador que descarta texto com número divergente',
+      'Fallback para template estático quando a validação falha',
+      'Ingestão de dados do Tesouro Direto',
+      'Golden tests contra o preço oficial do Tesouro Transparente',
+      'Decisões arquiteturais registradas em ADRs',
+    ],
+    tech: {
+      frontend: ['TypeScript', 'Node 20'],
+      backend: ['Python 3.12', 'FastAPI', 'PostgreSQL', 'Alembic'],
+      tools: ['pytest', 'mypy estrito', 'Design tokens'],
+    },
+    results: [
+      'Os golden tests recalculam títulos reais em datas reais e comparam com o preço oficial publicado pelo Tesouro Transparente.',
+      'A LTN bate com tolerância de R$ 0,01 — validação real, não estimativa.',
+      'NTN-F e NTN-B têm resíduo de precisão documentado e ainda não resolvido, com tolerância mais larga e visível no código, nunca afrouxada em silêncio.',
+    ],
+    github: 'https://github.com/Kadu2728/vertice',
+  },
+  {
+    slug: 'controle-produtos',
+    title: 'Controle de Produtos',
+    tagline: 'CRUD com autenticação em PHP puro, sem nenhuma dependência.',
+    year: '2026',
+    category: 'Aplicação',
+    role: 'Full-Stack · PHP',
+    overview:
+      'Sistema web de cadastro e controle de produtos com autenticação de usuários, desenvolvido como teste prático para vaga de estágio. API REST em PHP e front-end em HTML, CSS e JavaScript puro, com dados em MySQL.',
+    challenge:
+      'Entregar um CRUD completo com autenticação e rastreio de quem cadastrou cada item — provando domínio de fundamentos, não de framework.',
+    solution:
+      'API REST escrita à mão em PHP, front-end em JavaScript puro consumindo essa API e MySQL como persistência. A tabela de produtos registra ID, data de cadastro, usuário responsável, descrição, quantidade e valor.',
+    experience:
+      'Nenhuma dependência externa: sem framework, sem Composer, sem npm install. Quem clona o repositório roda o projeto com o que já está na máquina — decisão que elimina o atrito de setup que costuma atrapalhar em avaliação técnica.',
+    features: [
+      'Autenticação de usuários',
+      'Cadastro, edição e remoção de produtos',
+      'Registro de qual usuário cadastrou cada item',
+      'Tabela com ID, data, descrição, quantidade e valor',
+      'API REST documentada',
+      'Zero dependências externas',
+    ],
+    tech: {
+      frontend: ['HTML', 'CSS', 'JavaScript'],
+      backend: ['PHP', 'MySQL', 'REST API', 'JWT'],
+      tools: [],
+    },
+    results: ['Desenvolvido como teste prático para vaga de estágio em desenvolvimento.'],
+    github: 'https://github.com/Kadu2728/crud-produtos',
+  },
+  {
     slug: 'finpilot',
     title: 'FinPilot',
     tagline: 'SaaS de gestão financeira para autônomos e pequenos negócios.',
