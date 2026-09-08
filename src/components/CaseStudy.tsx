@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { LocaleProvider, localeHref, useLocale, type Locale } from '@/lib/locale'
 import { getContent } from '@/data/content'
@@ -97,6 +98,25 @@ function Body({ slug }: { slug: string }) {
           )}
         </div>
       </header>
+
+      {/* A tela do produto vem antes de qualquer texto do case */}
+      {project.image && (
+        <section className="border-b border-line px-6 md:px-10">
+          <div className="mx-auto -mt-10 max-w-shell md:-mt-14">
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-sm border border-line bg-graphite shadow-2xl">
+              <Image
+                src={project.image}
+                alt={`Interface do projeto ${project.title}`}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 86rem"
+                className="object-cover object-top"
+              />
+            </div>
+          </div>
+          <div className="h-14 md:h-20" />
+        </section>
+      )}
 
       {project.metrics && (
         <section className="border-b border-line px-6 md:px-10">

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Github, Star } from 'lucide-react'
 import { MaskText } from '@/components/ui/MaskText'
@@ -93,6 +94,24 @@ function Featured({ project }: { project: Project }) {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(224,74,63,0.10),transparent_70%)]"
       />
+
+      {/* A captura abre o bloco: o produto aparece antes do texto sobre ele */}
+      {project.image && (
+        <div className="relative aspect-[16/7] w-full overflow-hidden border-b border-line">
+          <Image
+            src={project.image}
+            alt={`Interface do projeto ${project.title}`}
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 80vw"
+            className="object-cover object-top transition-transform duration-700 ease-expo group-hover:scale-[1.02]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/20 to-transparent"
+          />
+        </div>
+      )}
 
       <div className="relative grid gap-10 p-8 md:p-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:p-16">
         <div>

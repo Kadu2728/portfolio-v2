@@ -22,8 +22,10 @@ export type Project = {
   year: string
   category: ProjectCategory
   role: string
-  /** Featured = entra no scroll horizontal principal. */
+  /** Featured = ganha o bloco de destaque. */
   featured?: boolean
+  /** Captura de tela em /public/projects. Ausente = cai na placa tipográfica. */
+  image?: string
 
   overview: string
   challenge: string

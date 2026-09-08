@@ -7,6 +7,7 @@ import type { Project } from '@/types'
 export const projects: Project[] = [
   {
     slug: 'ceap-connect',
+    image: '/projects/ceap-connect.webp',
     title: 'CEAP Connect',
     tagline: 'Processo seletivo transformado em jornada gamificada, com IA.',
     year: '2026',
@@ -53,6 +54,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'vestora',
+    image: '/projects/vestora.webp',
     title: 'VESTORA',
     tagline: 'Carteira de investimentos com patrimônio e dividendos em tempo real.',
     year: '2026',
@@ -103,6 +105,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'vendia',
+    image: '/projects/vendia.webp',
     title: 'VendIA',
     tagline: 'A IA lê a foto do produto e escreve o anúncio.',
     year: '2026',
@@ -140,6 +143,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'giro',
+    image: '/projects/giro.webp',
     title: 'GIRO — App',
     tagline: 'Merchandising offline que calcula o giro sozinho.',
     year: '2026',
@@ -182,6 +186,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'giro-varejo',
+    image: '/projects/giro-varejo.webp',
     title: 'GIRO — Landing',
     tagline: 'A página que apresenta o GIRO a quem decide a compra.',
     year: '2026',
@@ -212,6 +217,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'vitrine',
+    image: '/projects/vitrine.webp',
     title: 'Vitrine',
     tagline: 'Auditoria de gôndola por visão computacional.',
     year: '2026',
@@ -251,6 +257,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'vertice',
+    image: '/projects/vertice.webp',
     title: 'Vértice',
     tagline: 'Marcação a mercado de títulos públicos, explicada em linguagem natural.',
     year: '2026',
@@ -287,6 +294,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'controle-produtos',
+    image: '/projects/controle-produtos.webp',
     title: 'Controle de Produtos',
     tagline: 'CRUD com autenticação em PHP puro, sem nenhuma dependência.',
     year: '2026',
@@ -318,6 +326,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'finpilot',
+    image: '/projects/finpilot.webp',
     title: 'FinPilot',
     tagline: 'SaaS de gestão financeira para autônomos e pequenos negócios.',
     year: '2026',
@@ -352,6 +361,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'controlcash',
+    image: '/projects/controlcash.webp',
     title: 'ControlCash',
     tagline: 'Controle financeiro pessoal construído sem framework.',
     year: '2026',
@@ -383,6 +393,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'investbem',
+    image: '/projects/investbem.webp',
     title: 'InvestBem',
     tagline: 'Landing page de fintech construída em torno da conversão.',
     year: '2026',
@@ -415,6 +426,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'barbearia-fino',
+    image: '/projects/barbearia-fino.webp',
     title: 'Barbearia FINOViSÚ',
     tagline: 'Agendamento em poucos toques, para quem chega pelo celular.',
     year: '2026',
@@ -446,6 +458,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'dani-brigs',
+    image: '/projects/dani-brigs.webp',
     title: 'Dani Brigs',
     tagline: 'Cardápio digital que vende pelo canal que a cliente já usava.',
     year: '2026',
