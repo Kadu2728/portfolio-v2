@@ -124,9 +124,11 @@ function Body({ slug }: { slug: string }) {
             {project.metrics.map((m, k) => (
               <div
                 key={m.label}
-                className={`py-10 ${k > 0 ? 'border-l border-line pl-6 md:pl-10' : 'pr-6'}`}
+                className={`min-w-0 py-10 ${k > 0 ? 'border-l border-line pl-6 md:pl-10' : 'pr-6'}`}
               >
-                <dd className="font-display text-3xl font-bold text-chalk">{m.value}</dd>
+                <dd className="break-words font-display text-2xl font-bold text-chalk sm:text-3xl">
+                  {m.value}
+                </dd>
                 <dt className="mt-1 font-tech text-micro uppercase text-dim">{m.label}</dt>
               </div>
             ))}

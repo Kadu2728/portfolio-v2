@@ -182,10 +182,14 @@ function Featured({ project }: { project: Project }) {
         {/* Coluna de apoio: números e o que o produto entrega */}
         <div className="lg:border-l lg:border-line lg:pl-12">
           {project.metrics && (
-            <dl className="mb-10 grid grid-cols-3 gap-4">
+            // Duas colunas até o sm: em três, um valor com palavra inteira
+            // ("Aprovado") não cabe na coluna e invade o número ao lado.
+            <dl className="mb-10 grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 sm:gap-4">
               {project.metrics.map((m) => (
-                <div key={m.label}>
-                  <dd className="font-display text-2xl font-bold text-chalk">{m.value}</dd>
+                <div key={m.label} className="min-w-0">
+                  <dd className="break-words font-display text-xl font-bold text-chalk sm:text-2xl">
+                    {m.value}
+                  </dd>
                   <dt className="mt-1 font-tech text-micro uppercase leading-tight text-dim">
                     {m.label}
                   </dt>

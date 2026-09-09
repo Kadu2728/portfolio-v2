@@ -58,7 +58,7 @@ export function Contact() {
           <MaskText
             as="h2"
             lines={c.ui.contact.title}
-            className="font-display text-5xl font-bold leading-[0.92] text-chalk"
+            className="font-display text-5xl font-bold text-chalk"
             highlightLast="text-accent"
           />
         </motion.div>
@@ -116,13 +116,17 @@ export function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: i * 0.06, duration: 0.5 }}
-                className="group flex items-center gap-6 border-b border-line py-7"
+                className="group flex items-center gap-4 border-b border-line py-7 sm:gap-6"
               >
-                <span className="w-24 shrink-0 font-tech text-micro uppercase text-dim">
-                  {c.label}
-                </span>
-                <span className="flex-1 truncate font-display text-xl font-medium text-ash transition-colors duration-300 group-hover:text-chalk md:text-2xl">
-                  {c.value}
+                {/* No celular o rótulo sobe para cima do valor: lado a lado,
+                    sobrava pouco mais de 160px e o e-mail saía cortado. */}
+                <span className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-center sm:gap-6">
+                  <span className="w-24 shrink-0 font-tech text-micro uppercase text-dim">
+                    {c.label}
+                  </span>
+                  <span className="min-w-0 truncate font-display text-xl font-medium text-ash transition-colors duration-300 group-hover:text-chalk sm:flex-1 md:text-2xl">
+                    {c.value}
+                  </span>
                 </span>
                 <ArrowUpRight
                   size={18}

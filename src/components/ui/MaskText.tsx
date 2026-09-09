@@ -64,7 +64,9 @@ export function MaskText({
                 accentIndex === i && 'text-accent'
               )}
               variants={{
-                hidden: prefersReduced ? { opacity: 0 } : { y: '112%' },
+                // 118%: o recorte agora tem folga embaixo, e 112% deixaria o
+                // topo da letra aparecer por baixo da máscara antes da subida.
+                hidden: prefersReduced ? { opacity: 0 } : { y: '118%' },
                 visible: prefersReduced
                   ? { opacity: 1, transition: { duration: 0.2 } }
                   : {

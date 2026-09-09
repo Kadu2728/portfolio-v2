@@ -66,7 +66,10 @@ export function About() {
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           {/* Coluna presa: a palavra do capítulo */}
           <div className="hidden lg:block">
-            <div className="sticky top-1/2 -translate-y-1/2 py-24">
+            {/* Centrado pelo `top`, não por translate: o deslocamento de -50%
+                é aplicado na pintura e ignora o limite do container, então no
+                começo da seção a palavra subia por cima do título. */}
+            <div className="sticky top-[calc(50vh-13rem)] py-24">
               <div className="mb-8 h-px w-full bg-line">
                 <motion.div
                   style={{ scaleX: barScale }}

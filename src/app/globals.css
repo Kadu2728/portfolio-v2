@@ -74,8 +74,10 @@
   .mask-line {
     display: block;
     overflow: hidden;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
+    /* Folga para acento e descida caberem dentro do recorte. Não é anulada
+       por margem negativa: era ela que comia o avanço entre as linhas e
+       fazia o "Ó" de CÓDIGO encostar em FORMA nos títulos de leading curto. */
+    padding-bottom: 0.14em;
   }
 }
 

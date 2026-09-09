@@ -133,127 +133,134 @@ export function Hero() {
 
       <motion.div style={{ background: halo }} aria-hidden="true" className="absolute inset-0" />
 
-      {/* ---------- Conteúdo ---------- */}
+      {/* ---------- Conteúdo ----------
+          Uma camada de paralaxe só para o hero inteiro. Quando só o bloco de
+          texto subia, ele descia por cima do card e da régua de números no
+          meio do scroll — texto sobre texto. */}
       <motion.div
         style={prefersReduced ? undefined : { y: lift, opacity: fade }}
-        className="relative mx-auto w-full max-w-shell px-6 md:px-10"
+        className="relative w-full"
       >
-        <motion.div {...seq(0.2)} className="mb-8 flex items-center gap-4">
-          <span className="font-tech text-micro text-accent tabular-nums">01</span>
-          <span aria-hidden="true" className="h-px w-10 bg-line-strong" />
-          <span className="font-tech text-micro uppercase text-smoke">{t.eyebrow}</span>
-        </motion.div>
+        <div className="mx-auto w-full max-w-shell px-6 md:px-10">
+          <motion.div {...seq(0.2)} className="mb-8 flex items-center gap-4">
+            <span className="font-tech text-micro text-accent tabular-nums">01</span>
+            <span aria-hidden="true" className="h-px w-10 bg-line-strong" />
+            <span className="font-tech text-micro uppercase text-smoke">{t.eyebrow}</span>
+          </motion.div>
 
-        <MaskText
-          as="h1"
-          animate={ready}
-          delay={0.32}
-          stagger={0.085}
-          lines={t.headline}
-          className="font-display text-5xl font-bold uppercase leading-[0.92] text-chalk"
-          accentIndex={t.headlineAccent}
-        />
+          <MaskText
+            as="h1"
+            animate={ready}
+            delay={0.32}
+            stagger={0.085}
+            lines={t.headline}
+            // Sem leading próprio: o 0.96 do token já é o mínimo que mantém o
+            // acento de "CÓDIGO" longe da linha de cima.
+            className="font-display text-5xl font-bold uppercase text-chalk"
+            accentIndex={t.headlineAccent}
+          />
 
-        <motion.p {...seq(1.05)} className="mt-7 max-w-md text-base leading-relaxed text-ash">
-          {t.intro}
-        </motion.p>
+          <motion.p {...seq(1.05)} className="mt-7 max-w-md text-base leading-relaxed text-ash">
+            {t.intro}
+          </motion.p>
 
-        <motion.div {...seq(1.2)} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-          <Link
-            href="#projetos"
-            onClick={(e) => {
-              e.preventDefault()
-              document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' })
-            }}
-            className="group inline-flex items-center gap-4"
+          <motion.div {...seq(1.2)} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <Link
+              href="#projetos"
+              onClick={(e) => {
+                e.preventDefault()
+                document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+              className="group inline-flex items-center gap-4"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white transition-all duration-300 ease-expo group-hover:scale-110 group-hover:bg-accent-bright">
+                <ArrowRight size={18} />
+              </span>
+              <span className="font-tech text-label uppercase tracking-[0.10em] text-chalk">
+                {t.viewProjects}
+              </span>
+            </Link>
+
+            <span className="flex items-center gap-2 font-tech text-micro uppercase text-smoke">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              {t.available}
+            </span>
+          </motion.div>
+
+          {/* ---------- Contatos: todos na primeira dobra ---------- */}
+          <motion.ul
+            {...seq(1.35)}
+            aria-label={t.contactsLabel}
+            className="mt-8 flex flex-wrap items-center gap-2"
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white transition-all duration-300 ease-expo group-hover:scale-110 group-hover:bg-accent-bright">
-              <ArrowRight size={18} />
-            </span>
-            <span className="font-tech text-label uppercase tracking-[0.10em] text-chalk">
-              {t.viewProjects}
-            </span>
-          </Link>
+            {contacts.map(({ Icon, label, href, ext, download }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target={ext ? '_blank' : undefined}
+                  rel={ext ? 'noopener noreferrer' : undefined}
+                  download={download}
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-sm border border-line bg-carbon/70 px-3.5 py-2.5',
+                    'font-tech text-micro text-ash backdrop-blur-sm transition-colors duration-200',
+                    'hover:border-accent-line hover:text-chalk'
+                  )}
+                >
+                  <Icon size={13} className="shrink-0 text-smoke" />
+                  {label}
+                </a>
+              </li>
+            ))}
+          </motion.ul>
+        </div>
 
-          <span className="flex items-center gap-2 font-tech text-micro uppercase text-smoke">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-            </span>
-            {t.available}
-          </span>
-        </motion.div>
-
-        {/* ---------- Contatos: todos na primeira dobra ---------- */}
-        <motion.ul
-          {...seq(1.35)}
-          aria-label={t.contactsLabel}
-          className="mt-8 flex flex-wrap items-center gap-2"
-        >
-          {contacts.map(({ Icon, label, href, ext, download }) => (
-            <li key={label}>
-              <a
-                href={href}
-                target={ext ? '_blank' : undefined}
-                rel={ext ? 'noopener noreferrer' : undefined}
-                download={download}
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-sm border border-line bg-carbon/70 px-3.5 py-2.5',
-                  'font-tech text-micro text-ash backdrop-blur-sm transition-colors duration-200',
-                  'hover:border-accent-line hover:text-chalk'
-                )}
-              >
-                <Icon size={13} className="shrink-0 text-smoke" />
-                {label}
-              </a>
-            </li>
-          ))}
-        </motion.ul>
-      </motion.div>
-
-      {/* ---------- Case em destaque ---------- */}
-      {featured && (
-        <motion.div
-          {...seq(1.5)}
-          className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10 lg:-mt-4 lg:flex lg:justify-end"
-        >
-          <Link
-            href={localeHref(locale, `/projects/${featured.slug}`)}
-            className="group block w-full rounded-sm border border-line bg-carbon/80 p-6 backdrop-blur-md transition-colors duration-500 hover:border-accent-line lg:max-w-sm"
+        {/* ---------- Case em destaque ---------- */}
+        {featured && (
+          <motion.div
+            {...seq(1.5)}
+            className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10 lg:-mt-4 lg:flex lg:justify-end"
           >
-            <span className="flex items-center gap-2 font-tech text-micro uppercase text-accent-text">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              {t.featured}
-            </span>
-            <p className="mt-4 font-display text-2xl font-bold uppercase text-chalk">
-              {featured.title}
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-ash">{featured.tagline}</p>
-            <span className="mt-5 inline-flex items-center gap-2 font-tech text-micro uppercase text-chalk">
-              {t.viewCase}
-              <ArrowUpRight
-                size={13}
-                className="text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </span>
-          </Link>
-        </motion.div>
-      )}
+            <Link
+              href={localeHref(locale, `/projects/${featured.slug}`)}
+              className="group block w-full rounded-sm border border-line bg-carbon/80 p-6 backdrop-blur-md transition-colors duration-500 hover:border-accent-line lg:max-w-sm"
+            >
+              <span className="flex items-center gap-2 font-tech text-micro uppercase text-accent-text">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                {t.featured}
+              </span>
+              <p className="mt-4 font-display text-2xl font-bold uppercase text-chalk">
+                {featured.title}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ash">{featured.tagline}</p>
+              <span className="mt-5 inline-flex items-center gap-2 font-tech text-micro uppercase text-chalk">
+                {t.viewCase}
+                <ArrowUpRight
+                  size={13}
+                  className="text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </span>
+            </Link>
+          </motion.div>
+        )}
 
-      {/* ---------- Números ---------- */}
-      <motion.div {...seq(1.65)} className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10">
-        <dl className="flex flex-wrap items-end gap-x-10 gap-y-4 border-t border-line pt-6">
-          {[
-            { v: String(c.projects.length), l: t.statsProjects },
-            { v: '6', l: t.statsLive },
-            { v: highlights.total, l: t.statsCerts },
-          ].map((s) => (
-            <div key={s.l} className="flex items-baseline gap-2.5">
-              <dd className="font-display text-xl font-bold tabular-nums text-chalk">{s.v}</dd>
-              <dt className="font-tech text-micro uppercase text-dim">{s.l}</dt>
-            </div>
-          ))}
-        </dl>
+        {/* ---------- Números ---------- */}
+        <motion.div {...seq(1.65)} className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10">
+          <dl className="flex flex-wrap items-end gap-x-10 gap-y-4 border-t border-line pt-6">
+            {[
+              { v: String(c.projects.length), l: t.statsProjects },
+              { v: '6', l: t.statsLive },
+              { v: highlights.total, l: t.statsCerts },
+            ].map((s) => (
+              <div key={s.l} className="flex items-baseline gap-2.5">
+                <dd className="font-display text-xl font-bold tabular-nums text-chalk">{s.v}</dd>
+                <dt className="font-tech text-micro uppercase text-dim">{s.l}</dt>
+              </div>
+            ))}
+          </dl>
+        </motion.div>
       </motion.div>
     </section>
   )
