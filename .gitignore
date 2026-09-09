@@ -3,3 +3,6 @@ node_modules/
 
 # Artefato incremental do TypeScript
 tsconfig.tsbuildinfo
+
+# Config local do agente/editor
+.claude/

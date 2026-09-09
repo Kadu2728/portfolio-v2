@@ -20,7 +20,7 @@ export type Bundle = {
   /** Só o que muda de idioma; e-mail, telefone e links vêm de `profile`. */
   role: string
   location: string
-  education: { org: string; course: string; period: string }
+  education: readonly { org: string; course: string; period: string }[]
   experience: readonly {
     org: string
     role: string

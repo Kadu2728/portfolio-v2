@@ -135,13 +135,15 @@ export function About() {
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <TechLabel className="mb-5">{c.ui.about.education}</TechLabel>
-            <p className="font-display text-lg font-semibold text-chalk">
-              {c.education.org}
-            </p>
-            <p className="mt-1 text-base text-ash">{c.education.course}</p>
-            <p className="mt-2 font-tech text-micro uppercase text-dim">
-              {c.education.period}
-            </p>
+            <div className="space-y-6">
+              {c.education.map((e) => (
+                <div key={e.course}>
+                  <p className="font-display text-lg font-semibold text-chalk">{e.org}</p>
+                  <p className="mt-1 text-base text-ash">{e.course}</p>
+                  <p className="mt-2 font-tech text-micro uppercase text-dim">{e.period}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="md:col-span-2">

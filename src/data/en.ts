@@ -48,11 +48,18 @@ export const enChapters: Chapter[] = [
 export const enProfile = {
   role: 'Full-Stack Developer',
   location: 'São Paulo, Brazil',
-  education: {
-    org: 'FIAP',
-    course: 'Information Technology Management',
-    period: 'Feb 2026 — Jul 2028',
-  },
+  education: [
+    {
+      org: 'FIAP',
+      course: 'Information Technology Management',
+      period: 'Feb 2026 — Jul 2028',
+    },
+    {
+      org: 'FIAP',
+      course: 'Digital Marketing and Social Media',
+      period: 'In progress',
+    },
+  ],
   experience: [
     {
       org: 'Independent Projects',

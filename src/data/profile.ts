@@ -22,11 +22,20 @@ export const profile = {
   intro:
     'Desenvolvedor full-stack em São Paulo. Trabalho o produto inteiro — modelo o banco, escrevo a API e desenho a interface que a pessoa toca. No último ano publiquei seis aplicações de ponta a ponta, sozinho.',
 
-  education: {
-    org: 'FIAP',
-    course: 'Gestão de Tecnologia da Informação',
-    period: 'Fev 2026 — Jul 2028',
-  },
+  // Duas formações em andamento na FIAP: a de tecnologia é a principal, a de
+  // marketing entra depois — a ordem aqui é a ordem de leitura na página.
+  education: [
+    {
+      org: 'FIAP',
+      course: 'Gestão de Tecnologia da Informação',
+      period: 'Fev 2026 — Jul 2028',
+    },
+    {
+      org: 'FIAP',
+      course: 'Marketing Digital e Social Media',
+      period: 'Em andamento',
+    },
+  ],
 
   experience: [
     {
