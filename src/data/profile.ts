@@ -1,49 +1,47 @@
-import type { Chapter, NavItem } from '@/types'
+import type { Chapter, NavItem, Proof } from '@/types'
 
 export const profile = {
   name: 'Carlos Eduardo Diogo Gavioli',
   short: 'Carlos Eduardo',
   initials: 'CE',
-  role: 'Full-Stack Developer',
+  role: 'Product Owner · Produto, Negócios e Dados',
   location: 'São Paulo, Brasil',
   email: 'kacadu007@gmail.com',
   phone: '(11) 99358-2543',
   whatsapp: 'https://wa.me/5511993582543',
   github: 'https://github.com/Kadu2728',
   githubUser: 'Kadu2728',
-  linkedin: 'https://www.linkedin.com/in/carlos-eduardo-diogo-192282358',
+  linkedin: 'https://www.linkedin.com/in/carlos-eduardo-diogo-gavioli-192282358',
   available: true,
   cv: '/cv-carlos-eduardo-diogo.pdf',
 
   /** Headline do hero, quebrada em linhas com comportamento próprio. */
-  headline: ['Eu construo', 'experiências', 'digitais.'],
-  headlineTail: 'Não apenas aplicações.',
+  headline: ['Problema', 'de negócio', 'vira produto.'],
+  headlineTail: 'Não apenas tela.',
 
   intro:
-    'Desenvolvedor full-stack em São Paulo. Trabalho o produto inteiro — modelo o banco, escrevo a API e desenho a interface que a pessoa toca. No último ano publiquei seis aplicações de ponta a ponta, sozinho.',
+    'Fui Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe finalista do NEXT FIAP 2026. Identifico o problema, analiso os dados, traduzo a necessidade em requisito e conduzo a construção com IA até o produto publicado.',
 
-  // Duas formações em andamento na FIAP: a de tecnologia é a principal, a de
-  // marketing entra depois — a ordem aqui é a ordem de leitura na página.
   education: [
     {
       org: 'FIAP',
-      course: 'Gestão de Tecnologia da Informação',
-      period: 'Fev 2026 — Jul 2028',
+      course: 'Gestão da Tecnologia da Informação',
+      period: 'Fev 2026 — Fev 2028',
     },
     {
-      org: 'FIAP',
-      course: 'Marketing Digital e Social Media',
-      period: 'Em andamento',
+      org: 'Wizard by Pearson',
+      course: 'Inglês',
+      period: 'Abr 2021 — Set 2023 · concluído',
     },
   ],
 
   experience: [
     {
-      org: 'Projetos Independentes',
-      role: 'Full Stack Developer · Autônomo',
-      period: 'Jul 2025 — Presente',
+      org: 'Projetos independentes',
+      role: 'Desenvolvimento de Produtos Digitais',
+      period: '2026 — Presente',
       place: 'São Paulo · Remoto',
-      body: 'Projeto, construo e publico aplicações web de ponta a ponta — do UX/UI e front-end à API REST, banco de dados e produção. Todos desenvolvidos sozinho, do conceito ao produto no ar.',
+      body: 'Conduzo produtos próprios do início ao fim: identificação do problema, requisitos, priorização, especificação da arquitetura e dos prompts, construção com IA, publicação e evolução.',
       current: true,
     },
     {
@@ -51,16 +49,41 @@ export const profile = {
       role: 'Profissional de Merchandising',
       period: 'Jan 2026 — Presente',
       place: 'São Paulo, SP',
-      body: 'Execução em ponto de venda e análise de giro. É dessa rotina que nasceu o GIRO — software para um problema que eu vivo todo dia.',
+      body: 'Execução no ponto de venda, com organização de produtos, acompanhamento de ruptura e giro. Foi observando essa rotina que nasceu o GIRO.',
       current: true,
     },
   ],
 
   languages: [
     { code: 'PT', name: 'Português', level: 'Nativo' },
-    { code: 'EN', name: 'Inglês', level: 'Intermediário' },
+    { code: 'EN', name: 'Inglês', level: 'Intermediário-avançado' },
   ],
 } as const
+
+/**
+ * Provas, não adjetivos. Cada uma é verificável e sai do currículo — é a
+ * primeira coisa que um recrutador precisa ver depois do título.
+ */
+export const proofs: Proof[] = [
+  {
+    id: 'next',
+    index: '01',
+    label: 'Finalista do NEXT FIAP 2026',
+    body: 'Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe: visão do produto, priorização do backlog e desenvolvimento.',
+  },
+  {
+    id: 'ceap',
+    index: '02',
+    label: 'Aprovação institucional',
+    body: 'Apresentei o CEAP Connect ao Diretor do CEAP, que aprovou o avanço do projeto e o encaminhou à Coordenação de TI da instituição.',
+  },
+  {
+    id: 'fiap',
+    index: '03',
+    label: 'Reconhecimento acadêmico FIAP',
+    body: 'Média superior a 8,0 em Gestão da Tecnologia da Informação, reconhecida com a continuidade do acesso à plataforma Alura.',
+  },
+]
 
 /** `key` casa com os rótulos em ui.nav; o href é igual nos dois idiomas. */
 export const navItems = [
@@ -75,41 +98,44 @@ export const navItems = [
 /**
  * A narrativa do About. Cada capítulo tem uma palavra-chave que domina a tela
  * enquanto a seção está presa no scroll — a palavra é o elemento gráfico.
+ *
+ * A sequência é a do trabalho de produto: problema, dado, requisito,
+ * construção, entrega. Não é a história de como aprendi a programar.
  */
 export const chapters: Chapter[] = [
   {
-    id: 'curiosity',
+    id: 'problema',
     index: '01',
-    word: 'Curiosidade',
-    title: 'Começou querendo saber como as coisas funcionam por dentro.',
-    body: 'Não foi um curso que me trouxe até aqui. Foi abrir o inspetor de elementos e não conseguir mais fechar. A pergunta nunca foi "como faço isso funcionar", e sim "por que funciona assim".',
+    word: 'Problema',
+    title: 'Antes de escolher a tecnologia, eu quero saber quem perde o quê.',
+    body: 'O GIRO existe porque eu conto estoque em gôndola e anotava no papel. O CEAP Connect existe porque candidato desiste no meio do processo seletivo. Produto sem problema identificado é exercício de programação.',
   },
   {
-    id: 'code',
+    id: 'dado',
     index: '02',
-    word: 'Código',
-    title: 'Aprendi que fazer funcionar é só metade do trabalho.',
-    body: 'A outra metade é fazer de um jeito que a próxima pessoa entenda — inclusive eu, três meses depois. Escrevo código pensando em quem vai ler, não em quem vai executar.',
+    word: 'Dado',
+    title: 'Opinião sobre prioridade é barata. Funil é verificável.',
+    body: 'No CEAP eu analisei o funil do último processo seletivo — 777 inscritos, 206 presentes na prova — para achar a etapa onde a evasão realmente acontecia. O backlog foi priorizado a partir dessa etapa, não da ideia que parecia mais bonita.',
   },
   {
-    id: 'design',
+    id: 'requisito',
     index: '03',
-    word: 'Design',
-    title: 'Interface não é enfeite. É onde o produto acontece.',
-    body: 'Hierarquia tipográfica, espaçamento consistente, estado de foco visível, resposta em rede lenta. Detalhe que ninguém elogia, mas todo mundo sente quando falta.',
+    word: 'Requisito',
+    title: 'Traduzir conversa de stakeholder em algo construível.',
+    body: 'Discovery, regra de negócio, user story, critério de aceite, épico, roadmap. É o trabalho de transformar "precisamos engajar mais" em uma lista do que entra no produto, em que ordem e por quê.',
   },
   {
-    id: 'product',
+    id: 'ia',
     index: '04',
-    word: 'Produto',
-    title: 'Software sem problema real é exercício.',
-    body: 'Antes de escolher a stack, eu quero saber quem sofre com o quê. O GIRO existe porque eu conto estoque em gôndola. O CEAP Connect existe porque candidato desiste no meio do processo.',
+    word: 'IA',
+    title: 'Eu especifico e construo com IA — não peço mágica.',
+    body: 'Defino a arquitetura, escrevo as especificações e os prompts e conduzo a construção. A IA acelera a execução; a decisão de produto, a regra de negócio e o que é aceitável continuam sendo minhas.',
   },
   {
-    id: 'fullstack',
+    id: 'entrega',
     index: '05',
-    word: 'Full-Stack',
-    title: 'Do modelo de dados ao pixel, sem terceirizar decisão.',
-    body: 'Consigo desenhar a tabela, expor a rota, consumir no front e colocar em produção. Isso não me faz especialista em tudo — me faz capaz de entregar o produto inteiro sem esperar por ninguém.',
+    word: 'Entrega',
+    title: 'Produto no ar, não slide de produto.',
+    body: 'Quatro produtos publicados e um protótipo em campo. Sei a diferença entre as duas coisas e digo qual é qual — porque é isso que separa portfólio de promessa.',
   },
 ]

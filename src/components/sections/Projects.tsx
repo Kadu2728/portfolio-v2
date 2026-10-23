@@ -7,28 +7,31 @@ import { ArrowUpRight, Github, Star } from 'lucide-react'
 import { MaskText } from '@/components/ui/MaskText'
 import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { EASE, inView } from '@/lib/motion'
-import { pad } from '@/lib/utils'
 import { ProjectPlate } from '@/components/ui/ProjectPlate'
+import { StageTag } from '@/components/ui/StageTag'
 import { useLocale, localeHref } from '@/lib/locale'
 import type { Project } from '@/types'
 
 /**
  * PROJETOS
  *
- * Dois pesos: o CEAP Connect ocupa um bloco inteiro, com métricas e
- * funcionalidades à vista; os demais entram numa grade regular com resumo.
+ * Três pesos. O CEAP Connect ocupa um bloco inteiro, com o funil analisado e
+ * o que foi construído à vista; os outros quatro do posicionamento atual
+ * entram numa grade regular; os anteriores ficam numa seção secundária, em
+ * cards compactos.
  *
- * A galeria horizontal saiu: escondia projeto atrás de scroll lateral, e o
- * objetivo aqui é que todos sejam lidos sem esforço.
+ * Tirar os antigos do ar apagaria o histórico; deixá-los no mesmo peso dos
+ * atuais diluiria o posicionamento de produto. A separação resolve as duas
+ * coisas.
  */
 const HERO_SLUG = 'ceap-connect'
 
 export function Projects() {
-  const { c, locale } = useLocale()
-  const projects = c.projects
+  const { c } = useLocale()
   const t = c.ui.projects
-  const hero = projects.find((p) => p.slug === HERO_SLUG)
-  const rest = projects.filter((p) => p.slug !== HERO_SLUG)
+  const hero = c.projects.find((p) => p.slug === HERO_SLUG)
+  const main = c.projects.filter((p) => !p.early && p.slug !== HERO_SLUG)
+  const early = c.projects.filter((p) => p.early)
 
   return (
     <section
@@ -51,7 +54,7 @@ export function Projects() {
 
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-text text-lg text-ash">
-            {projects.length} {t.intro}
+            {main.length + 1} {t.intro}
           </p>
         </Reveal>
 
@@ -61,16 +64,32 @@ export function Projects() {
           <div className="mb-10 flex items-end justify-between gap-6 border-b border-line pb-5">
             <h3 className="font-display text-2xl font-semibold text-chalk">{t.others}</h3>
             <span className="font-tech text-micro uppercase text-dim tabular-nums">
-              {rest.length} {t.count}
+              {main.length} {t.count}
             </span>
           </div>
 
-          <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {rest.map((p, i) => (
+          <ul className="grid gap-5 md:grid-cols-2">
+            {main.map((p, i) => (
               <Card key={p.slug} project={p} index={i + 2} />
             ))}
           </ul>
         </div>
+
+        {/* Primeiros projetos: mesma informação, um terço do espaço. */}
+        {early.length > 0 && (
+          <div className="mt-24">
+            <div className="mb-8 border-b border-line pb-5">
+              <h3 className="font-display text-xl font-semibold text-chalk">{t.early}</h3>
+              <p className="mt-3 max-w-text text-base text-smoke">{t.earlyIntro}</p>
+            </div>
+
+            <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {early.map((p, i) => (
+                <EarlyCard key={p.slug} project={p} index={i + main.length + 2} />
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   )
@@ -120,6 +139,7 @@ function Featured({ project }: { project: Project }) {
               <Star size={11} className="fill-current" />
               {t.featured}
             </span>
+            <StageTag stage={project.stage} />
             <span className="font-tech text-micro uppercase text-dim">
               {project.category} · {project.year}
             </span>
@@ -212,12 +232,12 @@ function Featured({ project }: { project: Project }) {
           <ul className="flex flex-wrap gap-2">
             {[...project.tech.frontend, ...project.tech.backend, ...project.tech.tools]
               .slice(0, 10)
-              .map((t) => (
+              .map((x) => (
                 <li
-                  key={t}
+                  key={x}
                   className="rounded-xs border border-line px-2.5 py-1 font-tech text-micro text-smoke"
                 >
-                  {t}
+                  {x}
                 </li>
               ))}
           </ul>
@@ -227,7 +247,7 @@ function Featured({ project }: { project: Project }) {
   )
 }
 
-/** Card de projeto: título, resumo e stack. Sem imagem — o texto é o argumento. */
+/** Card do posicionamento atual: captura, resumo e estado. */
 function Card({ project, index }: { project: Project; index: number }) {
   const { locale } = useLocale()
   const prefersReduced = useReducedMotion()
@@ -237,7 +257,7 @@ function Card({ project, index }: { project: Project; index: number }) {
       initial={{ opacity: 0, y: prefersReduced ? 0 : 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={inView}
-      transition={{ duration: 0.55, ease: EASE, delay: (index % 3) * 0.07 }}
+      transition={{ duration: 0.55, ease: EASE, delay: (index % 2) * 0.07 }}
     >
       <div className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-line bg-carbon transition-colors duration-500 hover:border-accent-line hover:bg-steel">
         <Link
@@ -249,11 +269,14 @@ function Card({ project, index }: { project: Project; index: number }) {
         <ProjectPlate project={project} index={index} />
 
         <div className="relative flex flex-1 flex-col p-6">
-          <h4 className="font-display text-2xl font-semibold text-chalk">{project.title}</h4>
+          <div className="flex flex-wrap items-center gap-3">
+            <h4 className="font-display text-2xl font-semibold text-chalk">{project.title}</h4>
+            <StageTag stage={project.stage} />
+          </div>
           <p className="mt-2 text-base font-medium text-accent-text">{project.tagline}</p>
           <p className="mt-4 flex-1 text-base leading-relaxed text-ash">{project.overview}</p>
 
-          <div className="mt-6 flex items-center justify-between border-t border-line pt-5">
+          <div className="mt-6 flex items-center justify-between gap-4 border-t border-line pt-5">
             <span className="font-tech text-micro uppercase text-dim">{project.role}</span>
             <span className="relative z-20 flex items-center gap-3">
               {project.github && (
@@ -275,6 +298,42 @@ function Card({ project, index }: { project: Project; index: number }) {
           </div>
         </div>
       </div>
+    </motion.li>
+  )
+}
+
+/** Primeiros projetos: sem imagem, sem resumo longo. Título, estado e link. */
+function EarlyCard({ project, index }: { project: Project; index: number }) {
+  const { locale } = useLocale()
+  const prefersReduced = useReducedMotion()
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: prefersReduced ? 0 : 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={inView}
+      transition={{ duration: 0.5, ease: EASE, delay: (index % 4) * 0.05 }}
+    >
+      <Link
+        href={localeHref(locale, `/projects/${project.slug}`)}
+        className="group flex h-full flex-col rounded-sm border border-line bg-carbon p-5 transition-colors duration-300 hover:border-line-strong hover:bg-steel"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <span className="font-tech text-micro uppercase text-dim">{project.category}</span>
+          <StageTag stage={project.stage} />
+        </div>
+        <p className="mt-4 font-display text-lg font-semibold leading-snug text-chalk">
+          {project.title}
+        </p>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-smoke">{project.tagline}</p>
+        <span className="mt-4 inline-flex items-center gap-2 font-tech text-micro uppercase text-dim transition-colors group-hover:text-chalk">
+          {project.role}
+          <ArrowUpRight
+            size={13}
+            className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </span>
+      </Link>
     </motion.li>
   )
 }

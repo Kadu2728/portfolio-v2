@@ -1,17 +1,26 @@
-import type { Chapter, Project, StackGroup } from '@/types'
+import type { Chapter, Project, Proof, StackGroup } from '@/types'
 import type { Service } from '@/data/services'
 import type { UIStrings } from '@/data/ui'
 
 import { ptUI, enUI } from '@/data/ui'
-import { chapters, profile } from '@/data/profile'
+import { chapters, profile, proofs } from '@/data/profile'
 import { services, servicesIntro } from '@/data/services'
 import { projects } from '@/data/projects'
 import { stackGroups, marquee } from '@/data/stack'
-import { enChapters, enProfile, enProjects, enServices, enServicesIntro, enStack } from '@/data/en'
+import {
+  enChapters,
+  enProfile,
+  enProjects,
+  enProofs,
+  enServices,
+  enServicesIntro,
+  enStack,
+} from '@/data/en'
 
 export type Bundle = {
   ui: UIStrings
   chapters: Chapter[]
+  proofs: Proof[]
   projects: Project[]
   services: Service[]
   servicesIntro: string
@@ -35,6 +44,7 @@ export type Bundle = {
 const pt: Bundle = {
   ui: ptUI,
   chapters,
+  proofs,
   projects,
   services,
   servicesIntro,
@@ -50,6 +60,7 @@ const pt: Bundle = {
 const en: Bundle = {
   ui: enUI,
   chapters: enChapters,
+  proofs: enProofs,
   projects: enProjects,
   services: enServices,
   servicesIntro: enServicesIntro,

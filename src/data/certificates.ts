@@ -1,46 +1,52 @@
-import type { Certificate } from '@/types'
+import type { Certificate, CertificateArea } from '@/types'
 
+/**
+ * Certificações do currículo, agrupadas por área de aplicação.
+ *
+ * Sem contagem total e sem carga horária: o que importa é em que o estudo
+ * foi aplicado, e número redondo sem comprovação só convida a pergunta
+ * errada numa entrevista.
+ */
 export const certificates: Certificate[] = [
-  { title: 'Front End', institution: 'FIAP' },
-  { title: 'Android', institution: 'FIAP' },
-  { title: 'Algoritmos: Aprenda a Programar', institution: 'FIAP' },
-  { title: 'IA Responsável', institution: 'FIAP' },
-  { title: 'Agentes Autônomos (Agentic AI)', institution: 'FIAP' },
-  { title: 'IA Generativa', institution: 'FIAP' },
-  { title: 'Big Data & Analytics', institution: 'FIAP' },
-  { title: 'Big Data', institution: 'FIAP' },
-  { title: 'Banco de Dados Oracle', institution: 'FIAP' },
-  { title: 'Segurança da Informação', institution: 'FIAP' },
-  { title: 'Formação Social e Sustentabilidade', institution: 'FIAP' },
-  { title: 'Marketing em Plataformas de Social Media', institution: 'FIAP' },
+  // IA e Machine Learning
+  { title: 'Building with the Claude API', institution: 'Anthropic', area: 'ai' },
+  { title: 'Claude Code in Action', institution: 'Anthropic', area: 'ai' },
+  { title: 'Model Context Protocol (MCP)', institution: 'Anthropic', area: 'ai' },
+  { title: 'AI Fluency', institution: 'Anthropic', area: 'ai' },
+  { title: 'AI-Native Software Engineering', institution: 'Alura', area: 'ai' },
+  { title: 'Inteligência Artificial Responsável', institution: 'FIAP', area: 'ai' },
+  { title: 'Chatbots e Agentes Autônomos (Agentic AI)', institution: 'FIAP', area: 'ai' },
+  { title: 'Machine Learning Foundations', institution: 'AWS', area: 'ai' },
+  {
+    title: 'Fundamentos para uma Carreira em IA Generativa',
+    institution: 'Microsoft · LinkedIn',
+    area: 'ai',
+  },
 
-  { title: 'AI-Native Software Engineering', institution: 'Alura' },
-  { title: 'Iniciando em Dados: Aprendendo Python', institution: 'Alura' },
-  { title: 'SQL: Consultas e Manipulação de Dados', institution: 'Alura' },
-  { title: 'Engenharia de Software na Era da IA', institution: 'Alura' },
-  { title: 'Segurança da Informação para Todos', institution: 'Alura' },
-  { title: 'IA: Explorando IA Generativa', institution: 'Alura' },
+  // Dados e BI
+  { title: 'Big Data & Analytics', institution: 'FIAP', area: 'data' },
+  { title: 'Banco de Dados Oracle', institution: 'FIAP', area: 'data' },
+  { title: 'SQL', institution: 'Alura', area: 'data' },
+  { title: 'Bootcamp Excel com IA e Claude', institution: 'Santander', area: 'data' },
 
-  { title: 'AI Fluency: Framework & Foundations', institution: 'Anthropic' },
-  { title: 'Building with the Claude API', institution: 'Anthropic' },
-  { title: 'Model Context Protocol (MCP)', institution: 'Anthropic' },
+  // Tecnologia e Cloud
+  { title: 'Engenharia de Software', institution: 'FIAP', area: 'tech' },
+  { title: 'Python Development', institution: 'FIAP', area: 'tech' },
+  { title: 'Front-End', institution: 'FIAP', area: 'tech' },
+  { title: 'AWS SimuLearn: Cloud Computing Essentials', institution: 'AWS', area: 'tech' },
+  { title: 'Segurança da Informação', institution: 'Alura', area: 'tech' },
 
-  { title: 'AWS SimuLearn: Fundamentos da Computação em Nuvem', institution: 'AWS' },
-  { title: 'Publicidade Digital: Dados, IA e Legalidade', institution: 'Santander Open Academy' },
-  { title: 'Storytelling para Marketing Digital', institution: 'Santander Open Academy' },
+  // Outros
+  { title: 'Marketing em Plataformas de Social Media', institution: 'FIAP', area: 'other' },
+  { title: 'Publicidade Digital', institution: 'Santander', area: 'other' },
+  { title: 'Storytelling', institution: 'Santander', area: 'other' },
 ]
 
-/** Ordem de exibição dos grupos — Anthropic em destaque, por especialização. */
-export const institutionOrder = [
-  'Anthropic',
-  'FIAP',
-  'Alura',
-  'AWS',
-  'Santander Open Academy',
-] as const
+/** Ordem de exibição dos grupos — IA primeiro, por ser o diferencial. */
+export const areaOrder: readonly CertificateArea[] = ['ai', 'data', 'tech', 'other'] as const
 
 export const highlights = {
-  total: '40+',
-  anthropic: '13+',
-  anthropicFocus: 'Engenharia de IA e Engenharia de Prompt',
+  anthropicFocus: 'Engenharia de IA aplicada a produto',
+  /** Quatro certificações Anthropic nomeadas no currículo. */
+  anthropicCount: '4',
 }

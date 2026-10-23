@@ -27,23 +27,24 @@ const grotesk = Space_Grotesk({
 
 const title = `${profile.short} — ${profile.role}`
 const description =
-  'Desenvolvedor full-stack em São Paulo. Construo experiências digitais do modelo de dados à interface — Next.js, React, TypeScript, FastAPI e PostgreSQL.'
+  'Product Owner e estudante de GTI na FIAP, em São Paulo. Transformo problema de negócio em produto digital: discovery, requisitos, análise de dados e construção com IA generativa.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: title, template: `%s — ${profile.short}` },
   description,
   keywords: [
-    'desenvolvedor full-stack',
-    'creative developer',
-    'React',
+    'Product Owner',
+    'produto digital',
+    'análise de negócios',
+    'business intelligence',
+    'análise de dados',
+    'Scrum',
+    'product discovery',
+    'IA generativa',
+    'SQL',
     'Next.js',
-    'TypeScript',
     'FastAPI',
-    'Python',
-    'PostgreSQL',
-    'IA Generativa',
-    'UX/UI',
     'São Paulo',
     'portfólio',
   ],

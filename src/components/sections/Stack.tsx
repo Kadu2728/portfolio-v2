@@ -42,13 +42,12 @@ export function Stack() {
           className="font-display text-3xl font-bold text-chalk"
         />
         <p id="stack-titulo" className="sr-only">
-          Stack técnica
+          {c.ui.sections.stack}
         </p>
         <Reveal delay={0.1}>
-          <p className="mt-6 max-w-text text-lg text-ash">
-            Só está aqui o que já entrou em projeto entregue. A ordem dentro de cada camada é
-            intencional: começa pelo que domino melhor.
-          </p>
+          {/* Vinha escrito em português dentro do componente: na versão em
+              inglês a seção aparecia com o texto do outro idioma. */}
+          <p className="mt-6 max-w-text text-lg text-ash">{c.ui.stack.intro}</p>
         </Reveal>
       </div>
 

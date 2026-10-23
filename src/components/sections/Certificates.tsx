@@ -4,15 +4,18 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { MaskText } from '@/components/ui/MaskText'
 import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { EASE, inView } from '@/lib/motion'
-import { certificates, highlights, institutionOrder } from '@/data/certificates'
+import { certificates, highlights, areaOrder } from '@/data/certificates'
 import { useLocale } from '@/lib/locale'
 
 /**
- * FORMAÇÃO — densa de propósito.
+ * CURSOS E CERTIFICAÇÕES
  *
- * Certificado é volume, não narrativa: o valor está na quantidade e na
- * procedência. Por isso vira uma tabela técnica compacta em vez de cards
- * grandes, que roubariam peso dos projetos logo acima.
+ * Agrupado por área de aplicação, não por instituição: a pergunta de quem
+ * contrata é "em que isso foi usado", não "de onde veio o certificado". A
+ * instituição aparece em cada item, em peso menor.
+ *
+ * Sem total e sem carga horária — número redondo sem comprovação só convida
+ * a pergunta errada numa entrevista.
  */
 export function Certificates() {
   const { c } = useLocale()
@@ -34,13 +37,11 @@ export function Certificates() {
           className="font-display text-3xl font-bold text-chalk"
         />
         <p id="formacao-titulo" className="sr-only">
-          Certificados
+          {c.ui.sections.education}
         </p>
 
         <Reveal delay={0.1}>
-          <p className="mt-6 max-w-text text-lg text-ash">
-            {highlights.total} {c.ui.certificates.intro} {highlights.anthropicFocus}.
-          </p>
+          <p className="mt-6 max-w-text text-lg text-ash">{c.ui.certificates.intro}</p>
         </Reveal>
 
         {/* Destaque de especialização: o diferencial real da lista */}
@@ -54,38 +55,39 @@ export function Certificates() {
                 {highlights.anthropicFocus}
               </p>
             </div>
-            <p className="max-w-xs text-sm leading-relaxed text-ash">
+            <p className="max-w-sm text-sm leading-relaxed text-ash">
               {c.ui.certificates.specializationBody}
             </p>
           </div>
         </Reveal>
 
-        {/* Tabela por instituição */}
+        {/* Tabela por área */}
         <div className="mt-14 border-t border-line">
-          {institutionOrder.map((inst) => {
-            const list = certificates.filter((c) => c.institution === inst)
+          {areaOrder.map((area) => {
+            const list = certificates.filter((cert) => cert.area === area)
             if (!list.length) return null
             return (
               <motion.div
-                key={inst}
+                key={area}
                 initial={{ opacity: 0, y: prefersReduced ? 0 : 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={inView}
                 transition={{ duration: 0.55, ease: EASE }}
-                className="grid gap-4 border-b border-line py-8 md:grid-cols-[200px_1fr] md:gap-10"
+                className="grid gap-4 border-b border-line py-8 md:grid-cols-[220px_1fr] md:gap-10"
               >
-                {/* Só o nome da instituição. A contagem por grupo expunha
-                    números pequenos ("AWS 1") que enfraquecem o total. */}
                 <div>
-                  <p className="font-display text-lg font-semibold text-chalk">{inst}</p>
+                  <p className="font-display text-lg font-semibold text-chalk">
+                    {c.ui.certificates.areas[area]}
+                  </p>
                 </div>
-                <ul className="flex flex-wrap gap-x-2 gap-y-2">
-                  {list.map((c) => (
+                <ul className="flex flex-wrap gap-2">
+                  {list.map((cert) => (
                     <li
-                      key={c.title}
-                      className="border border-line px-3 py-1.5 font-tech text-micro text-ash transition-colors duration-200 hover:border-line-strong hover:text-chalk"
+                      key={cert.title}
+                      className="flex min-w-0 flex-wrap items-baseline gap-x-2 border border-line px-3 py-1.5 font-tech text-micro text-ash transition-colors duration-200 hover:border-line-strong hover:text-chalk"
                     >
-                      {c.title}
+                      <span className="break-words">{cert.title}</span>
+                      <span className="text-dim">{cert.institution}</span>
                     </li>
                   ))}
                 </ul>

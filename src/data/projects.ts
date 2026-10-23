@@ -1,189 +1,224 @@
 import type { Project } from '@/types'
 
 /**
- * Fonte única dos projetos. Alimenta a galeria horizontal, a listagem e as
- * rotas /projects/[slug] — adicionar um projeto é adicionar um objeto aqui.
+ * Fonte única dos projetos. Alimenta a listagem e as rotas /projects/[slug].
+ *
+ * Ordem: os cinco do posicionamento atual primeiro, depois os marcados como
+ * `early` — projetos anteriores, que continuam acessíveis numa seção
+ * secundária. Cada entrada declara o `stage`: produto publicado, protótipo
+ * ou repositório. Misturar os três é o jeito mais rápido de perder
+ * credibilidade numa conversa.
  */
 export const projects: Project[] = [
   {
     slug: 'ceap-connect',
     image: '/projects/ceap-connect.webp',
     title: 'CEAP Connect',
-    tagline: 'Processo seletivo transformado em jornada gamificada, com IA.',
+    tagline: 'Acompanha o candidato da inscrição ao resultado, para enfrentar a evasão.',
     year: '2026',
     category: 'Produto',
-    role: 'Produto · UX/UI · Full-Stack',
+    stage: 'published',
+    role: 'Product Owner · Discovery · Construção com IA',
     featured: true,
     overview:
-      'O CEAP é uma escola técnica gratuita para jovens em vulnerabilidade social. O CEAP Connect transforma o processo seletivo — que era burocrático e silencioso — numa jornada com missões, progressão e recompensas reais.',
+      'Challenge FIAP, projeto da minha equipe finalista do NEXT FIAP 2026. Plataforma web publicada que acompanha o candidato do CEAP — escola técnica gratuita para jovens — da inscrição ao resultado do processo seletivo.',
     challenge:
-      'Candidato desiste no meio do processo seletivo. Não por falta de capacidade, mas por falta de contexto: não sabe o que vem depois, não sabe se está indo bem, não tem a quem perguntar. O processo é uma caixa preta que só devolve resposta no fim.',
+      'O candidato desaparece no meio do processo seletivo. A coordenação só descobre a desistência quando a sala da prova tem menos gente do que a lista de inscritos, e nessa altura não há mais nada a fazer. Faltava enxergar quem estava em risco enquanto ainda dava tempo de agir.',
     solution:
-      'Quebrei o processo em missões visíveis, com progressão de Iniciante a Mestre CEAP. Cada etapa concluída rende XP e aproxima o candidato de recompensas que valem alguma coisa fora da plataforma: cursos e certificações de AWS, Google, Cisco e Fundação Bradesco. O ciclo fecha num painel onde a equipe confirma cada entrega — prêmio que não chega na mão não é prêmio, é promessa.',
+      'Fiz o discovery com a área de Projetos e Inovação do CEAP e analisei o funil do último processo seletivo: 777 inscritos e 206 presentes na prova. Com a etapa de maior evasão identificada, priorizei o backlog para atacá-la — score de risco explicável, console de intervenção para a coordenação, módulo de responsáveis e assistente de IA para quem não tem a quem perguntar em casa.',
     experience:
-      'A decisão mais importante não foi técnica. Foi entender que o público tem entre 14 e 18 anos e chega pelo celular, muitas vezes com internet limitada. Isso definiu tudo: mobile-first, respostas curtas, feedback imediato a cada ação e um assistente de IA disponível 24 horas para quem não tem a quem perguntar em casa.',
+      'Como PO, documentei o backlog por épicos, o roadmap e a arquitetura antes de construir, e conduzi a execução com IA a partir dessas especificações. O score precisava ser explicável: um número que diz "risco alto" sem dizer por quê não é usado por quem atende o candidato. E o público tem entre 14 e 18 anos e chega pelo celular — isso definiu mobile-first e feedback imediato em cada ação.',
     features: [
-      'Jornada do candidato com missões e etapas',
-      'Sistema de XP, níveis e conquistas',
-      'Catálogo de recompensas com cursos e certificações reais',
-      'Ciclo completo de resgate com confirmação de entrega',
-      'Assistente de IA com respostas em streaming e memória de conversa',
+      'Score de risco de evasão explicável',
+      'Console de intervenção para a coordenação',
+      'Módulo de responsáveis',
+      'Assistente de IA (Gemini) para dúvidas do candidato',
+      'Gestão de documentos da inscrição',
       'Simulados e preparação para a prova',
-      'Upload de documentos',
-      'Central de notificações',
-      'Painel administrativo com acesso restrito',
-      'Dashboard de gamificação em tempo real',
+      'Backlog por épicos, roadmap e arquitetura documentados',
+      'Back-end com 141 testes automatizados e CI',
     ],
     tech: {
-      frontend: ['Next.js', 'React 19', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-      backend: ['FastAPI', 'Python', 'SQLAlchemy', 'PostgreSQL', 'JWT'],
-      tools: ['Google Gemini', 'Neon', 'Vercel', 'Render'],
+      frontend: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+      backend: ['FastAPI', 'Python', 'PostgreSQL', 'JWT'],
+      tools: ['Google Gemini', 'Vercel', 'Neon', 'GitHub Actions'],
     },
     metrics: [
-      { value: '24/7', label: 'assistente de IA' },
-      { value: 'Aprovado', label: 'para a etapa seguinte' },
-      { value: '100%', label: 'em produção' },
+      { value: '777', label: 'inscritos no funil analisado' },
+      { value: '206', label: 'presentes na prova' },
+      { value: '141', label: 'testes automatizados' },
     ],
     results: [
-      'Apresentado em formato de pitch ao diretor geral do CEAP.',
-      'A proposta foi aprovada para avançar à etapa seguinte, com a Coordenação de TI.',
-      'O retorno sobre a camada de gamificação orientou a reformulação seguinte do produto.',
+      'Finalista do NEXT FIAP 2026 — projeto da equipe, com atuação como Product Owner e desenvolvedor.',
+      'Apresentado ao Diretor do CEAP, que aprovou o avanço do projeto e o encaminhou à Coordenação de TI.',
+      'Os números acima descrevem o funil que analisei para priorizar o backlog. Não são redução de evasão medida.',
     ],
     link: 'https://ceapconnect.vercel.app',
     github: 'https://github.com/Kadu2728/ceapconnect',
   },
   {
-    slug: 'vestora',
-    image: '/projects/vestora.webp',
-    title: 'VESTORA',
-    tagline: 'Carteira de investimentos com patrimônio e dividendos em tempo real.',
+    slug: 'giro',
+    image: '/projects/giro.webp',
+    title: 'GIRO',
+    tagline: 'SaaS B2B de merchandising nascido das minhas anotações em papel.',
     year: '2026',
-    category: 'Plataforma',
-    role: 'Full-Stack · Data Visualization',
+    category: 'Produto',
+    stage: 'prototype',
+    role: 'Product Owner · Regras de negócio · Arquitetura',
     featured: true,
     overview:
-      'Plataforma de gestão e acompanhamento de investimentos para ações, FIIs e ETFs. Consolida patrimônio, dividendos e rentabilidade num painel único, com autenticação própria e conta demonstrativa.',
+      'Protótipo de aplicativo para promotores de merchandising. Nasceu das anotações em papel que eu mesmo usava na rotina da Panco — o problema veio do campo, não de um briefing.',
     challenge:
-      'Quem investe em mais de uma classe de ativo acaba com a informação espalhada: uma corretora mostra ações, outra mostra fundos, a planilha tenta juntar tudo e desatualiza. Ninguém enxerga o patrimônio real num lugar só.',
+      'A indústria não enxerga o estoque dentro do varejista. O único número real é o que o promotor conta na gôndola, e esse número morre numa ficha de papel ou numa planilha que ninguém abre. Quem decide reposição decide sem dado.',
     solution:
-      'Modelei carteira, ativo, posição e provento como entidades separadas, o que permite calcular rentabilidade e dividendos sem duplicar dado. O front consome tudo via React Query, que cuida de cache e revalidação — dado de mercado muda, e recarregar a página inteira a cada mudança seria inaceitável.',
+      'Transformei observação de operação em regra de negócio. Duas delas sustentam o produto: o giro é sempre calculado a partir de contagens consecutivas, nunca digitado; e a ruptura só é registrada quando o promotor confirma a gôndola vazia. Especifiquei a arquitetura completa e construí o protótipo PWA com dados de demonstração.',
     experience:
-      'Investimento é assunto que intimida. Por isso a conta demonstrativa: dá para explorar a ferramenta inteira antes de cadastrar um centavo da carteira real. E os gráficos vêm com Recharts em vez de tabela pura, porque a pergunta que o usuário faz não é "quanto tenho", é "estou melhorando".',
+      'As duas regras acima me tomaram mais tempo que a interface, e são o que separa o produto de um formulário. Campo de giro editável viraria número inventado; SKU não contado é "ainda não vi", não "estoque zero" — tratar como iguais destruiria a confiança no dado. O modo offline existe porque sinal de mercado é ruim: a contagem grava no dispositivo e sobe quando a conexão volta.',
     features: [
-      'Carteira consolidada de ações, FIIs e ETFs',
-      'Patrimônio, dividendos e rentabilidade em tempo real',
-      'Dashboard interativo com gráficos',
-      'Conta demonstrativa sem cadastro de dados reais',
-      'Autenticação com JWT',
-      'Formulários validados de ponta a ponta',
-      'Histórico de proventos por ativo',
+      'Giro calculado a partir de contagens consecutivas',
+      'Ruptura registrada só com confirmação na gôndola',
+      'Fila local de sincronização para funcionar offline',
+      'Protótipo PWA instalável no celular',
+      'Dados de demonstração para navegar sem cadastro',
+      'Visão consolidada para o supervisor',
     ],
     tech: {
-      frontend: [
-        'Next.js',
-        'React',
-        'TypeScript',
-        'Tailwind CSS',
-        'Framer Motion',
-        'Recharts',
-        'React Query',
-        'React Hook Form',
-        'Zod',
-        'Axios',
-      ],
-      backend: ['FastAPI', 'SQLAlchemy', 'PostgreSQL', 'Alembic', 'JWT'],
-      tools: ['Vercel', 'Render'],
+      frontend: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'shadcn/ui'],
+      backend: ['FastAPI (especificado)', 'PostgreSQL (especificado)'],
+      tools: ['PWA', 'Service Worker', 'Vercel'],
     },
     metrics: [
-      { value: '3', label: 'classes de ativo' },
-      { value: 'JWT', label: 'autenticação própria' },
-      { value: 'Demo', label: 'conta de teste' },
+      { value: 'Offline', label: 'fila local de sincronização' },
+      { value: 'PWA', label: 'instalável no celular' },
     ],
-    results: ['Em produção, com front, API e banco publicados.'],
-    link: 'https://vestora-roan.vercel.app',
-    github: 'https://github.com/Kadu2728/Vestora',
+    results: [
+      'É protótipo: o front-end está no ar com dados de demonstração.',
+      'O back-end (FastAPI e PostgreSQL) e o isolamento multiempresa estão especificados na arquitetura e ainda não implementados.',
+      'A interface foi construída contra esse contrato, então ela não muda quando o back-end entrar.',
+    ],
+    link: 'https://giro-azure.vercel.app',
+    github: 'https://github.com/Kadu2728/GIRO',
   },
   {
     slug: 'vendia',
     image: '/projects/vendia.webp',
     title: 'VendIA',
-    tagline: 'A IA lê a foto do produto e escreve o anúncio.',
+    tagline: 'IA generativa para quem vende em marketplace e não tem time.',
     year: '2026',
     category: 'Produto',
-    role: 'Full-Stack · IA Generativa',
+    stage: 'published',
+    role: 'Produto · Escopo do MVP · Construção com IA',
     featured: true,
     overview:
-      'SaaS de IA Generativa para vendedores de marketplace, com foco em Shopee. Gera anúncio, sugere preço e responde perguntas de cliente.',
+      'Ferramenta publicada que ajuda pequenos vendedores de marketplace a criar anúncios, definir preços e responder clientes.',
     challenge:
-      'Vendedor pequeno não tem copywriter. Escreve o anúncio às pressas, com título ruim, e perde busca dentro do próprio marketplace. Contratar redator para cada produto é inviável no volume e na margem.',
+      'O vendedor pequeno disputa a mesma vitrine que uma loja grande, sem redator, sem analista de preço e sem alguém no atendimento. O anúncio sai às pressas, perde busca dentro do próprio marketplace e a venda vai para quem tem equipe.',
     solution:
-      'A geração é multimodal: o vendedor envia a foto e a IA lê a imagem, não só o texto digitado. Isso capta detalhe visual que o vendedor esquece de mencionar — cor, material, acabamento. Além do anúncio, sugere faixa de preço comparando concorrentes cadastrados, sempre com justificativa, e responde perguntas de cliente no tom configurado.',
+      'Defini a proposta de valor e cortei o escopo do MVP em três funcionalidades — geração de anúncio, sugestão de preço e apoio às respostas a clientes — em vez de prometer uma suíte. Desenhei os prompts e a integração com o Google Gemini, com Claude como alternativa.',
     experience:
-      'O tom da resposta é escolha do vendedor — formal, amigável ou direto — porque a voz da loja é dele, não do modelo. E toda sugestão de preço vem acompanhada do porquê: ferramenta que dá número sem explicação não é usada duas vezes.',
+      'A sugestão de preço sempre vem com a justificativa: ferramenta que devolve número sem explicar não é usada duas vezes. E o tom da resposta ao cliente é escolha do vendedor, porque a voz da loja é dele, não do modelo.',
     features: [
-      'Gerador de anúncio a partir da foto do produto',
-      'Análise multimodal de imagem',
+      'Geração de anúncio a partir dos dados do produto',
       'Sugestão de faixa de preço com justificativa',
-      'Comparação com concorrentes cadastrados',
-      'Respondedor de perguntas de cliente',
-      'Tom configurável: formal, amigável ou direto',
+      'Apoio às respostas a clientes, com tom configurável',
+      'Prompts desenhados por função, não um chat genérico',
+      'Integração com Google Gemini (Claude como alternativa)',
     ],
     tech: {
-      frontend: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'shadcn/ui'],
-      backend: ['FastAPI', 'Python', 'SQLAlchemy', 'Alembic', 'PostgreSQL'],
-      tools: ['Google Gemini', 'Neon', 'Vercel', 'Render'],
+      frontend: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'shadcn/ui'],
+      backend: ['FastAPI', 'Python', 'SQLAlchemy', 'PostgreSQL'],
+      tools: ['Google Gemini', 'Neon', 'Vercel', 'GitHub Actions'],
     },
     metrics: [
-      { value: '3', label: 'ferramentas no MVP' },
-      { value: 'Multimodal', label: 'texto + imagem' },
+      { value: '3', label: 'funcionalidades no MVP' },
+      { value: 'Gemini', label: 'LLM integrado' },
     ],
-    results: ['Em produção — front na Vercel, API no Render e banco na Neon.'],
+    results: [
+      'Publicado e disponível para teste — front-end na Vercel, API em FastAPI e banco PostgreSQL.',
+      'Integração contínua configurada no GitHub Actions.',
+    ],
     link: 'https://vend-ia-weld.vercel.app',
     github: 'https://github.com/Kadu2728/VendIA',
   },
   {
-    slug: 'giro',
-    image: '/projects/giro.webp',
-    title: 'GIRO — App',
-    tagline: 'Merchandising offline que calcula o giro sozinho.',
+    slug: 'vestora',
+    image: '/projects/vestora.webp',
+    title: 'VESTORA',
+    tagline: 'Indicadores de carteira definidos antes de desenhar o dashboard.',
     year: '2026',
-    category: 'Aplicação',
-    role: 'Produto · Front-End · Arquitetura',
+    category: 'Plataforma',
+    stage: 'published',
+    role: 'Produto · Indicadores · Modelagem de dados',
     featured: true,
     overview:
-      'PWA de execução de merchandising. Transforma a contagem que o promotor faz na gôndola em decisão de reposição.',
+      'Plataforma publicada para acompanhar uma carteira de ações, FIIs e ETFs, com patrimônio, rentabilidade e dividendos num lugar só.',
     challenge:
-      'Nenhuma indústria enxerga o estoque dentro do varejista. Não existe integração, não existe ERP compartilhado. O único número real é o que o promotor conta com o olho, na gôndola — e esse número morre numa ficha de papel ou numa planilha que ninguém abre.',
+      'Quem investe em mais de uma classe de ativo acaba com a informação espalhada: uma corretora mostra ações, outra mostra fundos e a planilha que tentava juntar tudo desatualiza. A pergunta real — "estou melhorando?" — fica sem resposta.',
     solution:
-      'O app deriva o giro da própria contagem, comparando com a visita anterior: o que tinha, mais o que foi reposto, menos o que sobrou. A partir daí projeta os dias de estoque restantes e avisa quando o item não chega até a próxima visita.',
+      'Comecei pelos indicadores: o que precisa ser respondido antes de desenhar tela. Modelei carteira, ativo, posição e provento como entidades separadas no PostgreSQL, o que permite calcular rentabilidade, dividendos e evolução patrimonial sem duplicar dado — e é essa modelagem que alimenta os dashboards.',
     experience:
-      'Duas decisões me tomaram mais tempo que o código. A primeira: giro nunca é digitado, é sempre derivado — campo editável viraria número inventado. A segunda: ruptura só existe se foi conferida; um SKU não contado é "ainda não vi", não "estoque zero". Tratar como iguais destruiria a confiança no dado. E tudo funciona offline, porque sinal de mercado é ruim: a contagem grava no dispositivo e sobe sozinha quando a conexão volta.',
+      'Investimento é assunto que intimida, e cadastro é atrito. Incluí uma conta demo que gera uma carteira de exemplo sem exigir cadastro, para quem quer entender o produto antes de colocar dado real.',
     features: [
-      'Cálculo automático de giro entre visitas',
-      'Projeção de dias de estoque restantes',
-      'Alerta de ruptura antes da próxima visita',
-      'Funcionamento offline com sincronização automática',
-      'Visão consolidada para o supervisor',
-      'Cumprimento de rota e histórico por SKU',
-      'Instalável como app no celular',
+      'Carteira consolidada de ações, FIIs e ETFs',
+      'Indicadores de rentabilidade, dividendos e evolução patrimonial',
+      'Modelagem relacional que evita dado duplicado',
+      'Conta demo com carteira de exemplo, sem cadastro',
+      'Autenticação com JWT',
+      'Histórico de proventos por ativo',
     ],
     tech: {
-      frontend: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind v4', 'shadcn/ui', 'Framer Motion'],
-      backend: ['FastAPI (arquitetado)', 'PostgreSQL (arquitetado)', 'JWT multi-tenant'],
-      tools: ['PWA', 'Service Worker'],
+      frontend: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'React Query', 'Recharts'],
+      backend: ['FastAPI', 'SQLAlchemy', 'PostgreSQL', 'Alembic', 'JWT'],
+      tools: ['Vercel', 'Render'],
     },
     metrics: [
-      { value: 'Offline', label: 'first' },
-      { value: '14', label: 'rotas' },
+      { value: '3', label: 'classes de ativo' },
+      { value: 'Demo', label: 'carteira de exemplo sem cadastro' },
     ],
-    results: [
-      'Contrato de API especificado em FastAPI + PostgreSQL com isolamento multi-tenant por JWT.',
-      'O front foi construído contra esse contrato, então a interface não muda quando o back entrar.',
-      'Projeto de portfólio, com dados fictícios.',
-    ],
-    link: 'https://giro-azure.vercel.app/login',
-    github: 'https://github.com/Kadu2728/GIRO',
+    results: ['Publicado — front-end na Vercel, API no Render e banco PostgreSQL.'],
+    link: 'https://vestora-roan.vercel.app',
+    github: 'https://github.com/Kadu2728/Vestora',
   },
+  {
+    slug: 'finpilot',
+    image: '/projects/finpilot.webp',
+    title: 'FinPilot',
+    tagline: 'Receitas, despesas e metas para quem não tem departamento financeiro.',
+    year: '2026',
+    category: 'Plataforma',
+    stage: 'published',
+    role: 'Requisitos · Modelagem de dados · Construção',
+    featured: true,
+    overview:
+      'SaaS para pequenas empresas e profissionais autônomos controlarem receitas, despesas e metas.',
+    challenge:
+      'Autônomo e pequeno negócio controlam dinheiro em planilha ou no caderno. Funciona até o volume crescer — aí ninguém sabe se o mês fechou no positivo, muito menos se a meta do trimestre está de pé.',
+    solution:
+      'Levantei os requisitos de controle de receitas, despesas, metas e fluxo de caixa e modelei os dados em PostgreSQL. Construí a API REST em FastAPI com autenticação JWT e documentação via OpenAPI/Swagger, com os relatórios em gráficos.',
+    experience:
+      'Controle financeiro só funciona se o lançamento for rápido: se registrar uma despesa dá trabalho, a pessoa para de registrar e o sistema perde sentido. Por isso o caminho até o lançamento é o mais curto da interface, e o dashboard responde primeiro a pergunta mais simples — entrou mais do que saiu?',
+    features: [
+      'Receitas, despesas e fluxo de caixa',
+      'Metas financeiras',
+      'Relatórios em gráficos',
+      'API REST documentada em OpenAPI/Swagger',
+      'Autenticação com JWT',
+    ],
+    tech: {
+      frontend: ['JavaScript', 'Chart.js', 'HTML', 'CSS'],
+      backend: ['FastAPI', 'Python', 'SQLAlchemy', 'PostgreSQL', 'JWT'],
+      tools: ['Railway', 'Vercel'],
+    },
+    metrics: [
+      { value: 'OpenAPI', label: 'contrato documentado' },
+      { value: 'JWT', label: 'sessão protegida' },
+    ],
+    results: ['Publicado — front-end na Vercel e API no Railway.'],
+    link: 'https://finpilot-omega.vercel.app',
+    github: 'https://github.com/Kadu2728/FinPilot',
+  },
+
+  /* ---------- Projetos anteriores ao posicionamento atual ---------- */
   {
     slug: 'giro-varejo',
     image: '/projects/giro-varejo.webp',
@@ -191,7 +226,9 @@ export const projects: Project[] = [
     tagline: 'A página que apresenta o GIRO a quem decide a compra.',
     year: '2026',
     category: 'Experiência',
+    stage: 'published',
     role: 'UX/UI · Front-End',
+    early: true,
     overview:
       'Landing page do GIRO: apresenta a ferramenta de execução de merchandising para a indústria, que é quem contrata, não quem usa no dia a dia.',
     challenge:
@@ -212,7 +249,7 @@ export const projects: Project[] = [
       backend: [],
       tools: ['Vercel'],
     },
-    results: ['Em produção na Vercel.'],
+    results: ['Publicado na Vercel.'],
     link: 'https://giro-varejo.vercel.app',
   },
   {
@@ -222,36 +259,35 @@ export const projects: Project[] = [
     tagline: 'Auditoria de gôndola por visão computacional.',
     year: '2026',
     category: 'Aplicação',
+    stage: 'prototype',
     role: 'Produto · Visão Computacional · Python',
+    early: true,
     overview:
       'Biblioteca e CLI que analisam a foto de uma gôndola e devolvem número: quantos produtos estão expostos, como o espaço está dividido entre regiões e onde há buraco na prateleira.',
     challenge:
-      'A indústria paga — em dinheiro, bonificação e acordo comercial — para que seus produtos ocupem um espaço determinado de prateleira, e não tem como verificar se aquele espaço está sendo ocupado. A informação existe: está na foto que o promotor tira. Só que ela morre ali como imagem, e o número que sobra é o que alguém digitou na prancheta — que ninguém consegue auditar depois.',
+      'A indústria paga — em dinheiro, bonificação e acordo comercial — para que seus produtos ocupem um espaço determinado de prateleira, e não tem como verificar se aquele espaço está sendo ocupado. A informação existe: está na foto que o promotor tira. Só que ela morre ali como imagem.',
     solution:
-      'A foto entra, o número sai. O pipeline corrige orientação EXIF e perspectiva, detecta produtos por trás de um protocolo com três implementações trocáveis, remove duplicatas, agrupa em prateleiras e calcula share por contagem, share por área linear e ocupação lado a lado. A saída é a imagem anotada mais um JSON com schema versionado.',
+      'A foto entra, o número sai. O pipeline corrige orientação e perspectiva, detecta produtos por trás de um protocolo com implementações trocáveis, remove duplicatas, agrupa em prateleiras e calcula share por contagem e por área linear. A saída é a imagem anotada mais um JSON com schema versionado.',
     experience:
-      'Não tem front-end, e isso é decisão de arquitetura, não limitação. A imagem anotada é a interface e o `--json` é a API. Uma camada web adicionaria superfície de manutenção sem adicionar capacidade — e o efeito colateral é o ponto: sem tela bonita não há onde esconder problema. A página de demonstração em Gradio existe, mas mora fora do produto e consome a biblioteca como qualquer outro cliente.',
+      'Não tem front-end, e isso é decisão de arquitetura: a imagem anotada é a interface e o `--json` é a API. Uma camada web adicionaria superfície de manutenção sem adicionar capacidade.',
     features: [
-      'Correção de orientação EXIF e de perspectiva',
+      'Correção de orientação e de perspectiva',
       'Detecção por protocolo, com implementações trocáveis',
-      'Remoção de detecções duplicadas antes da contagem',
-      'Agrupamento em prateleiras com limiar relativo',
+      'Agrupamento em prateleiras',
       'Share por contagem, por área linear e ocupação',
       'Detecção de espaço vazio na prateleira',
       'Imagem anotada e JSON com schema versionado',
-      'Medição de precisão, recall e AP@50 sobre dataset anotado',
-      'Lote paralelo, resumível após interrupção',
       'Histórico por ponto de venda em SQLite',
     ],
     tech: {
-      frontend: ['CLI (Typer)', 'Rich', 'Gradio (demo)'],
-      backend: ['Python', 'OpenCV', 'NumPy', 'Pydantic', 'Pillow', 'SQLite'],
+      frontend: ['CLI (Typer)', 'Rich'],
+      backend: ['Python', 'OpenCV', 'NumPy', 'Pydantic', 'SQLite'],
       tools: ['YOLO / Ultralytics', 'GitHub Actions'],
     },
     results: [
-      'Funciona de ponta a ponta em foto avulsa e em lote: analyze, batch, history e benchmark.',
-      'Fase 3 de 4: o detector real ainda não tem peso treinado em gôndola, e as métricas de detecção seguem não medidas — declarado no próprio README.',
-      'Não identifica SKU nem marca: produto é classe única, e o share é entre regiões da gôndola.',
+      'Funciona de ponta a ponta em foto avulsa e em lote.',
+      'É protótipo: o detector ainda não tem peso treinado em gôndola, e as métricas de detecção seguem não medidas — declarado no próprio README.',
+      'Não identifica SKU nem marca: produto é classe única.',
     ],
     github: 'https://github.com/Kadu2728/vitrine',
   },
@@ -262,33 +298,34 @@ export const projects: Project[] = [
     tagline: 'Marcação a mercado de títulos públicos, explicada em linguagem natural.',
     year: '2026',
     category: 'Plataforma',
+    stage: 'prototype',
     role: 'Arquitetura · Back-End · IA aplicada',
+    early: true,
     overview:
       'Simulador que calcula a marcação a mercado de títulos do Tesouro e explica o resultado em texto, sem exigir que o investidor entenda a matemática por trás.',
     challenge:
       'Milhões de investidores têm títulos públicos e não entendem por que o valor de mercado muda todo dia. Quando a taxa de juros se move, prefixados e indexados ao IPCA sofrem marcação a mercado — o preço sobe ou desce sem nada "errado" ter acontecido.',
     solution:
-      'O sistema é dividido em dois mundos que nunca se misturam. O motor determinístico calcula todo preço, taxa, imposto e valor exibido em Python puro, sem depender de framework, banco ou IA. A camada de IA só explica em texto o que o motor já calculou.',
+      'O sistema é dividido em dois mundos que nunca se misturam. O motor determinístico calcula todo preço, taxa e imposto em Python puro. A camada de IA só explica em texto o que o motor já calculou.',
     experience:
-      'A fronteira entre os dois é a razão de existir do projeto. Um validador extrai todo valor monetário do texto gerado e descarta a resposta se algo não bater com o payload original, caindo num template estático determinístico. Se um número aparece na tela, ele veio do motor — a IA nunca inventa, estima ou corrige valor financeiro.',
+      'A fronteira entre os dois é a razão de existir do projeto. Um validador extrai todo valor monetário do texto gerado e descarta a resposta se algo não bater com o payload original, caindo num template estático. Se um número aparece na tela, ele veio do motor — a IA nunca estima valor financeiro.',
     features: [
       'Motor de precificação determinístico e isolado',
       'Explicação em linguagem natural gerada por IA',
       'Validador que descarta texto com número divergente',
       'Fallback para template estático quando a validação falha',
-      'Ingestão de dados do Tesouro Direto',
       'Golden tests contra o preço oficial do Tesouro Transparente',
       'Decisões arquiteturais registradas em ADRs',
     ],
     tech: {
       frontend: ['TypeScript', 'Node 20'],
       backend: ['Python 3.12', 'FastAPI', 'PostgreSQL', 'Alembic'],
-      tools: ['pytest', 'mypy estrito', 'Design tokens'],
+      tools: ['pytest', 'mypy estrito'],
     },
     results: [
       'Os golden tests recalculam títulos reais em datas reais e comparam com o preço oficial publicado pelo Tesouro Transparente.',
-      'A LTN bate com tolerância de R$ 0,01 — validação real, não estimativa.',
-      'NTN-F e NTN-B têm resíduo de precisão documentado e ainda não resolvido, com tolerância mais larga e visível no código, nunca afrouxada em silêncio.',
+      'A LTN bate com tolerância de R$ 0,01.',
+      'NTN-F e NTN-B têm resíduo de precisão documentado e ainda não resolvido, com tolerância visível no código.',
     ],
     github: 'https://github.com/Kadu2728/vertice',
   },
@@ -299,65 +336,31 @@ export const projects: Project[] = [
     tagline: 'CRUD com autenticação em PHP puro, sem nenhuma dependência.',
     year: '2026',
     category: 'Aplicação',
+    stage: 'repo',
     role: 'Full-Stack · PHP',
+    early: true,
     overview:
-      'Sistema web de cadastro e controle de produtos com autenticação de usuários, desenvolvido como teste prático para vaga de estágio. API REST em PHP e front-end em HTML, CSS e JavaScript puro, com dados em MySQL.',
+      'Sistema web de cadastro e controle de produtos com autenticação de usuários, desenvolvido como teste prático para vaga de estágio. API REST em PHP e front-end em JavaScript puro, com dados em MySQL.',
     challenge:
       'Entregar um CRUD completo com autenticação e rastreio de quem cadastrou cada item — provando domínio de fundamentos, não de framework.',
     solution:
       'API REST escrita à mão em PHP, front-end em JavaScript puro consumindo essa API e MySQL como persistência. A tabela de produtos registra ID, data de cadastro, usuário responsável, descrição, quantidade e valor.',
     experience:
-      'Nenhuma dependência externa: sem framework, sem Composer, sem npm install. Quem clona o repositório roda o projeto com o que já está na máquina — decisão que elimina o atrito de setup que costuma atrapalhar em avaliação técnica.',
+      'Nenhuma dependência externa: sem framework, sem Composer, sem npm install. Quem clona o repositório roda o projeto com o que já está na máquina — decisão que elimina o atrito de setup em avaliação técnica.',
     features: [
       'Autenticação de usuários',
       'Cadastro, edição e remoção de produtos',
       'Registro de qual usuário cadastrou cada item',
-      'Tabela com ID, data, descrição, quantidade e valor',
       'API REST documentada',
       'Zero dependências externas',
     ],
     tech: {
       frontend: ['HTML', 'CSS', 'JavaScript'],
-      backend: ['PHP', 'MySQL', 'REST API', 'JWT'],
+      backend: ['PHP', 'MySQL', 'REST API'],
       tools: [],
     },
-    results: ['Desenvolvido como teste prático para vaga de estágio em desenvolvimento.'],
+    results: ['Desenvolvido como teste prático para vaga de estágio. Disponível no repositório.'],
     github: 'https://github.com/Kadu2728/crud-produtos',
-  },
-  {
-    slug: 'finpilot',
-    image: '/projects/finpilot.webp',
-    title: 'FinPilot',
-    tagline: 'SaaS de gestão financeira para autônomos e pequenos negócios.',
-    year: '2026',
-    category: 'Plataforma',
-    role: 'Full-Stack',
-    featured: true,
-    overview:
-      'Plataforma de gestão financeira com autenticação, dashboard e relatórios. Organiza receitas, despesas e fluxo de caixa de quem não tem departamento financeiro.',
-    challenge:
-      'Autônomo e pequeno negócio controlam dinheiro em planilha ou no caderno. Funciona até o volume crescer — aí ninguém sabe se o mês fechou no positivo, muito menos se a meta do trimestre está de pé.',
-    solution:
-      'Modelei receita, despesa e meta como entidades próprias, com API REST protegida por JWT. O dashboard responde a pergunta que importa antes de qualquer outra: entrou mais do que saiu? Os relatórios e indicadores vêm depois, para quem quer aprofundar.',
-    experience:
-      'Controle financeiro só funciona se o lançamento for rápido. Se registrar uma despesa dá trabalho, a pessoa para de registrar e o sistema inteiro perde sentido — então o caminho até o lançamento é o mais curto da interface.',
-    features: [
-      'Receitas e despesas',
-      'Fluxo de caixa',
-      'Metas financeiras',
-      'Indicadores e relatórios',
-      'Dashboard interativo',
-      'Autenticação com JWT',
-    ],
-    tech: {
-      frontend: ['Next.js', 'React', 'TypeScript', 'JavaScript'],
-      backend: ['FastAPI', 'Python', 'PostgreSQL', 'REST API', 'JWT'],
-      tools: ['Railway', 'Vercel'],
-    },
-    metrics: [{ value: 'JWT', label: 'sessão protegida' }],
-    results: ['Em produção — back-end no Railway, front-end na Vercel.'],
-    link: 'https://finpilot-omega.vercel.app',
-    github: 'https://github.com/Kadu2728/FinPilot',
   },
   {
     slug: 'controlcash',
@@ -366,7 +369,9 @@ export const projects: Project[] = [
     tagline: 'Controle financeiro pessoal construído sem framework.',
     year: '2026',
     category: 'Aplicação',
+    stage: 'published',
     role: 'Front-End · UX',
+    early: true,
     overview:
       'Aplicação de controle de finanças pessoais com dashboard, visualização de dados e persistência local. Feita do zero em JavaScript puro.',
     challenge:
@@ -387,7 +392,7 @@ export const projects: Project[] = [
       backend: ['LocalStorage'],
       tools: ['Vercel'],
     },
-    results: ['Em produção na Vercel.'],
+    results: ['Publicado na Vercel.'],
     link: 'https://controlcash-weld.vercel.app',
     github: 'https://github.com/Kadu2728/ControlCash',
   },
@@ -398,13 +403,15 @@ export const projects: Project[] = [
     tagline: 'Landing page de fintech construída em torno da conversão.',
     year: '2026',
     category: 'Experiência',
+    stage: 'published',
     role: 'UX/UI · Front-End',
+    early: true,
     overview:
       'Página de captação para fintech de investimentos, com estética premium e motion trabalhado.',
     challenge:
       'Página de investimento precisa vender confiança antes de vender produto. Excesso de efeito passa amadorismo; falta de efeito passa desatualização. O equilíbrio é o trabalho.',
     solution:
-      'Hierarquia visual construída em torno de um único CTA, com planos comparáveis lado a lado e animações de scroll que revelam conteúdo no ritmo da leitura — nunca antes de o usuário chegar lá.',
+      'Hierarquia visual construída em torno de um único CTA, com planos comparáveis lado a lado e animações de scroll que revelam conteúdo no ritmo da leitura.',
     experience:
       'As microinterações existem para dar resposta, não para chamar atenção. Cada hover confirma que o elemento é clicável; cada revelação acompanha o scroll em vez de disputar com ele.',
     features: [
@@ -412,7 +419,6 @@ export const projects: Project[] = [
       'Seção de planos comparativa',
       'Animações de scroll',
       'Microinterações em hover e foco',
-      'Design financeiro premium',
       'Totalmente responsivo',
     ],
     tech: {
@@ -420,7 +426,7 @@ export const projects: Project[] = [
       backend: [],
       tools: ['Vercel'],
     },
-    results: ['Em produção na Vercel.'],
+    results: ['Publicado na Vercel.'],
     link: 'https://investbem.vercel.app',
     github: 'https://github.com/Kadu2728/InvestBem',
   },
@@ -431,7 +437,9 @@ export const projects: Project[] = [
     tagline: 'Agendamento em poucos toques, para quem chega pelo celular.',
     year: '2026',
     category: 'Experiência',
+    stage: 'published',
     role: 'UX/UI · Front-End',
+    early: true,
     overview:
       'Experiência digital completa para barbearia: agendamento online, galeria de cortes e identidade visual urbana.',
     challenge:
@@ -452,7 +460,7 @@ export const projects: Project[] = [
       backend: [],
       tools: ['Vercel'],
     },
-    results: ['Projeto para cliente real, em produção.'],
+    results: ['Projeto para cliente real, publicado.'],
     link: 'https://barbearia-fino.vercel.app',
     github: 'https://github.com/Kadu2728/BarbeariaFINO',
   },
@@ -463,7 +471,9 @@ export const projects: Project[] = [
     tagline: 'Cardápio digital que vende pelo canal que a cliente já usava.',
     year: '2026',
     category: 'Experiência',
+    stage: 'published',
     role: 'UI · Front-End',
+    early: true,
     overview:
       'Experiência digital para confeitaria artesanal em Sapopemba/SP: cardápio navegável, galeria de produtos e pedido direto.',
     challenge:
@@ -484,13 +494,15 @@ export const projects: Project[] = [
       backend: [],
       tools: ['Vercel'],
     },
-    results: ['Projeto para cliente real, em produção.'],
+    results: ['Projeto para cliente real, publicado.'],
     link: 'https://danibrigs.vercel.app',
     github: 'https://github.com/Kadu2728/DoceriaSite',
   },
 ]
 
-export const featuredProjects = projects.filter((p) => p.featured)
-export const otherProjects = projects.filter((p) => !p.featured)
+/** Os cinco do posicionamento atual. */
+export const mainProjects = projects.filter((p) => !p.early)
+/** Anteriores — continuam no portfólio, numa seção secundária. */
+export const earlyProjects = projects.filter((p) => p.early)
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug)

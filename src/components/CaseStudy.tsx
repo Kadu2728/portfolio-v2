@@ -11,6 +11,7 @@ import { Footer } from '@/components/layout/Footer'
 import { MaskText } from '@/components/ui/MaskText'
 import { TechLabel, Reveal } from '@/components/ui/Reveal'
 import { Action } from '@/components/ui/Action'
+import { StageTag } from '@/components/ui/StageTag'
 import { pad } from '@/lib/utils'
 import type { Project } from '@/types'
 
@@ -57,8 +58,9 @@ function Body({ slug }: { slug: string }) {
             {t.back}
           </Link>
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-tech text-micro uppercase text-dim">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 font-tech text-micro uppercase text-dim">
             <span className="text-accent-text tabular-nums">{pad(i + 1)}</span>
+            <StageTag stage={project.stage} />
             <span>{project.category}</span>
             <span className="h-3 w-px bg-line-strong" />
             <span className="tabular-nums">{project.year}</span>

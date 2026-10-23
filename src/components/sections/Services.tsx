@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
   ArrowUpRight,
-  Database,
+  BarChart3,
+  Compass,
   Layers,
-  Palette,
+  ListChecks,
   Rocket,
-  Server,
   Sparkles,
   type LucideIcon,
 } from 'lucide-react'
@@ -31,11 +31,11 @@ import { profile } from '@/data/profile'
  * vira lista de promessas — que é o erro comum do formato.
  */
 const ICONS: Record<Service['icon'], LucideIcon> = {
-  layers: Layers,
-  server: Server,
-  palette: Palette,
+  compass: Compass,
+  list: ListChecks,
+  chart: BarChart3,
   sparkles: Sparkles,
-  database: Database,
+  layers: Layers,
   rocket: Rocket,
 }
 

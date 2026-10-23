@@ -3,9 +3,9 @@ import { Shell } from '@/components/Shell'
 import { profile } from '@/data/profile'
 import { siteUrl } from '@/lib/site'
 
-const title = `${profile.short} — Full-Stack Developer`
+const title = `${profile.short} — Product Owner`
 const description =
-  'Full-stack developer in São Paulo. I build digital products end to end — from the data model to the interface. Next.js, React, TypeScript, FastAPI and PostgreSQL.'
+  'Product Owner and IT Management student at FIAP, in São Paulo. I turn a business problem into a digital product: discovery, requirements, data analysis and building with generative AI.'
 
 export const metadata: Metadata = {
   title,

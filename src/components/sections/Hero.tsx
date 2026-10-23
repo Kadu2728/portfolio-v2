@@ -26,7 +26,6 @@ import { EASE } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 import { useLocale, localeHref } from '@/lib/locale'
 import { profile } from '@/data/profile'
-import { highlights } from '@/data/certificates'
 
 /**
  * HERO
@@ -142,7 +141,8 @@ export function Hero() {
         className="relative w-full"
       >
         <div className="mx-auto w-full max-w-shell px-6 md:px-10">
-          <motion.div {...seq(0.2)} className="mb-8 flex items-center gap-4">
+          {/* flex-wrap: o cargo completo não cabe numa linha de 375px */}
+          <motion.div {...seq(0.2)} className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="font-tech text-micro text-accent tabular-nums">01</span>
             <span aria-hidden="true" className="h-px w-10 bg-line-strong" />
             <span className="font-tech text-micro uppercase text-smoke">{t.eyebrow}</span>
@@ -249,11 +249,7 @@ export function Hero() {
         {/* ---------- Números ---------- */}
         <motion.div {...seq(1.65)} className="relative mx-auto mt-10 w-full max-w-shell px-6 md:px-10">
           <dl className="flex flex-wrap items-end gap-x-10 gap-y-4 border-t border-line pt-6">
-            {[
-              { v: String(c.projects.length), l: t.statsProjects },
-              { v: '6', l: t.statsLive },
-              { v: highlights.total, l: t.statsCerts },
-            ].map((s) => (
+            {t.stats.map((s) => (
               <div key={s.l} className="flex items-baseline gap-2.5">
                 <dd className="font-display text-xl font-bold tabular-nums text-chalk">{s.v}</dd>
                 <dt className="font-tech text-micro uppercase text-dim">{s.l}</dt>

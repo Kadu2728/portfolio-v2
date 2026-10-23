@@ -1,1 +1,1 @@
-Carlos Eduardo, Full-Stack Developer — retrato ao lado do nome em destaque, com a stack Next.js, React, TypeScript, FastAPI e PostgreSQL.
+Carlos Eduardo, Product Owner — retrato ao lado do nome em destaque, com a frase "transformo problema de negócio em produto digital" e as áreas discovery, backlog, dados e BI, IA generativa e Scrum.
