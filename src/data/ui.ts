@@ -25,7 +25,7 @@ export const ptUI = {
     /** Índice da linha que recebe o accent. */
     headlineAccent: 2,
     intro:
-      'Fui Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe finalista do NEXT FIAP 2026. Identifico o problema, analiso os dados, traduzo a necessidade em requisito e conduzo a construção com IA até o produto publicado.',
+      'Fui Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe finalista do NEXT FIAP 2026, onde ficamos em 2º lugar. Identifico o problema, analiso os dados, traduzo a necessidade em requisito e conduzo a construção com IA até o produto publicado.',
     available: 'Buscando estágio ou posição júnior',
     viewProjects: 'Ver projetos',
     downloadCv: 'Baixar CV',
@@ -33,7 +33,7 @@ export const ptUI = {
     viewCase: 'Ver case',
     contactsLabel: 'Contato',
     stats: [
-      { v: 'Finalista', l: 'NEXT FIAP 2026' },
+      { v: '2º lugar', l: 'NEXT FIAP 2026' },
       { v: '5', l: 'produtos de ponta a ponta' },
       { v: '8,0+', l: 'média em GTI' },
     ],
@@ -174,7 +174,7 @@ export const enUI: UIStrings = {
     headline: ['A business', 'problem', 'becomes a product.'],
     headlineAccent: 2,
     intro:
-      'I was the Product Owner and developer of CEAP Connect, my team project and a finalist at NEXT FIAP 2026. I find the problem, analyse the data, turn the need into requirements and drive the build with AI until the product ships.',
+      'I was the Product Owner and developer of CEAP Connect, my team project and a finalist at NEXT FIAP 2026, where we placed 2nd. I find the problem, analyse the data, turn the need into requirements and drive the build with AI until the product ships.',
     available: 'Looking for an internship or junior role',
     viewProjects: 'View work',
     downloadCv: 'Download CV',
@@ -182,7 +182,7 @@ export const enUI: UIStrings = {
     viewCase: 'View case',
     contactsLabel: 'Contact',
     stats: [
-      { v: 'Finalist', l: 'NEXT FIAP 2026' },
+      { v: '2nd place', l: 'NEXT FIAP 2026' },
       { v: '5', l: 'products end to end' },
       { v: '8.0+', l: 'GPA in IT Management' },
     ],

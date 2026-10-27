@@ -20,7 +20,7 @@ export const profile = {
   headlineTail: 'Não apenas tela.',
 
   intro:
-    'Fui Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe finalista do NEXT FIAP 2026. Identifico o problema, analiso os dados, traduzo a necessidade em requisito e conduzo a construção com IA até o produto publicado.',
+    'Fui Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe finalista do NEXT FIAP 2026, onde ficamos em 2º lugar. Identifico o problema, analiso os dados, traduzo a necessidade em requisito e conduzo a construção com IA até o produto publicado.',
 
   education: [
     {
@@ -68,7 +68,7 @@ export const proofs: Proof[] = [
   {
     id: 'next',
     index: '01',
-    label: 'Finalista do NEXT FIAP 2026',
+    label: 'Finalista e 2º lugar no NEXT FIAP 2026',
     body: 'Product Owner e desenvolvedor do CEAP Connect, projeto da minha equipe: visão do produto, priorização do backlog e desenvolvimento.',
   },
   {

@@ -21,7 +21,7 @@ export const projects: Project[] = [
     role: 'Product Owner · Discovery · Construção com IA',
     featured: true,
     overview:
-      'Challenge FIAP, projeto da minha equipe finalista do NEXT FIAP 2026. Plataforma web publicada que acompanha o candidato do CEAP — escola técnica gratuita para jovens — da inscrição ao resultado do processo seletivo.',
+      'Challenge FIAP, projeto da minha equipe finalista do NEXT FIAP 2026 — ficamos em 2º lugar. Plataforma web publicada que acompanha o candidato do CEAP — escola técnica gratuita para jovens — da inscrição ao resultado do processo seletivo.',
     challenge:
       'O candidato desaparece no meio do processo seletivo. A coordenação só descobre a desistência quando a sala da prova tem menos gente do que a lista de inscritos, e nessa altura não há mais nada a fazer. Faltava enxergar quem estava em risco enquanto ainda dava tempo de agir.',
     solution:
@@ -49,7 +49,7 @@ export const projects: Project[] = [
       { value: '141', label: 'testes automatizados' },
     ],
     results: [
-      'Finalista do NEXT FIAP 2026 — projeto da equipe, com atuação como Product Owner e desenvolvedor.',
+      'Finalista e 2º lugar no NEXT FIAP 2026 — projeto da equipe, com atuação como Product Owner e desenvolvedor.',
       'Apresentado ao Diretor do CEAP, que aprovou o avanço do projeto e o encaminhou à Coordenação de TI.',
       'Os números acima descrevem o funil que analisei para priorizar o backlog. Não são redução de evasão medida.',
     ],

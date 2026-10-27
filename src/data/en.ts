@@ -53,7 +53,7 @@ export const enProfile = {
   headlineTail: 'Not just a screen.',
 
   intro:
-    'I was the Product Owner and developer of CEAP Connect, my team project and a finalist at NEXT FIAP 2026. I find the problem, analyse the data, turn the need into requirements and drive the build with AI until the product ships.',
+    'I was the Product Owner and developer of CEAP Connect, my team project and a finalist at NEXT FIAP 2026, where we placed 2nd. I find the problem, analyse the data, turn the need into requirements and drive the build with AI until the product ships.',
 
   education: [
     {
@@ -97,7 +97,7 @@ export const enProofs: Proof[] = [
   {
     id: 'next',
     index: '01',
-    label: 'Finalist at NEXT FIAP 2026',
+    label: 'Finalist and 2nd place at NEXT FIAP 2026',
     body: 'Product Owner and developer of CEAP Connect, my team project: product vision, backlog prioritisation and development.',
   },
   {
@@ -297,7 +297,7 @@ export const enProjects: Project[] = [
     role: 'Product Owner · Discovery · Building with AI',
     featured: true,
     overview:
-      'A FIAP Challenge project, my team’s entry and a finalist at NEXT FIAP 2026. A live web platform that follows candidates at CEAP — a free technical school for young people — from application to the result of the selection process.',
+      'A FIAP Challenge project, my team’s entry and a finalist at NEXT FIAP 2026 — we placed 2nd. A live web platform that follows candidates at CEAP — a free technical school for young people — from application to the result of the selection process.',
     challenge:
       'Candidates disappear halfway through the selection process. The coordination team only finds out when the exam room has fewer people than the list of applicants, and by then there is nothing left to do. What was missing was seeing who was at risk while there was still time to act.',
     solution:
@@ -325,7 +325,7 @@ export const enProjects: Project[] = [
       { value: '141', label: 'automated tests' },
     ],
     results: [
-      'Finalist at NEXT FIAP 2026 — a team project, with my role as Product Owner and developer.',
+      'Finalist and 2nd place at NEXT FIAP 2026 — a team project, with my role as Product Owner and developer.',
       'Presented to the Director of CEAP, who approved taking the project forward and referred it to the IT Coordination team.',
       'The numbers above describe the funnel I analysed to prioritise the backlog. They are not a measured reduction in drop-off.',
     ],
